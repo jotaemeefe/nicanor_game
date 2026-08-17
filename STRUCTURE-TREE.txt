@@ -615,6 +615,7 @@ nicanor_game
 │   │   │   │   ├── loro_5_loud.png.import
 │   │   │   │   ├── loro_6_molting.png
 │   │   │   │   ├── loro_6_molting.png.import
+│   │   │   │   ├── loro_frames.tres
 │   │   │   │   ├── loro_master.png
 │   │   │   │   └── loro_master.png.import
 │   │   │   └── recepcionista

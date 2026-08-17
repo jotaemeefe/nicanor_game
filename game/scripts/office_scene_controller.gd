@@ -30,7 +30,7 @@ const CARTEL_ROJO := preload("res://assets/props/cartel_estado/cartel_rojo.png")
 
 @onready var _nicanor: NicanorController = $World/Nicanor
 @onready var _recepcionista_sprite: Sprite2D = get_node_or_null("World/Recepcionista/Sprite2D")
-@onready var _loro_sprite: Sprite2D = get_node_or_null("World/Hotspots/Loro/Sprite2D")
+@onready var _loro_sprite: AnimatedSprite2D = get_node_or_null("World/Hotspots/Loro/AnimatedSprite2D")
 @onready var _machine_sprite: Sprite2D = get_node_or_null("World/Hotspots/Dispensador/Sprite2D")
 @onready var _door_sprite: Sprite2D = get_node_or_null("World/Hotspots/Puerta/Sprite2D")
 @onready var _cartel_estado_sprite: Sprite2D = get_node_or_null("CartelEstado")
@@ -299,14 +299,14 @@ func _apply_speaker_state(speaker: String, pose: String) -> void:
 	if _recepcionista_sprite:
 		_recepcionista_sprite.texture = CARP_HABLANDO if speaker == "Recepcionista" else CARP_IDLE
 	if _loro_sprite:
-		_loro_sprite.texture = LORO_HABLANDO if speaker == "Loro" else LORO_IDLE
+		_loro_sprite.play("hablando" if speaker == "Loro" else "idle")
 
 func _set_speaker_idle_all() -> void:
 	_nicanor.clear_pose()
 	if _recepcionista_sprite:
 		_recepcionista_sprite.texture = CARP_IDLE
 	if _loro_sprite:
-		_loro_sprite.texture = LORO_IDLE
+		_loro_sprite.play("idle")
 
 func _portrait_for_speaker(speaker: String) -> Texture2D:
 	match speaker:

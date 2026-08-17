@@ -1,0 +1,34 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/parrot/loro_1_sleepy.png" id="1_sleepy"]
+[ext_resource type="Texture2D" path="res://assets/characters/parrot/loro_2_halfopen.png" id="2_halfopen"]
+[ext_resource type="Texture2D" path="res://assets/characters/parrot/loro_3_alert.png" id="3_alert"]
+[ext_resource type="Texture2D" path="res://assets/characters/parrot/loro_4_squawk.png" id="4_squawk"]
+
+[resource]
+animations = [{
+"name": &"idle",
+"speed": 1.0,
+"loop": true,
+"frames": [{
+"duration": 2.6,
+"texture": ExtResource("1_sleepy")
+}, {
+"duration": 1.8,
+"texture": ExtResource("2_halfopen")
+}, {
+"duration": 2.2,
+"texture": ExtResource("3_alert")
+}, {
+"duration": 1.6,
+"texture": ExtResource("2_halfopen")
+}]
+}, {
+"name": &"hablando",
+"speed": 6.0,
+"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_squawk")
+}]
+}]

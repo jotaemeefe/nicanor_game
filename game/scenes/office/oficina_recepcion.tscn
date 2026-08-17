@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/props/maquina_turnos/maquina_apagada.png" id="8_maquina"]
 [ext_resource type="Texture2D" path="res://assets/props/formulario.png" id="9_formulario"]
 [ext_resource type="Texture2D" path="res://assets/props/sello.png" id="10_sello"]
-[ext_resource type="Texture2D" path="res://assets/characters/parrot/loro_2_halfopen.png" id="11_loro"]
+[ext_resource type="SpriteFrames" path="res://assets/characters/parrot/loro_frames.tres" id="11_loroframes"]
 [ext_resource type="Texture2D" path="res://assets/props/puerta/puerta_cerrada.png" id="12_puerta"]
 [ext_resource type="SpriteFrames" path="res://assets/props/ventilador/fan_frames.tres" id="13_fanframes"]
 [ext_resource type="Texture2D" path="res://assets/props/cartel_estado/cartel_apagado.png" id="14_cartelestado"]
@@ -102,16 +102,18 @@ look_direction = "right"
 observe_text = "Lleva veinte años en el mismo mostrador. No sonríe, pero tampoco parece triste."
 
 [node name="Loro" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(957, 318)
+position = Vector2(1015, 300)
 hotspot_name = "Loro"
-hitbox_size = Vector2(70, 100)
+hitbox_size = Vector2(110, 160)
 invisible = true
-approach_point = Vector2(-57, 242)
+approach_point = Vector2(-115, 260)
 look_direction = "right"
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Loro"]
-texture = ExtResource("11_loro")
-scale = Vector2(0.13, 0.13)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Hotspots/Loro"]
+sprite_frames = ExtResource("11_loroframes")
+animation = &"idle"
+autoplay = "idle"
+scale = Vector2(0.21, 0.21)
 
 [node name="Cartel" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
 position = Vector2(249, 140)
