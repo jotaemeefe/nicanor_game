@@ -543,7 +543,10 @@ nicanor_game
 │   ├── ChatGPT Image 16 ago 2026, 03_35_19 p.m. (5).png
 │   ├── ChatGPT Image 16 ago 2026, 03_41_23 p.m. (1).png
 │   ├── ChatGPT Image 16 ago 2026, 03_41_23 p.m. (2).png
-│   └── ChatGPT Image 16 ago 2026, 03_41_26 p.m. (3).png
+│   ├── ChatGPT Image 16 ago 2026, 03_41_26 p.m. (3).png
+│   ├── Intro - Juego v1.mp4
+│   ├── rolling_table_clean.png
+│   └── scene_background_no_table.png
 ├── examples
 │   ├── cross-engine-gdd
 │   │   ├── game-design-document.md
@@ -572,7 +575,9 @@ nicanor_game
 │   ├── assets
 │   │   ├── backgrounds
 │   │   │   ├── oficina_recepcion.png
-│   │   │   └── oficina_recepcion.png.import
+│   │   │   ├── oficina_recepcion.png.import
+│   │   │   ├── scene_background_no_table.png
+│   │   │   └── scene_background_no_table.png.import
 │   │   ├── characters
 │   │   │   ├── nicanor
 │   │   │   │   ├── idle_1.png
@@ -643,50 +648,66 @@ nicanor_game
 │   │   │       ├── carp_full_5.png.import
 │   │   │       ├── carp_full_6.png
 │   │   │       ├── carp_full_6.png.import
+│   │   │       ├── carp_hablando_new.png
+│   │   │       ├── carp_hablando_new.png.import
+│   │   │       ├── carp_idle_new.png
+│   │   │       ├── carp_idle_new.png.import
 │   │   │       ├── carpincho.png
 │   │   │       └── carpincho.png.import
-│   │   └── props
-│   │       ├── cartel_estado
-│   │       │   ├── cartel_ambar.png
-│   │       │   ├── cartel_ambar.png.import
-│   │       │   ├── cartel_apagado.png
-│   │       │   ├── cartel_apagado.png.import
-│   │       │   ├── cartel_rojo.png
-│   │       │   └── cartel_rojo.png.import
-│   │       ├── maquina_turnos
-│   │       │   ├── maquina_apagada.png
-│   │       │   ├── maquina_apagada.png.import
-│   │       │   ├── maquina_encendida.png
-│   │       │   ├── maquina_encendida.png.import
-│   │       │   ├── maquina_imprimiendo.png
-│   │       │   └── maquina_imprimiendo.png.import
-│   │       ├── puerta
-│   │       │   ├── puerta_abierta.png
-│   │       │   ├── puerta_abierta.png.import
-│   │       │   ├── puerta_cerrada.png
-│   │       │   ├── puerta_cerrada.png.import
-│   │       │   ├── puerta_desbloqueada.png
-│   │       │   └── puerta_desbloqueada.png.import
-│   │       ├── ventilador
-│   │       │   ├── fan_frames.tres
-│   │       │   ├── ventilador_1.png
-│   │       │   ├── ventilador_1.png.import
-│   │       │   ├── ventilador_2.png
-│   │       │   ├── ventilador_2.png.import
-│   │       │   ├── ventilador_3.png
-│   │       │   ├── ventilador_3.png.import
-│   │       │   ├── ventilador_4.png
-│   │       │   └── ventilador_4.png.import
-│   │       ├── campana.png
-│   │       ├── campana.png.import
-│   │       ├── carnet.png
-│   │       ├── carnet.png.import
-│   │       ├── dispensador_turnos.png
-│   │       ├── dispensador_turnos.png.import
-│   │       ├── formulario.png
-│   │       ├── formulario.png.import
-│   │       ├── sello.png
-│   │       └── sello.png.import
+│   │   ├── furniture
+│   │   │   ├── rolling_table_clean.png
+│   │   │   └── rolling_table_clean.png.import
+│   │   ├── props
+│   │   │   ├── cartel_estado
+│   │   │   │   ├── cartel_ambar.png
+│   │   │   │   ├── cartel_ambar.png.import
+│   │   │   │   ├── cartel_ambar_new.png
+│   │   │   │   ├── cartel_ambar_new.png.import
+│   │   │   │   ├── cartel_apagado.png
+│   │   │   │   ├── cartel_apagado.png.import
+│   │   │   │   ├── cartel_apagado_new.png
+│   │   │   │   ├── cartel_apagado_new.png.import
+│   │   │   │   ├── cartel_rojo.png
+│   │   │   │   ├── cartel_rojo.png.import
+│   │   │   │   ├── cartel_rojo_new.png
+│   │   │   │   └── cartel_rojo_new.png.import
+│   │   │   ├── maquina_turnos
+│   │   │   │   ├── maquina_apagada.png
+│   │   │   │   ├── maquina_apagada.png.import
+│   │   │   │   ├── maquina_encendida.png
+│   │   │   │   ├── maquina_encendida.png.import
+│   │   │   │   ├── maquina_imprimiendo.png
+│   │   │   │   └── maquina_imprimiendo.png.import
+│   │   │   ├── puerta
+│   │   │   │   ├── puerta_abierta.png
+│   │   │   │   ├── puerta_abierta.png.import
+│   │   │   │   ├── puerta_cerrada.png
+│   │   │   │   ├── puerta_cerrada.png.import
+│   │   │   │   ├── puerta_desbloqueada.png
+│   │   │   │   └── puerta_desbloqueada.png.import
+│   │   │   ├── ventilador
+│   │   │   │   ├── fan_frames.tres
+│   │   │   │   ├── ventilador_1.png
+│   │   │   │   ├── ventilador_1.png.import
+│   │   │   │   ├── ventilador_2.png
+│   │   │   │   ├── ventilador_2.png.import
+│   │   │   │   ├── ventilador_3.png
+│   │   │   │   ├── ventilador_3.png.import
+│   │   │   │   ├── ventilador_4.png
+│   │   │   │   └── ventilador_4.png.import
+│   │   │   ├── campana.png
+│   │   │   ├── campana.png.import
+│   │   │   ├── carnet.png
+│   │   │   ├── carnet.png.import
+│   │   │   ├── dispensador_turnos.png
+│   │   │   ├── dispensador_turnos.png.import
+│   │   │   ├── formulario.png
+│   │   │   ├── formulario.png.import
+│   │   │   ├── sello.png
+│   │   │   └── sello.png.import
+│   │   └── video
+│   │       ├── intro.ogv
+│   │       └── intro.ogv.uid
 │   ├── data
 │   │   ├── dialogues
 │   │   │   ├── final.json

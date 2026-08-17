@@ -1,25 +1,27 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/office_scene_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://scripts/nicanor_controller.gd" id="2_nicanor"]
 [ext_resource type="SpriteFrames" path="res://assets/characters/nicanor/nicanor_frames.tres" id="3_nicanorframes"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/oficina_recepcion.png" id="4_bg"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/scene_background_no_table.png" id="4_bg"]
 [ext_resource type="PackedScene" path="res://scenes/hotspot.tscn" id="5_hotspot"]
 [ext_resource type="PackedScene" path="res://scenes/dialogue_box.tscn" id="6_dialoguebox"]
-[ext_resource type="Texture2D" path="res://assets/characters/recepcionista/carp_1_neutral.png" id="7_carpidle"]
+[ext_resource type="Texture2D" path="res://assets/characters/recepcionista/carp_idle_new.png" id="7_carpidle"]
 [ext_resource type="Texture2D" path="res://assets/props/maquina_turnos/maquina_apagada.png" id="8_maquina"]
 [ext_resource type="Texture2D" path="res://assets/props/formulario.png" id="9_formulario"]
 [ext_resource type="Texture2D" path="res://assets/props/sello.png" id="10_sello"]
 [ext_resource type="SpriteFrames" path="res://assets/characters/parrot/loro_frames.tres" id="11_loroframes"]
 [ext_resource type="Texture2D" path="res://assets/props/puerta/puerta_cerrada.png" id="12_puerta"]
 [ext_resource type="SpriteFrames" path="res://assets/props/ventilador/fan_frames.tres" id="13_fanframes"]
-[ext_resource type="Texture2D" path="res://assets/props/cartel_estado/cartel_apagado.png" id="14_cartelestado"]
+[ext_resource type="Texture2D" path="res://assets/props/cartel_estado/cartel_apagado_new.png" id="14_cartelestado"]
+[ext_resource type="Texture2D" path="res://assets/furniture/rolling_table_clean.png" id="15_mesa"]
 
 [node name="OficinaRecepcion" type="Node2D"]
 script = ExtResource("1_controller")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(640, 360)
+scale = Vector2(0.765550239, 0.765550239)
 texture = ExtResource("4_bg")
 
 [node name="AmbientFan" type="AnimatedSprite2D" parent="."]
@@ -30,8 +32,8 @@ animation = &"spin"
 autoplay = "spin"
 
 [node name="CartelEstado" type="Sprite2D" parent="."]
-position = Vector2(572, 215)
-scale = Vector2(0.21, 0.21)
+position = Vector2(1010, 82)
+scale = Vector2(0.19, 0.19)
 texture = ExtResource("14_cartelestado")
 
 [node name="Audio" type="Node" parent="."]
@@ -48,34 +50,40 @@ volume_db = -8.0
 y_sort_enabled = true
 
 [node name="Nicanor" type="Node2D" parent="World"]
-position = Vector2(400, 650)
+position = Vector2(400, 620)
 y_sort_enabled = true
 script = ExtResource("2_nicanor")
-walkable_bounds = Rect2(80, 540, 1140, 150)
+walkable_bounds = Rect2(80, 540, 1140, 100)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Nicanor"]
 sprite_frames = ExtResource("3_nicanorframes")
 animation = &"idle"
-offset = Vector2(0, -342)
+offset = Vector2(0, -330)
 scale = Vector2(0.62, 0.62)
 
 [node name="Recepcionista" type="Node2D" parent="World"]
-position = Vector2(765, 390)
+position = Vector2(870, 388)
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Recepcionista"]
 texture = ExtResource("7_carpidle")
-offset = Vector2(0, -248)
+offset = Vector2(0, -362)
 scale = Vector2(0.29, 0.29)
 
+[node name="Mesa" type="Sprite2D" parent="World"]
+position = Vector2(1055, 584)
+scale = Vector2(0.2736, 0.2736)
+texture = ExtResource("15_mesa")
+
 [node name="Hotspots" type="Node2D" parent="World"]
+y_sort_enabled = true
 
 [node name="Dispensador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(480, 353)
+position = Vector2(480, 385)
 hotspot_name = "Máquina de turnos"
 hitbox_size = Vector2(90, 230)
 invisible = true
-approach_point = Vector2(90, 207)
+approach_point = Vector2(90, 175)
 look_direction = "left"
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Dispensador"]
@@ -126,18 +134,18 @@ observe_text = "\"Toda declaración de ausencia requiere acreditar presencia pre
 interact_text = "\"Toda declaración de ausencia requiere acreditar presencia previa.\" Firmado: el Ministerio, para sí mismo."
 
 [node name="Puerta" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(1155, 330)
+position = Vector2(1158, 360)
 hotspot_name = "Puerta"
-hitbox_size = Vector2(170, 340)
+hitbox_size = Vector2(210, 430)
 invisible = true
-approach_point = Vector2(-335, 230)
+approach_point = Vector2(-330, 230)
 look_direction = "right"
 observe_text = "Dice SALIDA. En este Ministerio, eso probablemente sea una amenaza."
 interact_text = "No cede. Todavía no."
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Puerta"]
 texture = ExtResource("12_puerta")
-scale = Vector2(0.34, 0.34)
+scale = Vector2(0.43, 0.43)
 
 [node name="Planta" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
 position = Vector2(94, 209)
@@ -161,17 +169,17 @@ interact_text = "Nicanor completa el formulario como puede. Hay una pregunta que
 interact_text_alt = "El formulario ya está completo. Romperlo no cambiaría nada."
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Formulario"]
-position = Vector2(-55, -60)
-rotation = -0.21
+position = Vector2(-52, -51)
+rotation = -0.09
 texture = ExtResource("9_formulario")
-scale = Vector2(0.16, 0.16)
+scale = Vector2(0.14, 0.14)
 
 [node name="Sello" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(980, 460)
+position = Vector2(985, 495)
 hotspot_name = "Sello"
 hitbox_size = Vector2(100, 100)
 invisible = true
-approach_point = Vector2(-130, 110)
+approach_point = Vector2(-115, 145)
 look_direction = "right"
 observe_text = "El instrumento más poderoso del edificio. Por eso está atado."
 interact_text = "El instrumento más poderoso del edificio. Por eso está atado."

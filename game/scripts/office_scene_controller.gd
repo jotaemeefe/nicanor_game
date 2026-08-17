@@ -11,8 +11,8 @@ const LORO_DIALOGUE_PATH := "res://data/dialogues/loro.json"
 const FINAL_DIALOGUE_PATH := "res://data/dialogues/final.json"
 const MAQUINA_HOTSPOT_DATA_PATH := "res://data/hotspots/maquina_turnos.json"
 
-const CARP_IDLE := preload("res://assets/characters/recepcionista/carp_1_neutral.png")
-const CARP_HABLANDO := preload("res://assets/characters/recepcionista/carp_3_hablando.png")
+const CARP_IDLE := preload("res://assets/characters/recepcionista/carp_idle_new.png")
+const CARP_HABLANDO := preload("res://assets/characters/recepcionista/carp_hablando_new.png")
 const LORO_IDLE := preload("res://assets/characters/parrot/loro_2_halfopen.png")
 const LORO_HABLANDO := preload("res://assets/characters/parrot/loro_4_squawk.png")
 
@@ -24,9 +24,9 @@ const PUERTA_CERRADA := preload("res://assets/props/puerta/puerta_cerrada.png")
 const PUERTA_DESBLOQUEADA := preload("res://assets/props/puerta/puerta_desbloqueada.png")
 const PUERTA_ABIERTA := preload("res://assets/props/puerta/puerta_abierta.png")
 
-const CARTEL_APAGADO := preload("res://assets/props/cartel_estado/cartel_apagado.png")
-const CARTEL_AMBAR := preload("res://assets/props/cartel_estado/cartel_ambar.png")
-const CARTEL_ROJO := preload("res://assets/props/cartel_estado/cartel_rojo.png")
+const CARTEL_APAGADO := preload("res://assets/props/cartel_estado/cartel_apagado_new.png")
+const CARTEL_AMBAR := preload("res://assets/props/cartel_estado/cartel_ambar_new.png")
+const CARTEL_ROJO := preload("res://assets/props/cartel_estado/cartel_rojo_new.png")
 
 @onready var _nicanor: NicanorController = $World/Nicanor
 @onready var _recepcionista_sprite: Sprite2D = get_node_or_null("World/Recepcionista/Sprite2D")
