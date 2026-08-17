@@ -1,0 +1,107 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/scene_controller.gd" id="1_scene"]
+[ext_resource type="Script" path="res://scripts/nicanor_controller.gd" id="2_nicanor"]
+[ext_resource type="PackedScene" path="res://scenes/hotspot.tscn" id="3_hotspot"]
+[ext_resource type="PackedScene" path="res://scenes/dialogue_box.tscn" id="4_dialoguebox"]
+
+[node name="OficinaLicenciasPoeticas" type="Node2D"]
+script = ExtResource("1_scene")
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0.44, 0.42, 0.36, 1)
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)
+
+[node name="WalkableFloor" type="Polygon2D" parent="."]
+color = Color(0.52, 0.5, 0.42, 1)
+polygon = PackedVector2Array(120, 420, 1160, 420, 1160, 660, 120, 660)
+
+[node name="Nicanor" type="Node2D" parent="."]
+position = Vector2(640, 640)
+script = ExtResource("2_nicanor")
+
+[node name="Body" type="Polygon2D" parent="Nicanor"]
+color = Color(0.82, 0.55, 0.16, 1)
+polygon = PackedVector2Array(-18, 0, -12, -40, 0, -52, 12, -40, 18, 0, 10, 14, -10, 14)
+
+[node name="Beak" type="Polygon2D" parent="Nicanor"]
+color = Color(0.95, 0.8, 0.2, 1)
+polygon = PackedVector2Array(14, -34, 30, -30, 14, -26)
+
+[node name="Hotspots" type="Node2D" parent="."]
+
+[node name="Dispensador" parent="Hotspots" instance=ExtResource("3_hotspot")]
+position = Vector2(220, 470)
+hotspot_name = "Dispensador de turnos"
+hitbox_size = Vector2(90, 140)
+observe_text = "No entrega números desde que la espera fue privatizada."
+interact_text = "No entrega números desde que la espera fue privatizada."
+visual_color = Color(0.3, 0.32, 0.34, 1)
+
+[node name="Formulario" parent="Hotspots" instance=ExtResource("3_hotspot")]
+position = Vector2(560, 520)
+hotspot_name = "Formulario"
+hitbox_size = Vector2(100, 70)
+observe_text = "Tiene más casilleros que preguntas."
+interact_text = "Tiene más casilleros que preguntas."
+visual_color = Color(0.85, 0.83, 0.7, 1)
+
+[node name="Sello" parent="Hotspots" instance=ExtResource("3_hotspot")]
+position = Vector2(690, 500)
+hotspot_name = "Sello"
+hitbox_size = Vector2(60, 50)
+observe_text = "El instrumento más poderoso del edificio. Por eso está atado a la mesa."
+interact_text = "El instrumento más poderoso del edificio. Por eso está atado a la mesa."
+visual_color = Color(0.5, 0.1, 0.1, 1)
+
+[node name="Funcionaria" parent="Hotspots" instance=ExtResource("3_hotspot")]
+position = Vector2(860, 440)
+hotspot_name = "Funcionaria"
+hitbox_size = Vector2(140, 220)
+triggers_dialogue = true
+observe_text = "Lleva veinte años en el mismo escritorio. No sonríe, pero tampoco parece triste."
+interact_text = ""
+visual_color = Color(0.35, 0.45, 0.55, 1)
+
+[node name="Loro" parent="Hotspots" instance=ExtResource("3_hotspot")]
+position = Vector2(1080, 300)
+hotspot_name = "Loro"
+hitbox_size = Vector2(70, 70)
+observe_text = "Parece haber repetido todo lo que escuchó en su vida. Por suerte, no fue mucho."
+interact_text = "Parece haber repetido todo lo que escuchó en su vida. Por suerte, no fue mucho."
+visual_color = Color(0.2, 0.55, 0.3, 1)
+
+[node name="Puerta" parent="Hotspots" instance=ExtResource("3_hotspot")]
+position = Vector2(1180, 470)
+hotspot_name = "Puerta"
+hitbox_size = Vector2(110, 260)
+observe_text = "Dice SALIDA. En este Ministerio, eso probablemente sea una amenaza."
+interact_text = "Dice SALIDA. En este Ministerio, eso probablemente sea una amenaza."
+visual_color = Color(0.25, 0.2, 0.15, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HoverLabel" type="Label" parent="UI"]
+offset_left = 40.0
+offset_top = 30.0
+offset_right = 400.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 22
+text = ""
+visible = false
+
+[node name="DialogueBox" parent="UI" instance=ExtResource("4_dialoguebox")]
+
+[node name="EndLabel" type="Label" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -30.0
+offset_right = 200.0
+offset_bottom = 30.0
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+text = "Fin de la prueba"
+visible = false

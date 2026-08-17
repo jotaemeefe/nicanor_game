@@ -1,0 +1,79 @@
+[gd_resource type="SpriteFrames" load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/idle_1.png" id="0_idle1"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/walk_1.png" id="1_walk1"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/walk_2.png" id="2_walk2"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/walk_3.png" id="3_walk3"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/walk_4.png" id="4_walk4"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/walk_5.png" id="5_walk5"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/walk_6.png" id="6_walk6"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/pose_neutral.png" id="7_neutral"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/pose_explicacion.png" id="8_explicacion"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/pose_escepticismo.png" id="9_escepticismo"]
+[ext_resource type="Texture2D" path="res://assets/characters/nicanor/pose_recitado.png" id="10_recitado"]
+
+[resource]
+animations = [{
+"name": &"idle",
+"speed": 5.0,
+"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("0_idle1")
+}]
+}, {
+"name": &"walk",
+"speed": 9.0,
+"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_walk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_walk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_walk5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_walk6")
+}]
+}, {
+"name": &"pose_neutral",
+"speed": 5.0,
+"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_neutral")
+}]
+}, {
+"name": &"pose_explicacion",
+"speed": 5.0,
+"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_explicacion")
+}]
+}, {
+"name": &"pose_escepticismo",
+"speed": 5.0,
+"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_escepticismo")
+}]
+}, {
+"name": &"pose_recitado",
+"speed": 5.0,
+"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_recitado")
+}]
+}]

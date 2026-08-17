@@ -1,0 +1,57 @@
+{
+  "branches": [
+    {
+      "id": "intro",
+      "max_state": "MAQUINA_EXAMINADA",
+      "lines": [
+        { "speaker": "Nicanor", "text": "Vengo a declarar una ausencia.", "pose": "neutral" },
+        { "speaker": "Recepcionista", "text": "¿La ausencia vino con usted?" },
+        { "choice": [
+          { "text": "Si hubiera venido, no sería una ausencia.", "pose": "escepticismo" },
+          { "text": "No. Por eso estoy acá y no en otro lado.", "pose": "neutral" }
+        ] },
+        { "speaker": "Recepcionista", "text": "Entonces va a necesitar una constancia de presencia. Suya, no de la ausencia." }
+      ],
+      "effects": { "set_state": "REQUISITO_DESCUBIERTO" }
+    },
+    {
+      "id": "reminder_formulario",
+      "min_state": "REQUISITO_DESCUBIERTO",
+      "max_state": "REQUISITO_DESCUBIERTO",
+      "lines": [
+        { "speaker": "Recepcionista", "text": "El formulario está sobre el mostrador. Complételo y vuelva a la máquina." },
+        { "speaker": "Nicanor", "text": "¿Y si no tengo nada que declarar todavía?", "pose": "explicacion" },
+        { "speaker": "Recepcionista", "text": "Entonces complete lo que tenga. De todos modos va a valer lo mismo." }
+      ]
+    },
+    {
+      "id": "reminder_use_machine",
+      "min_state": "DECLARACION_OBTENIDA",
+      "max_state": "DECLARACION_OBTENIDA",
+      "lines": [
+        { "speaker": "Recepcionista", "text": "Ya tiene la constancia. Presentéla en la máquina, no a mí." }
+      ]
+    },
+    {
+      "id": "turno_cero",
+      "min_state": "TURNO_0_RECIBIDO",
+      "max_state": "TURNO_0_RECIBIDO",
+      "lines": [
+        { "speaker": "Nicanor", "text": "La máquina me dio el número cero.", "pose": "neutral" },
+        { "speaker": "Recepcionista", "text": "Llegó tarde. El cero se atiende antes de empezar." },
+        { "speaker": "Nicanor", "text": "¿Antes de empezar qué?", "pose": "escepticismo" },
+        { "speaker": "Recepcionista", "text": "Antes de empezar a atender. Su turno era mañana." },
+        { "speaker": "Nicanor", "text": "Mañana todavía no llegó.", "pose": "explicacion" },
+        { "speaker": "Recepcionista", "text": "Por eso mismo. Si ya perdió el turno de mañana, hoy no tiene ninguno pendiente. Puede pasar." }
+      ],
+      "effects": { "set_state": "ACCESO_AUTORIZADO" }
+    },
+    {
+      "id": "post_autorizado",
+      "min_state": "ACCESO_AUTORIZADO",
+      "lines": [
+        { "speaker": "Recepcionista", "text": "Ya está autorizado. La puerta, y no yo, es su próximo problema." }
+      ]
+    }
+  ]
+}

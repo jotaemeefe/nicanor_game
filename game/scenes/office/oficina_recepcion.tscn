@@ -1,0 +1,259 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/office_scene_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://scripts/nicanor_controller.gd" id="2_nicanor"]
+[ext_resource type="SpriteFrames" path="res://assets/characters/nicanor/nicanor_frames.tres" id="3_nicanorframes"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/oficina_recepcion.png" id="4_bg"]
+[ext_resource type="PackedScene" path="res://scenes/hotspot.tscn" id="5_hotspot"]
+[ext_resource type="PackedScene" path="res://scenes/dialogue_box.tscn" id="6_dialoguebox"]
+[ext_resource type="Texture2D" path="res://assets/characters/recepcionista/carp_1_neutral.png" id="7_carpidle"]
+[ext_resource type="Texture2D" path="res://assets/props/maquina_turnos/maquina_apagada.png" id="8_maquina"]
+[ext_resource type="Texture2D" path="res://assets/props/formulario.png" id="9_formulario"]
+[ext_resource type="Texture2D" path="res://assets/props/sello.png" id="10_sello"]
+[ext_resource type="Texture2D" path="res://assets/characters/parrot/loro_2_halfopen.png" id="11_loro"]
+[ext_resource type="Texture2D" path="res://assets/props/puerta/puerta_cerrada.png" id="12_puerta"]
+[ext_resource type="SpriteFrames" path="res://assets/props/ventilador/fan_frames.tres" id="13_fanframes"]
+[ext_resource type="Texture2D" path="res://assets/props/cartel_estado/cartel_apagado.png" id="14_cartelestado"]
+
+[node name="OficinaRecepcion" type="Node2D"]
+script = ExtResource("1_controller")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("4_bg")
+
+[node name="AmbientFan" type="AnimatedSprite2D" parent="."]
+position = Vector2(413, 55)
+scale = Vector2(0.35, 0.35)
+sprite_frames = ExtResource("13_fanframes")
+animation = &"spin"
+autoplay = "spin"
+
+[node name="CartelEstado" type="Sprite2D" parent="."]
+position = Vector2(572, 215)
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("14_cartelestado")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Ambiente" type="AudioStreamPlayer" parent="Audio"]
+autoplay = false
+volume_db = -8.0
+
+[node name="MaquinaSfx" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="ClickSfx" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="World" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Nicanor" type="Node2D" parent="World"]
+position = Vector2(400, 650)
+y_sort_enabled = true
+script = ExtResource("2_nicanor")
+walkable_bounds = Rect2(80, 540, 1140, 150)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Nicanor"]
+sprite_frames = ExtResource("3_nicanorframes")
+animation = &"idle"
+offset = Vector2(0, -342)
+scale = Vector2(0.62, 0.62)
+
+[node name="Recepcionista" type="Node2D" parent="World"]
+position = Vector2(765, 390)
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Recepcionista"]
+texture = ExtResource("7_carpidle")
+offset = Vector2(0, -248)
+scale = Vector2(0.29, 0.29)
+
+[node name="Hotspots" type="Node2D" parent="World"]
+
+[node name="Dispensador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(480, 353)
+hotspot_name = "Máquina de turnos"
+hitbox_size = Vector2(90, 230)
+invisible = true
+approach_point = Vector2(90, 207)
+look_direction = "left"
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Dispensador"]
+texture = ExtResource("8_maquina")
+scale = Vector2(0.233, 0.233)
+
+[node name="Mostrador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(765, 320)
+hotspot_name = "Mostrador"
+hitbox_size = Vector2(370, 40)
+invisible = true
+approach_point = Vector2(-65, 240)
+look_direction = "right"
+observe_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
+interact_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
+
+[node name="RecepcionistaHotspot" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(765, 300)
+hotspot_name = "Recepcionista"
+hitbox_size = Vector2(150, 150)
+invisible = true
+approach_point = Vector2(-115, 260)
+look_direction = "right"
+observe_text = "Lleva veinte años en el mismo mostrador. No sonríe, pero tampoco parece triste."
+
+[node name="Loro" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(957, 318)
+hotspot_name = "Loro"
+hitbox_size = Vector2(70, 100)
+invisible = true
+approach_point = Vector2(-57, 242)
+look_direction = "right"
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Loro"]
+texture = ExtResource("11_loro")
+scale = Vector2(0.13, 0.13)
+
+[node name="Cartel" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(249, 140)
+hotspot_name = "Cartel de normas"
+hitbox_size = Vector2(107, 119)
+invisible = true
+approach_point = Vector2(0, 450)
+look_direction = "left"
+observe_text = "\"Toda declaración de ausencia requiere acreditar presencia previa.\" Firmado: el Ministerio, para sí mismo."
+interact_text = "\"Toda declaración de ausencia requiere acreditar presencia previa.\" Firmado: el Ministerio, para sí mismo."
+
+[node name="Puerta" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(1155, 330)
+hotspot_name = "Puerta"
+hitbox_size = Vector2(170, 340)
+invisible = true
+approach_point = Vector2(-335, 230)
+look_direction = "right"
+observe_text = "Dice SALIDA. En este Ministerio, eso probablemente sea una amenaza."
+interact_text = "No cede. Todavía no."
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Puerta"]
+texture = ExtResource("12_puerta")
+scale = Vector2(0.34, 0.34)
+
+[node name="Planta" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(94, 209)
+hotspot_name = "Planta de oficina"
+hitbox_size = Vector2(96, 73)
+invisible = true
+approach_point = Vector2(30, 381)
+look_direction = "left"
+observe_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
+interact_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
+
+[node name="Formulario" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(120, 480)
+hotspot_name = "Formulario"
+hitbox_size = Vector2(80, 80)
+invisible = true
+approach_point = Vector2(80, 120)
+look_direction = "left"
+observe_text = "Tiene más casilleros que preguntas."
+interact_text = "Nicanor completa el formulario como puede. Hay una pregunta que no entiende y contesta con una fecha."
+interact_text_alt = "El formulario ya está completo. Romperlo no cambiaría nada."
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Formulario"]
+position = Vector2(-55, -60)
+rotation = -0.21
+texture = ExtResource("9_formulario")
+scale = Vector2(0.16, 0.16)
+
+[node name="Sello" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(980, 460)
+hotspot_name = "Sello"
+hitbox_size = Vector2(100, 100)
+invisible = true
+approach_point = Vector2(-130, 110)
+look_direction = "right"
+observe_text = "El instrumento más poderoso del edificio. Por eso está atado."
+interact_text = "El instrumento más poderoso del edificio. Por eso está atado."
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Sello"]
+texture = ExtResource("10_sello")
+scale = Vector2(0.137, 0.137)
+
+[node name="Ventilador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(413, 55)
+hotspot_name = "Ventilador de techo"
+hitbox_size = Vector2(220, 90)
+invisible = true
+approach_point = Vector2(0, 535)
+look_direction = "right"
+observe_text = "Gira con una lentitud casi filosófica. Es, técnicamente, el empleado más antiguo del edificio."
+interact_text = "Nicanor lo saluda con la mano. El ventilador no corresponde el gesto."
+
+[node name="Reloj" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
+position = Vector2(640, 145)
+hotspot_name = "Reloj"
+hitbox_size = Vector2(110, 150)
+invisible = true
+approach_point = Vector2(0, 455)
+look_direction = "right"
+observe_text = "Marca una hora que no coincide con ninguna de las dos que importan hoy."
+interact_text = "Nicanor lo golpea suavemente, como si eso ayudara. No ayuda."
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HoverLabel" type="Label" parent="UI"]
+offset_left = 40.0
+offset_top = 30.0
+offset_right = 500.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 22
+text = ""
+visible = false
+
+[node name="DialogueBox" parent="UI" instance=ExtResource("6_dialoguebox")]
+
+[node name="TopBar" type="HBoxContainer" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 56.0
+theme_override_constants/separation = 8
+
+[node name="Reiniciar" type="Button" parent="UI/TopBar"]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="Menu" type="Button" parent="UI/TopBar"]
+layout_mode = 2
+text = "Menú"
+
+[node name="EndPanel" type="Panel" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/EndPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -70.0
+offset_right = 160.0
+offset_bottom = 70.0
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="UI/EndPanel/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+text = "Fin de la escena"
+
+[node name="Reiniciar" type="Button" parent="UI/EndPanel/VBoxContainer"]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="Menu" type="Button" parent="UI/EndPanel/VBoxContainer"]
+layout_mode = 2
+text = "Menú principal"

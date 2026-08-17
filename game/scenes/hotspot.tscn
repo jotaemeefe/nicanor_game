@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/hotspot.gd" id="1_hotspot"]
+
+[node name="Hotspot" type="Area2D"]
+script = ExtResource("1_hotspot")
+
+[node name="Visual" type="Polygon2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

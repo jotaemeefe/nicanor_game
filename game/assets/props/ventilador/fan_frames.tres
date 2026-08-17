@@ -1,0 +1,26 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_1.png" id="1_v1"]
+[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_2.png" id="2_v2"]
+[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_3.png" id="3_v3"]
+[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_4.png" id="4_v4"]
+
+[resource]
+animations = [{
+"name": &"spin",
+"speed": 1.0,
+"loop": true,
+"frames": [{
+"duration": 0.16,
+"texture": ExtResource("1_v1")
+}, {
+"duration": 0.11,
+"texture": ExtResource("2_v2")
+}, {
+"duration": 0.19,
+"texture": ExtResource("3_v3")
+}, {
+"duration": 0.13,
+"texture": ExtResource("4_v4")
+}]
+}]

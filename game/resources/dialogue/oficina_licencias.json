@@ -1,0 +1,15 @@
+{
+  "conversacion_funcionaria": [
+    { "speaker": "Nicanor", "text": "Quiero solicitar una licencia poética." },
+    { "speaker": "Funcionaria", "text": "¿Sabe escribir poesía?" },
+    { "speaker": "Nicanor", "text": "Eso espero." },
+    { "speaker": "Funcionaria", "text": "Entonces deberá demostrar que todavía no aprendió." }
+  ],
+  "observaciones": {
+    "loro": "Parece haber repetido todo lo que escuchó en su vida. Por suerte, no fue mucho.",
+    "dispensador": "No entrega números desde que la espera fue privatizada.",
+    "sello": "El instrumento más poderoso del edificio. Por eso está atado a la mesa.",
+    "puerta": "Dice SALIDA. En este Ministerio, eso probablemente sea una amenaza.",
+    "formulario": "Tiene más casilleros que preguntas."
+  }
+}

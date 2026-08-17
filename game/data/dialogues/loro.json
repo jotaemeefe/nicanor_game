@@ -1,0 +1,27 @@
+{
+  "idle_by_state": {
+    "INICIO": [
+      "\"Constancia de presencia obligatoria.\"",
+      "\"Buenas tardes. Buenas tardes.\""
+    ],
+    "MAQUINA_EXAMINADA": [
+      "\"Sin constancia no hay número. Sin número no hay trámite. Sin trámite no hay usted.\""
+    ],
+    "REQUISITO_DESCUBIERTO": [
+      "\"El formulario está sobre el mostrador.\""
+    ],
+    "DECLARACION_OBTENIDA": [
+      "\"Presente la constancia en la máquina.\""
+    ],
+    "TURNO_0_RECIBIDO": [
+      "\"El cero se atiende antes de empezar.\""
+    ],
+    "ACCESO_AUTORIZADO": [
+      "\"Puede pasar. Puede pasar.\""
+    ],
+    "ESCENA_TERMINADA": [
+      "\"Vuelva mañana. Vuelva mañana.\""
+    ]
+  },
+  "remate_final": "\"Gracias por su ausencia.\""
+}
