@@ -722,6 +722,8 @@ nicanor_game
 │   │   └── dialogue
 │   │       └── oficina_licencias.json
 │   ├── scenes
+│   │   ├── intro
+│   │   │   └── intro.tscn
 │   │   ├── main_menu
 │   │   │   └── main_menu.tscn
 │   │   ├── office
@@ -738,6 +740,8 @@ nicanor_game
 │   │   ├── game_state.gd.uid
 │   │   ├── hotspot.gd
 │   │   ├── hotspot.gd.uid
+│   │   ├── intro.gd
+│   │   ├── intro.gd.uid
 │   │   ├── main_menu.gd
 │   │   ├── main_menu.gd.uid
 │   │   ├── nicanor_controller.gd
@@ -747,6 +751,8 @@ nicanor_game
 │   │   ├── scene_controller.gd
 │   │   └── scene_controller.gd.uid
 │   ├── tests
+│   │   ├── intro_flow_test.gd
+│   │   ├── intro_flow_test.tscn
 │   │   ├── puzzle_flow_test.gd
 │   │   ├── puzzle_flow_test.gd.uid
 │   │   └── puzzle_flow_test.tscn

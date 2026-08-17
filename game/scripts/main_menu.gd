@@ -7,4 +7,4 @@ func _ready() -> void:
 	_start_button.grab_focus()
 
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/office/oficina_recepcion.tscn")
+	get_tree().change_scene_to_file("res://scenes/intro/intro.tscn")
