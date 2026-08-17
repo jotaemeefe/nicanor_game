@@ -289,9 +289,14 @@ func _show_choice(options: Array) -> void:
 		texts.append(opt.get("text", ""))
 	_dialogue_box.show_choices(texts)
 
+## Clicking a choice already showed its full text as the button label —
+## re-displaying that same text as a new typewriter-animated line (the old
+## behavior) just repeated what the player already read and made them
+## click again to get past it. Apply the chosen pose directly and go
+## straight to whatever the branch queues next (the NPC's response).
 func _on_choice_selected(index: int) -> void:
 	var opt: Dictionary = _pending_choice_options[index]
-	_line_queue.push_front({ "speaker": "Nicanor", "text": opt.get("text", ""), "pose": opt.get("pose", "") })
+	_apply_speaker_state("Nicanor", opt.get("pose", ""))
 	_advance_queue()
 
 func _apply_speaker_state(speaker: String, pose: String) -> void:
