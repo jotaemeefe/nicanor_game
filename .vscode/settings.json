@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/.godot": true,
+    "**/.game-dev": true
+  },
+  "files.associations": {
+    "*.gd": "gdscript",
+    "*.tscn": "gdresource",
+    "*.tres": "gdresource"
+  }
+}

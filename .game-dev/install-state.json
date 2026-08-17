@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "active_profile": "godot-indie-2d",
+  "installed_components": [
+    "baseline:rules",
+    "baseline:agents",
+    "baseline:commands",
+    "baseline:skills",
+    "baseline:docs",
+    "baseline:contexts",
+    "engine:godot",
+    "domain:workflow",
+    "domain:design",
+    "domain:engineering-common",
+    "domain:qa-release"
+  ],
+  "installed_modules": [
+    "rules-core",
+    "agents-core",
+    "commands-core",
+    "skills-core",
+    "docs-core",
+    "contexts-core",
+    "engine-godot",
+    "domain-workflow",
+    "domain-design",
+    "domain-engineering-common",
+    "domain-qa-release"
+  ],
+  "installed_at": "2026-08-16T18:21:42.334Z",
+  "notes": [
+    "Installed from profile 'godot-indie-2d'.",
+    "Use install-report.json for the resolved file list."
+  ],
+  "active_engine": "godot"
+}
