@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d36yw4f2wawqy"
-path="res://.godot/imported/ventilador_4.png-d3c2f77e68bd9b5162dcd413395fa045.ctex"
+uid="uid://b48vp846l04lw"
+path="res://.godot/imported/ceiling_fan_4_frames.png-a6cca7f6238cda46b3960acae63c7b59.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/props/ventilador/ventilador_4.png"
-dest_files=["res://.godot/imported/ventilador_4.png-d3c2f77e68bd9b5162dcd413395fa045.ctex"]
+source_file="res://assets/props/ventilador/ceiling_fan_4_frames.png"
+dest_files=["res://.godot/imported/ceiling_fan_4_frames.png-a6cca7f6238cda46b3960acae63c7b59.ctex"]
 
 [params]
 

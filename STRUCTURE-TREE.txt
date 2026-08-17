@@ -690,15 +690,9 @@ nicanor_game
 │   │   │   │   ├── puerta_desbloqueada.png
 │   │   │   │   └── puerta_desbloqueada.png.import
 │   │   │   ├── ventilador
-│   │   │   │   ├── fan_frames.tres
-│   │   │   │   ├── ventilador_1.png
-│   │   │   │   ├── ventilador_1.png.import
-│   │   │   │   ├── ventilador_2.png
-│   │   │   │   ├── ventilador_2.png.import
-│   │   │   │   ├── ventilador_3.png
-│   │   │   │   ├── ventilador_3.png.import
-│   │   │   │   ├── ventilador_4.png
-│   │   │   │   └── ventilador_4.png.import
+│   │   │   │   ├── ceiling_fan_4_frames.png
+│   │   │   │   ├── ceiling_fan_4_frames.png.import
+│   │   │   │   └── fan_frames.tres
 │   │   │   ├── campana.png
 │   │   │   ├── campana.png.import
 │   │   │   ├── carnet.png

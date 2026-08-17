@@ -1,9 +1,22 @@
-[gd_resource type="SpriteFrames" load_steps=5 format=3]
+[gd_resource type="SpriteFrames" load_steps=6 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_1.png" id="1_v1"]
-[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_2.png" id="2_v2"]
-[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_3.png" id="3_v3"]
-[ext_resource type="Texture2D" path="res://assets/props/ventilador/ventilador_4.png" id="4_v4"]
+[ext_resource type="Texture2D" path="res://assets/props/ventilador/ceiling_fan_4_frames.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 543, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(543, 0, 543, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1086, 0, 543, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1629, 0, 543, 724)
 
 [resource]
 animations = [{
@@ -12,15 +25,15 @@ animations = [{
 "loop": true,
 "frames": [{
 "duration": 0.16,
-"texture": ExtResource("1_v1")
+"texture": SubResource("AtlasTexture_f1")
 }, {
 "duration": 0.11,
-"texture": ExtResource("2_v2")
+"texture": SubResource("AtlasTexture_f2")
 }, {
 "duration": 0.19,
-"texture": ExtResource("3_v3")
+"texture": SubResource("AtlasTexture_f3")
 }, {
 "duration": 0.13,
-"texture": ExtResource("4_v4")
+"texture": SubResource("AtlasTexture_f4")
 }]
 }]
