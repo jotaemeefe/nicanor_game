@@ -47,16 +47,21 @@ func _apply_hitbox() -> void:
 	shape.size = hitbox_size
 	_collision_shape.shape = shape
 
+## Soft highlight tint shown on hover, regardless of `invisible` — the
+## debug/placeholder polygon and the hover cue are separate concerns: most
+## hotspots have no polygon art of their own (`invisible = true`) but should
+## still flash something under the cursor so the player can tell what's
+## interactive, alongside the name shown via the `hovered` signal.
+const HOVER_COLOR := Color(1, 0.92, 0.6, 0.28)
+
 func _apply_visual() -> void:
-	if invisible:
-		_visual.visible = false
-		return
 	var hw := hitbox_size.x / 2.0
 	var hh := hitbox_size.y / 2.0
 	_visual.polygon = PackedVector2Array([
 		Vector2(-hw, -hh), Vector2(hw, -hh), Vector2(hw, hh), Vector2(-hw, hh)
 	])
 	_visual.color = visual_color
+	_visual.visible = not invisible
 
 ## Approach point in global coordinates (approach_point is stored relative to
 ## the hotspot so it stays correct if the hotspot is repositioned).
@@ -64,9 +69,13 @@ func approach_global_position() -> Vector2:
 	return global_position + approach_point
 
 func _on_mouse_entered() -> void:
+	_visual.color = HOVER_COLOR if invisible else visual_color.lightened(0.3)
+	_visual.visible = true
 	hovered.emit(self)
 
 func _on_mouse_exited() -> void:
+	_visual.color = visual_color
+	_visual.visible = not invisible
 	unhovered.emit(self)
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:

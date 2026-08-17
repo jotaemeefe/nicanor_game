@@ -67,12 +67,15 @@ func _ready() -> void:
 	_dialogue_box.choice_selected.connect(_on_choice_selected)
 	GameState.state_changed.connect(func(_prev, _cur): _sync_state_visuals())
 
-	for hotspot in _hotspots.get_children():
-		if hotspot is Hotspot:
-			hotspot.hovered.connect(_on_hotspot_hovered)
-			hotspot.unhovered.connect(_on_hotspot_unhovered)
-			hotspot.interacted.connect(_on_hotspot_interacted)
-			hotspot.observed.connect(_on_hotspot_observed)
+	# find_children(recursive) instead of get_children(): some hotspots (e.g.
+	# Sello) sit under a plain Node2D "sort anchor" that gives them a
+	# different y-sort key than their visual/click position — see SelloAnchor
+	# in oficina_recepcion.tscn.
+	for hotspot in _hotspots.find_children("*", "Hotspot", true, false):
+		hotspot.hovered.connect(_on_hotspot_hovered)
+		hotspot.unhovered.connect(_on_hotspot_unhovered)
+		hotspot.interacted.connect(_on_hotspot_interacted)
+		hotspot.observed.connect(_on_hotspot_observed)
 
 	_restart_button.pressed.connect(_restart_scene)
 	_menu_button.pressed.connect(_go_to_menu)

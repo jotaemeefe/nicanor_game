@@ -92,21 +92,21 @@ texture = ExtResource("8_maquina")
 scale = Vector2(0.233, 0.233)
 
 [node name="Mostrador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(765, 320)
+position = Vector2(765, 390)
 hotspot_name = "Mostrador"
-hitbox_size = Vector2(370, 40)
+hitbox_size = Vector2(370, 50)
 invisible = true
-approach_point = Vector2(-65, 240)
+approach_point = Vector2(-65, 170)
 look_direction = "right"
 observe_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
 interact_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
 
 [node name="RecepcionistaHotspot" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(765, 300)
+position = Vector2(870, 280)
 hotspot_name = "Recepcionista"
-hitbox_size = Vector2(150, 150)
+hitbox_size = Vector2(130, 220)
 invisible = true
-approach_point = Vector2(-115, 260)
+approach_point = Vector2(-220, 280)
 look_direction = "right"
 observe_text = "Lleva veinte años en el mismo mostrador. No sonríe, pero tampoco parece triste."
 
@@ -149,34 +149,37 @@ texture = ExtResource("12_puerta")
 scale = Vector2(0.43, 0.43)
 
 [node name="Planta" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(94, 209)
+position = Vector2(120, 190)
 hotspot_name = "Planta de oficina"
-hitbox_size = Vector2(96, 73)
+hitbox_size = Vector2(110, 100)
 invisible = true
-approach_point = Vector2(30, 381)
+approach_point = Vector2(4, 400)
 look_direction = "left"
 observe_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
 interact_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
 
 [node name="Formulario" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(120, 480)
+position = Vector2(63, 430)
 hotspot_name = "Formulario"
-hitbox_size = Vector2(80, 80)
+hitbox_size = Vector2(90, 65)
 invisible = true
-approach_point = Vector2(80, 120)
+approach_point = Vector2(150, 150)
 look_direction = "left"
 observe_text = "Tiene más casilleros que preguntas."
 interact_text = "Nicanor completa el formulario como puede. Hay una pregunta que no entiende y contesta con una fecha."
 interact_text_alt = "El formulario ya está completo. Romperlo no cambiaría nada."
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Formulario"]
-position = Vector2(-52, -51)
+position = Vector2(0, -4)
 rotation = -0.09
 texture = ExtResource("9_formulario")
-scale = Vector2(0.14, 0.14)
+scale = Vector2(0.122, 0.122)
 
-[node name="Sello" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(985, 495)
+[node name="SelloAnchor" type="Node2D" parent="World/Hotspots"]
+position = Vector2(985, 590)
+
+[node name="Sello" parent="World/Hotspots/SelloAnchor" instance=ExtResource("5_hotspot")]
+position = Vector2(0, -95)
 hotspot_name = "Sello"
 hitbox_size = Vector2(100, 100)
 invisible = true
@@ -185,7 +188,7 @@ look_direction = "right"
 observe_text = "El instrumento más poderoso del edificio. Por eso está atado."
 interact_text = "El instrumento más poderoso del edificio. Por eso está atado."
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Sello"]
+[node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/SelloAnchor/Sello"]
 texture = ExtResource("10_sello")
 scale = Vector2(0.137, 0.137)
 
