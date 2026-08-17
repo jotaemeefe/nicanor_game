@@ -576,8 +576,12 @@ nicanor_game
 │   │   ├── backgrounds
 │   │   │   ├── oficina_recepcion.png
 │   │   │   ├── oficina_recepcion.png.import
+│   │   │   ├── scene_background_counterless.png
+│   │   │   ├── scene_background_counterless.png.import
 │   │   │   ├── scene_background_no_table.png
-│   │   │   └── scene_background_no_table.png.import
+│   │   │   ├── scene_background_no_table.png.import
+│   │   │   ├── service_window_foreground_overlay.png
+│   │   │   └── service_window_foreground_overlay.png.import
 │   │   ├── characters
 │   │   │   ├── nicanor
 │   │   │   │   ├── idle_1.png
@@ -752,6 +756,7 @@ nicanor_game
 │   │   └── scene_controller.gd.uid
 │   ├── tests
 │   │   ├── intro_flow_test.gd
+│   │   ├── intro_flow_test.gd.uid
 │   │   ├── intro_flow_test.tscn
 │   │   ├── puzzle_flow_test.gd
 │   │   ├── puzzle_flow_test.gd.uid

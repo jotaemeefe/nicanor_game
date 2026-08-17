@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/office_scene_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://scripts/nicanor_controller.gd" id="2_nicanor"]
 [ext_resource type="SpriteFrames" path="res://assets/characters/nicanor/nicanor_frames.tres" id="3_nicanorframes"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/scene_background_no_table.png" id="4_bg"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/scene_background_counterless.png" id="4_bg"]
 [ext_resource type="PackedScene" path="res://scenes/hotspot.tscn" id="5_hotspot"]
 [ext_resource type="PackedScene" path="res://scenes/dialogue_box.tscn" id="6_dialoguebox"]
 [ext_resource type="Texture2D" path="res://assets/characters/recepcionista/carp_idle_new.png" id="7_carpidle"]
@@ -15,6 +15,7 @@
 [ext_resource type="SpriteFrames" path="res://assets/props/ventilador/fan_frames.tres" id="13_fanframes"]
 [ext_resource type="Texture2D" path="res://assets/props/cartel_estado/cartel_apagado_new.png" id="14_cartelestado"]
 [ext_resource type="Texture2D" path="res://assets/furniture/rolling_table_clean.png" id="15_mesa"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/service_window_foreground_overlay.png" id="16_windowfg"]
 
 [node name="OficinaRecepcion" type="Node2D"]
 script = ExtResource("1_controller")
@@ -207,6 +208,11 @@ approach_point = Vector2(0, 455)
 look_direction = "right"
 observe_text = "Marca una hora que no coincide con ninguna de las dos que importan hoy."
 interact_text = "Nicanor lo golpea suavemente, como si eso ayudara. No ayuda."
+
+[node name="ServiceWindowForeground" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+scale = Vector2(0.765550239, 0.765550239)
+texture = ExtResource("16_windowfg")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
