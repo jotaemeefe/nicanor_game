@@ -439,6 +439,7 @@ nicanor_game
 │   ├── characters
 │   │   └── nicanor.md
 │   ├── art-bible.md
+│   ├── dialogue-structure.md
 │   ├── game-bible.md
 │   ├── narrative.md
 │   └── puzzles.md

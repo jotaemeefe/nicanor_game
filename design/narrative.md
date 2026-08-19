@@ -2,7 +2,8 @@
 
 - Status: Active (biblia creativa completa — ver [game-bible.md](game-bible.md) para el canon
   narrativo íntegro)
-- Related docs: [game-bible.md](game-bible.md), [characters/nicanor.md](characters/nicanor.md), [puzzles.md](puzzles.md)
+- Related docs: [game-bible.md](game-bible.md), [characters/nicanor.md](characters/nicanor.md),
+  [puzzles.md](puzzles.md), [dialogue-structure.md](dialogue-structure.md)
 
 ## Canonical premise
 
@@ -62,6 +63,10 @@ trámite relacionado con una persona ausente.
 ausencia (sin explicarlo), seguida de un remate breve del loro. No debe explicar todavía la
 conspiración completa ni la historia de la madre — esta escena es la puerta de entrada, no la
 revelación.
+
+El **contrato de estructura** de esas conversaciones — esquema de los JSON, cómo se elige la rama,
+qué variables existen, presupuestos de longitud y pipeline de escritura — vive en
+[dialogue-structure.md](dialogue-structure.md). Acá va la voz; allá, la forma.
 
 Texto canónico completo (líneas de diálogo, variantes, condiciones) vive en
 `game/data/dialogues/` — no en este archivo ni en GDScript. Ver `game/data/dialogues/recepcionista.json`

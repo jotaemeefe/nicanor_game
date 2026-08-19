@@ -113,7 +113,10 @@ una contradicción reglamentaria → salir por la Puerta → cierre melancólico
 
 ## Cómo agregar o modificar un diálogo
 
-Todo el texto vive en JSON (`data/dialogues/`), nunca hardcodeado en GDScript.
+Todo el texto vive en JSON (`data/dialogues/`), nunca hardcodeado en GDScript. Acá va el
+resumen operativo; el contrato completo (orden de las ramas, vocabularios cerrados de `speaker` y
+`pose`, límites de longitud, invariantes y pipeline) está en
+[`../design/dialogue-structure.md`](../design/dialogue-structure.md).
 
 - **Conversación con estado** (como la Recepcionista): un archivo con `"branches"`, cada rama con
   `id`, `min_state`/`max_state` opcionales (nombres del enum `GameState.State`, límites inclusive),
