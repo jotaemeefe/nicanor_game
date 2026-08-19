@@ -694,10 +694,10 @@ nicanor_game
 │   │   │   ├── ventilador
 │   │   │   │   ├── ceiling_fan_4_frames.png
 │   │   │   │   ├── ceiling_fan_4_frames.png.import
-│   │   │   │   ├── fan_mount.png
-│   │   │   │   ├── fan_mount.png.import
-│   │   │   │   ├── fan_rotor.png
-│   │   │   │   └── fan_rotor.png.import
+│   │   │   │   ├── fan_blade.png
+│   │   │   │   ├── fan_blade.png.import
+│   │   │   │   ├── fan_hub.png
+│   │   │   │   └── fan_hub.png.import
 │   │   │   ├── campana.png
 │   │   │   ├── campana.png.import
 │   │   │   ├── carnet.png

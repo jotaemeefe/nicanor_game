@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwbicdv65b0wo"
-path="res://.godot/imported/fan_rotor.png-0c1a924728cf4b2044a2d12e9d2dd1c0.ctex"
+uid="uid://ccp3b8t5vkffq"
+path="res://.godot/imported/fan_blade.png-851bcd0b0e0dc8e6499bf44c165b95b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/props/ventilador/fan_rotor.png"
-dest_files=["res://.godot/imported/fan_rotor.png-0c1a924728cf4b2044a2d12e9d2dd1c0.ctex"]
+source_file="res://assets/props/ventilador/fan_blade.png"
+dest_files=["res://.godot/imported/fan_blade.png-851bcd0b0e0dc8e6499bf44c165b95b1.ctex"]
 
 [params]
 

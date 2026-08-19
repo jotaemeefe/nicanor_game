@@ -13,18 +13,27 @@ Reporte: el ventilador "se mueve de lugar"; propuesta del usuario, usar una sola
   900×724 con el ventilador en posiciones distintas: el arte de `fan_a` ocupa x 345..899 y el de
   `fan_b` x 147..661. A escala 0,211 eso son ~42 px de salto lateral cada 1,4 s. Además `fan_a`
   llega hasta la última columna del lienzo, o sea que estaba recortado.
+- **Primer intento fallido, y por qué.** Rotar las tres aspas como una sola imagen a través de
+  achatar → rotar → desachatar despedazó el ventilador ("gira rarísimo, como si estuviera
+  partido"). Ese mapa solo es correcto si las aspas están dibujadas sobre la elipse que el mapa
+  supone, y las tres de la hoja están a radios bien distintos (303, 323 y 340 px de radio en el
+  plano, para la izquierda, la de abajo y la derecha): cada una viajaba por su propia elipse y se
+  estiraba distinto. La solución es cortar **una sola aspa** e instanciarla tres veces a 120°;
+  aspas idénticas sobre una elipse no pueden desalinearse, y para un aspa plana en el plano del
+  ventilador ese mapa sí es exactamente la proyección correcta.
 - **Se implementó la propuesta, con el eje separado.** Del cuadro 4 de
   `ceiling_fan_4_frames.png` (el único con hueco a ambos lados — las aspas de los cuadros 2 y 3 se
   superponen — y con el caño vertical) se cortaron por script dos PNG nuevos, ambos centrados en el
-  buje: `fan_rotor.png` (aspas + buje, gira) y `fan_mount.png` (caño + florón, fijo, dibujado
-  encima para que un aspa que pasa por detrás del caño quede tapada por él, como en la realidad).
+  buje: `fan_blade.png` (un aspa, instanciada tres veces a 120°) y `fan_hub.png` (buje + caño +
+  florón, fijo, dibujado encima: tapa las raíces de las aspas y oculta a la que pasa por detrás del
+  caño, como en la realidad).
   Arriba del buje la banda del caño no contiene ni un píxel de aspa, así que quitarlo no le saca
-  nada al rotor.
+  nada a las aspas.
 - **La rotación es en el plano del ventilador, no en el de la pantalla.** Rotar el sprite solo
   haría voltear toda la elipse y se leería como bamboleo. La cadena de transformaciones lo resuelve
-  sin tocar el arte: el padre (`FanPlane`) achata Y por el escorzo con que están dibujadas las aspas
-  y el rotor deshace ese achatamiento con su propia escala, así que en reposo el arte se dibuja
-  exactamente como fue pintado y en cualquier otro ángulo barre esa misma elipse. El factor
+  sin tocar el arte: el padre (`FanPlane`) achata Y por el escorzo con que está dibujada el aspa y
+  cada aspa deshace ese achatamiento con su propia escala, así que se dibuja tal cual fue pintada en
+  su propio ángulo y queda bien proyectada en todos los demás. El factor
   (k = 0,62) se despejó de las tres puntas de aspa del cuadro 4 imponiendo que las tres estén al
   mismo radio real: da 0,568 y 0,679 según qué par se use, y se tomó el promedio.
 - **Velocidad**: 0,25 vueltas por segundo, una vuelta cada cuatro segundos. Es mucho más lento que

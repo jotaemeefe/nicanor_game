@@ -1,21 +1,28 @@
-extends Sprite2D
+extends Node2D
 
-## Spins the ceiling fan rotor, in the fan's own plane rather than in the
+## Turns the ceiling fan's blades, in the fan's own plane rather than in the
 ## screen plane.
 ##
-## The previous version was a two-frame AnimatedSprite2D, and the two frames
-## had been cropped out of the reference sheet with the fan in different spots
-## of the canvas, so the fan jumped ~42px sideways every 1.4s instead of
-## turning. One image rotating continuously has no such failure mode.
+## Two failures led to this shape, both worth keeping in mind before changing it:
 ##
-## The perspective is handled by the transform chain, not by the art: the
-## parent (FanPlane) squashes Y by the fan's foreshortening factor, this node's
-## own scale undoes it, so at rest the art is drawn exactly as painted and at
-## any other angle it sweeps the same ellipse the blades are drawn on. Rotating
-## the sprite alone would tumble the whole ellipse and read as a wobble.
+## 1. It used to be a two-frame AnimatedSprite2D whose frames had been cropped
+##    out of the reference sheet with the fan in different spots of the canvas,
+##    so it jumped ~42px sideways every 1.4s instead of turning.
+## 2. Replacing that with the whole fan as one rotating image pulled the fan
+##    apart: the sheet draws its three blades at visibly different radii, so
+##    under the projection each blade travelled its own ellipse.
 ##
-## The rod is not part of this node — see FanMount, drawn on top so a blade
-## sweeping up behind the rod is occluded by it.
+## So the children here are three instances of ONE blade, 120° apart. Identical
+## blades on one ellipse stay consistent at every angle.
+##
+## The perspective is in the transform chain, not in the art: the parent
+## (FanPlane) squashes Y by the foreshortening the blade is drawn with, and each
+## blade undoes that with its own scale — so a blade is drawn exactly as painted
+## at its own angle, and correctly projected at every other one. Rotating
+## without that pair would tumble the whole ellipse and read as a wobble.
+##
+## The hub and rod are not children of this node: FanHub draws over the blades,
+## hiding their roots and occluding a blade that sweeps up behind the rod.
 
 ## "Gira con una lentitud casi filosófica" (its own observe text), so this is
 ## deliberately far slower than a real fan: one turn every four seconds.

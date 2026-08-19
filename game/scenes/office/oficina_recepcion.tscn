@@ -12,8 +12,8 @@
 [ext_resource type="Texture2D" path="res://assets/props/sello.png" id="10_sello"]
 [ext_resource type="SpriteFrames" path="res://assets/characters/parrot/loro_frames.tres" id="11_loroframes"]
 [ext_resource type="Texture2D" path="res://assets/props/puerta/puerta_cerrada.png" id="12_puerta"]
-[ext_resource type="Texture2D" path="res://assets/props/ventilador/fan_rotor.png" id="13_fanrotor"]
-[ext_resource type="Texture2D" path="res://assets/props/ventilador/fan_mount.png" id="18_fanmount"]
+[ext_resource type="Texture2D" path="res://assets/props/ventilador/fan_blade.png" id="13_fanblade"]
+[ext_resource type="Texture2D" path="res://assets/props/ventilador/fan_hub.png" id="18_fanhub"]
 [ext_resource type="Script" path="res://scripts/ceiling_fan.gd" id="19_ceilingfan"]
 [ext_resource type="Texture2D" path="res://assets/props/cartel_estado/cartel_apagado_new.png" id="14_cartelestado"]
 [ext_resource type="Texture2D" path="res://assets/furniture/rolling_table_clean.png" id="15_mesa"]
@@ -39,18 +39,33 @@ modulate = Color(0.68, 0.67, 0.58, 1)
 [node name="FanPlane" type="Node2D" parent="AmbientFan"]
 scale = Vector2(0.47, 0.2914)
 
-; Undoes the plane squash, so the art is unchanged at rotation 0 and
-; sweeps that same ellipse at every other angle.
-[node name="FanRotor" type="Sprite2D" parent="AmbientFan/FanPlane"]
-scale = Vector2(1, 1.6129)
-texture = ExtResource("13_fanrotor")
+[node name="FanRotor" type="Node2D" parent="AmbientFan/FanPlane"]
 script = ExtResource("19_ceilingfan")
 
-; Rod and canopy stay put, and draw over the rotor so a blade passing
-; up behind the rod is occluded by it.
-[node name="FanMount" type="Sprite2D" parent="AmbientFan"]
+; One blade, instanced three times 120 degrees apart. The sheet draws its
+; three blades at different radii, so turning them as one image pulled the
+; fan apart; identical blades on one ellipse cannot. Each blade undoes the
+; plane squash with its own scale, so it is drawn as painted and projected
+; correctly at every other angle.
+[node name="Blade1" type="Sprite2D" parent="AmbientFan/FanPlane/FanRotor"]
+scale = Vector2(1, 1.6129)
+texture = ExtResource("13_fanblade")
+
+[node name="Blade2" type="Sprite2D" parent="AmbientFan/FanPlane/FanRotor"]
+rotation = 2.0943951
+scale = Vector2(1, 1.6129)
+texture = ExtResource("13_fanblade")
+
+[node name="Blade3" type="Sprite2D" parent="AmbientFan/FanPlane/FanRotor"]
+rotation = 4.1887902
+scale = Vector2(1, 1.6129)
+texture = ExtResource("13_fanblade")
+
+; Hub, rod and canopy stay put and draw over the blades, hiding their roots
+; and occluding a blade that sweeps up behind the rod.
+[node name="FanHub" type="Sprite2D" parent="AmbientFan"]
 scale = Vector2(0.47, 0.47)
-texture = ExtResource("18_fanmount")
+texture = ExtResource("18_fanhub")
 
 [node name="CartelEstado" type="Polygon2D" parent="."]
 position = Vector2(990, 90)
