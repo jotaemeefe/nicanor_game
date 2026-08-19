@@ -76,6 +76,7 @@ y_sort_enabled = true
 texture = ExtResource("7_carpidle")
 offset = Vector2(0, -362)
 scale = Vector2(0.29, 0.29)
+flip_h = true
 
 [node name="MesaSortAnchor" type="Node2D" parent="World"]
 position = Vector2(1055, 690)
@@ -109,11 +110,11 @@ texture = ExtResource("8_maquina")
 scale = Vector2(0.233, 0.233)
 
 [node name="Mostrador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(765, 390)
+position = Vector2(747, 390)
 hotspot_name = "Mostrador"
-hitbox_size = Vector2(370, 50)
+hitbox_size = Vector2(335, 50)
 invisible = true
-approach_point = Vector2(-65, 230)
+approach_point = Vector2(-47, 230)
 look_direction = "right"
 observe_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
 interact_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
@@ -127,15 +128,18 @@ approach_point = Vector2(-176, 328)
 look_direction = "right"
 observe_text = "Lleva veinte años en el mismo mostrador. No sonríe, pero tampoco parece triste."
 
-[node name="Loro" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(1060, 300)
+[node name="LoroAnchor" type="Node2D" parent="World/Hotspots"]
+position = Vector2(963, 480)
+
+[node name="Loro" parent="World/Hotspots/LoroAnchor" instance=ExtResource("5_hotspot")]
+position = Vector2(0, -108)
 hotspot_name = "Loro"
-hitbox_size = Vector2(110, 160)
+hitbox_size = Vector2(56, 160)
 invisible = true
-approach_point = Vector2(-160, 260)
+approach_point = Vector2(-195, 238)
 look_direction = "right"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Hotspots/Loro"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Hotspots/LoroAnchor/Loro"]
 sprite_frames = ExtResource("11_loroframes")
 animation = &"idle"
 autoplay = "idle"
@@ -196,18 +200,19 @@ scale = Vector2(0.122, 0.122)
 position = Vector2(1010, 700)
 
 [node name="Sello" parent="World/Hotspots/SelloAnchor" instance=ExtResource("5_hotspot")]
-position = Vector2(0, -195)
+position = Vector2(12, -255)
 hotspot_name = "Sello"
-hitbox_size = Vector2(100, 100)
+hitbox_size = Vector2(56, 140)
 invisible = true
-approach_point = Vector2(-140, 135)
+approach_point = Vector2(-262, 155)
 look_direction = "right"
 observe_text = "El instrumento más poderoso del edificio. Por eso está atado."
 interact_text = "El instrumento más poderoso del edificio. Por eso está atado."
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/SelloAnchor/Sello"]
+position = Vector2(26, 13)
 texture = ExtResource("10_sello")
-scale = Vector2(0.137, 0.137)
+scale = Vector2(0.16, 0.16)
 
 [node name="Ventilador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
 position = Vector2(413, 55)

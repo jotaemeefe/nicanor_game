@@ -30,7 +30,10 @@ const CARTEL_ROJO := preload("res://assets/props/cartel_estado/cartel_rojo_new.p
 
 @onready var _nicanor: NicanorController = $World/Nicanor
 @onready var _recepcionista_sprite: Sprite2D = get_node_or_null("World/Recepcionista/Sprite2D")
-@onready var _loro_sprite: AnimatedSprite2D = get_node_or_null("World/Hotspots/Loro/AnimatedSprite2D")
+## Under LoroAnchor, not directly under Hotspots: the parrot sits on the counter
+## in front of the window glass, so it needs a sort key past the window overlay
+## while staying drawn (and clickable) up at the ledge — same reason as SelloAnchor.
+@onready var _loro_sprite: AnimatedSprite2D = get_node_or_null("World/Hotspots/LoroAnchor/Loro/AnimatedSprite2D")
 @onready var _machine_sprite: Sprite2D = get_node_or_null("World/Hotspots/Dispensador/Sprite2D")
 @onready var _door_sprite: Sprite2D = get_node_or_null("World/Hotspots/Puerta/Sprite2D")
 ## A PerspectiveQuad, not a Sprite2D: the board's art is frontal and the wall it
@@ -306,17 +309,27 @@ func _apply_speaker_state(speaker: String, pose: String) -> void:
 		_nicanor.set_pose("pose_%s" % (pose if pose != "" else "neutral"))
 	elif speaker != "":
 		_nicanor.set_pose("pose_neutral")
-	if _recepcionista_sprite:
-		_recepcionista_sprite.texture = CARP_HABLANDO if speaker == "Recepcionista" else CARP_IDLE
+	_set_recepcionista_texture(CARP_HABLANDO if speaker == "Recepcionista" else CARP_IDLE)
 	if _loro_sprite:
 		_loro_sprite.play("hablando" if speaker == "Loro" else "idle")
 
 func _set_speaker_idle_all() -> void:
 	_nicanor.clear_pose()
-	if _recepcionista_sprite:
-		_recepcionista_sprite.texture = CARP_IDLE
+	_set_recepcionista_texture(CARP_IDLE)
 	if _loro_sprite:
 		_loro_sprite.play("idle")
+
+## The two Recepcionista textures were drawn facing opposite ways: carp_idle_new
+## looks right, carp_hablando_new looks left. She attends from the far side of
+## the window, so she has to face left — towards Nicanor — in both, which means
+## the idle one is mirrored and the talking one is not. Mirroring is free here
+## (her silhouette fills the canvas symmetrically, so nothing shifts); the only
+## tell is the shirt badge swapping pockets, which the pose change hides.
+func _set_recepcionista_texture(texture: Texture2D) -> void:
+	if not _recepcionista_sprite:
+		return
+	_recepcionista_sprite.texture = texture
+	_recepcionista_sprite.flip_h = texture == CARP_IDLE
 
 func _portrait_for_speaker(speaker: String) -> Texture2D:
 	match speaker:

@@ -89,12 +89,28 @@ func _ready() -> void:
 	_expect(Geometry2D.is_point_in_polygon(far_away, poly) or _on_border(far_away, poly),
 		"an off-screen click should resolve onto the walkable floor, got %s" % far_away)
 
+	var hotspots: Array[Node] = office.get_node("World/Hotspots").find_children("*", "Hotspot", true, false)
+
 	# Every hotspot's approach point has to land somewhere he can stand,
 	# otherwise interacting with it walks him into furniture.
-	for hotspot in office.get_node("World/Hotspots").find_children("*", "Hotspot", true, false):
+	for hotspot in hotspots:
 		var resolved := _resolve(nicanor, hotspot.approach_global_position())
 		_expect(Geometry2D.is_point_in_polygon(resolved, poly) or _on_border(resolved, poly),
 			"approach point for '%s' should resolve onto the floor, got %s" % [hotspot.hotspot_name, resolved])
+
+	# No two hitboxes may overlap. They are invisible rectangles, so an overlap
+	# is not visible while editing the scene, but a click in the shared area
+	# goes to whichever Area2D the viewport happens to pick first — the bug is
+	# silent until a player clicks the wrong prop. Every hotspot here is a
+	# separate object in the room, so "no overlap at all" is the right bar.
+	for i in hotspots.size():
+		for j in range(i + 1, hotspots.size()):
+			var a: Hotspot = hotspots[i]
+			var b: Hotspot = hotspots[j]
+			var rect_a := Rect2(a.global_position - a.hitbox_size * 0.5, a.hitbox_size)
+			var rect_b := Rect2(b.global_position - b.hitbox_size * 0.5, b.hitbox_size)
+			_expect(not rect_a.intersects(rect_b),
+				"hitboxes for '%s' %s and '%s' %s overlap" % [a.hotspot_name, rect_a, b.hotspot_name, rect_b])
 
 	# --- draw order -------------------------------------------------------
 

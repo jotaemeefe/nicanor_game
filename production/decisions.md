@@ -5,6 +5,49 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — Orientación de la Recepcionista, Loro al mostrador, Sello sobre la mesa
+
+Segunda ronda contra el maestro (`scene_master_reference.png`), medida sobre capturas reales y
+sobre los assets.
+
+- **Los dos sprites de la Recepcionista estaban dibujados mirando para lados distintos.**
+  `carp_idle_new.png` mira a la derecha (a la pared) y `carp_hablando_new.png` mira a la izquierda
+  (a Nicanor); en el maestro mira a la izquierda. Se espeja el idle con `flip_h` y no el de habla.
+  El espejado es gratis en geometría — su silueta ocupa el ancho completo del lienzo, así que no se
+  corre nada — y el único delator es el distintivo del bolsillo, que cambia de lado justo cuando
+  cambia de pose. La regla quedó en un solo lugar (`_set_recepcionista_texture`) en vez de repetida
+  en los dos puntos donde se cambia la textura. Las variantes viejas (`carp_1_neutral` y compañía)
+  sí miran a la izquierda, pero son de otra generación y otro encuadre (377×497 contra 362×724):
+  usarlas obligaría a un offset distinto por textura y lo haría saltar al hablar.
+- **El Loro estaba sobre la puerta, no sobre el mostrador.** Estaba en (1060, 300), que cae encima
+  del dibujo de la puerta (x 1053..1263), y con clave de ordenamiento 300 la puerta se dibujaba
+  encima. En el maestro está sobre el mostrador, en el extremo derecho de la ventanilla, delante
+  del vidrio. Ahora cuelga de un `LoroAnchor` en y=480 — igual que `SelloAnchor` y
+  `ServiceWindowSortAnchor` — porque tiene que ordenarse **después** del overlay de la ventanilla
+  (y=470) pero dibujarse arriba, a la altura del alféizar; sin el ancla, el alféizar le tapaba la
+  percha. El asset ya trae su propia percha, así que no hace falta arte nuevo. La escala (0.21) no
+  se tocó: aunque el pájaro del maestro es más chico en cuerpo, el prop completo (percha + ave +
+  cola) ocupa casi exactamente la misma caja que el asset a 0.21 — 68×154 px contra 73×148 del
+  maestro.
+- **El Sello no estaba apoyado sobre la mesa: la cortaba.** El borde superior-frontal de la mesa se
+  midió sobre el asset (`rolling_table_clean.png` con su propia transformación): es la recta
+  `y = 501,5 + 0,1174·(x − 872,4)` en pantalla. La base del sello caía ~25 px **por debajo** de esa
+  recta, o sea dibujada sobre el frente de los cajones, con el reborde rojo del tampón cruzando la
+  manija. Ahora está en (1048, 458) a escala 0,16 (antes 0,137): la base queda 8 px arriba de la
+  recta del lado derecho y 17 px del izquierdo — apoyada, no encajada. La escala nueva sale de la
+  manija del maestro (alto 78 px de pantalla, ancho 50), que da 0,159 y 0,158 por separado.
+- **Lo que no se arregló, porque es el asset y no la posición**: el sello del juego es rojo brillante
+  con aro dorado y el del maestro es caoba con collar de metal; la percha del asset del loro es más
+  gruesa y su chapita del Ministerio más chica que en el maestro. Cambiar eso es regenerar arte, no
+  moverlo.
+- **Invariante nueva: ningún par de hitboxes de hotspot puede solaparse** (`walkable_area_test`,
+  55 pares). Son rectángulos invisibles, así que un solapamiento no se ve al editar la escena, pero
+  el clic se lo lleva el Area2D que el viewport levante primero — el error es silencioso hasta que
+  un jugador clickea el prop equivocado. Mover el Loro al mostrador lo puso encima del hotspot del
+  Mostrador, y agrandar el Sello lo puso encima del de la Puerta; se recortaron Mostrador (370→335
+  de ancho), Loro (110→56) y Sello (120×140→56×140), y el hotspot del Sello se centró sobre el arte
+  visible con el sprite desplazado para compensar.
+
 ## 2026-08-19 — La Recepcionista atiende detrás del mostrador (posición, no escala)
 
 Reporte: "el carpincho se ve raro, como si no estuviera bien posicionado el cuerpo y le faltara lo
