@@ -10,16 +10,23 @@ class_name NicanorController
 
 @export var move_speed: float = 220.0
 @export var arrive_threshold: float = 4.0
+
+## Fallback walkable area for scenes that don't define a walkable_polygon
+## (the older prototype scenes). Ignored whenever walkable_polygon has at
+## least 3 points.
 @export var walkable_bounds: Rect2 = Rect2(120, 420, 1040, 240)
 
-## Sub-regions of walkable_bounds that are off-limits — furniture footprints
-## and similar spots where standing would read as "on top of" a prop instead
-## of on the floor beside it. A click/approach point that lands inside one
-## gets pushed to its nearest edge instead of rejected outright, so the walk
-## still resolves to somewhere reasonable nearby.
-@export var excluded_zones: Array[Rect2] = []
+## The free floor, as a polygon in the parent's coordinate space. A perspective
+## floor with furniture in the near corners is a trapezoid with bites taken out
+## of it, which an axis-aligned rectangle (even minus rectangular holes) can't
+## describe: the previous rect-plus-exclusions version left Nicanor able to
+## stand inside the rolling table's and the front desk's footprints, where he
+## read as standing *on* them. A click outside the polygon resolves to the
+## closest point on its border, so clicks anywhere still produce a sensible
+## walk. See production/decisions.md.
+@export var walkable_polygon: PackedVector2Array = PackedVector2Array()
 
-## Sprite scale at the back (small Y) and front (large Y) of walkable_bounds;
+## Sprite scale at the back (small Y) and front (large Y) of the walkable area;
 ## every point in between is linearly interpolated by Y. See
 ## production/decisions.md for why this exists — a constant scale made
 ## Nicanor look like he was walking "across the whole screen" instead of on
@@ -43,8 +50,13 @@ var _was_walking: bool = false
 ## physics frame while walking/idle, frozen while a dialogue pose is active
 ## (he isn't moving during a conversation).
 var _current_depth_scale: float = 1.0
+## Y range the depth scaling interpolates across, derived from whichever
+## walkable shape is actually in use.
+var _depth_back_y: float = 0.0
+var _depth_front_y: float = 0.0
 
 func _ready() -> void:
+	_compute_depth_range()
 	_target_position = global_position
 	_current_depth_scale = _depth_scale_for_y(global_position.y)
 	if _sprite:
@@ -58,34 +70,45 @@ func is_walking() -> bool:
 	return global_position.distance_to(_target_position) > arrive_threshold
 
 func _clamp_to_walkable(point: Vector2) -> Vector2:
-	var clamped := Vector2(
+	if walkable_polygon.size() >= 3:
+		if Geometry2D.is_point_in_polygon(point, walkable_polygon):
+			return point
+		return _closest_point_on_polygon(point, walkable_polygon)
+	return Vector2(
 		clampf(point.x, walkable_bounds.position.x, walkable_bounds.position.x + walkable_bounds.size.x),
 		clampf(point.y, walkable_bounds.position.y, walkable_bounds.position.y + walkable_bounds.size.y)
 	)
-	for zone in excluded_zones:
-		if zone.has_point(clamped):
-			clamped = _push_out_of_zone(clamped, zone)
-	return clamped
 
-## Moves a point that's inside `zone` to whichever edge is closest.
-func _push_out_of_zone(point: Vector2, zone: Rect2) -> Vector2:
-	var dist_left := point.x - zone.position.x
-	var dist_right := (zone.position.x + zone.size.x) - point.x
-	var dist_top := point.y - zone.position.y
-	var dist_bottom := (zone.position.y + zone.size.y) - point.y
-	var closest := minf(minf(dist_left, dist_right), minf(dist_top, dist_bottom))
-	if closest == dist_left:
-		return Vector2(zone.position.x, point.y)
-	if closest == dist_right:
-		return Vector2(zone.position.x + zone.size.x, point.y)
-	if closest == dist_top:
-		return Vector2(point.x, zone.position.y)
-	return Vector2(point.x, zone.position.y + zone.size.y)
+## Nearest point on the polygon's border — used to resolve a click that landed
+## off the walkable floor (on a wall, on furniture) to the closest spot he can
+## actually stand, rather than ignoring the click.
+func _closest_point_on_polygon(point: Vector2, poly: PackedVector2Array) -> Vector2:
+	var count := poly.size()
+	var best := poly[0]
+	var best_distance := INF
+	for i in count:
+		var candidate := Geometry2D.get_closest_point_to_segment(point, poly[i], poly[(i + 1) % count])
+		var distance := point.distance_squared_to(candidate)
+		if distance < best_distance:
+			best_distance = distance
+			best = candidate
+	return best
+
+func _compute_depth_range() -> void:
+	if walkable_polygon.size() >= 3:
+		_depth_back_y = walkable_polygon[0].y
+		_depth_front_y = walkable_polygon[0].y
+		for vertex in walkable_polygon:
+			_depth_back_y = minf(_depth_back_y, vertex.y)
+			_depth_front_y = maxf(_depth_front_y, vertex.y)
+	else:
+		_depth_back_y = walkable_bounds.position.y
+		_depth_front_y = walkable_bounds.position.y + walkable_bounds.size.y
 
 func _depth_scale_for_y(y: float) -> float:
-	var back_y := walkable_bounds.position.y
-	var front_y := walkable_bounds.position.y + walkable_bounds.size.y
-	var t := clampf(inverse_lerp(back_y, front_y, y), 0.0, 1.0)
+	if is_equal_approx(_depth_back_y, _depth_front_y):
+		return scale_at_back
+	var t := clampf(inverse_lerp(_depth_back_y, _depth_front_y, y), 0.0, 1.0)
 	return lerpf(scale_at_back, scale_at_front, t)
 
 ## Sets a dialogue pose ("pose_neutral", "pose_explicacion", "pose_escepticismo",

@@ -546,7 +546,9 @@ nicanor_game
 │   ├── ChatGPT Image 16 ago 2026, 03_41_26 p.m. (3).png
 │   ├── Intro - Juego v1.mp4
 │   ├── rolling_table_clean.png
-│   └── scene_background_no_table.png
+│   ├── scene_background_counterless.png
+│   ├── scene_background_no_table.png
+│   └── service_window_foreground_overlay.png
 ├── examples
 │   ├── cross-engine-gdd
 │   │   ├── game-design-document.md
@@ -758,7 +760,9 @@ nicanor_game
 │   │   ├── intro_flow_test.tscn
 │   │   ├── puzzle_flow_test.gd
 │   │   ├── puzzle_flow_test.gd.uid
-│   │   └── puzzle_flow_test.tscn
+│   │   ├── puzzle_flow_test.tscn
+│   │   ├── walkable_area_test.gd
+│   │   └── walkable_area_test.tscn
 │   ├── .gitignore
 │   ├── project.godot
 │   ├── README.md

@@ -77,7 +77,9 @@ game/
     MVP_SCOPE.md
     PLAYTEST.md
   tests/
-    puzzle_flow_test.gd / .tscn   # test headless del estado/diálogo (ver abajo)
+    puzzle_flow_test.gd / .tscn    # test headless del estado/diálogo (ver abajo)
+    intro_flow_test.gd / .tscn     # test headless del video de intro
+    walkable_area_test.gd / .tscn  # test headless del piso caminable y orden de dibujado
   TODO_ASSETS.md
 ```
 
@@ -122,14 +124,24 @@ Todo el texto vive en JSON (`data/dialogues/`), nunca hardcodeado en GDScript.
 - `pose` en una línea de Nicanor puede ser `"neutral"`, `"explicacion"`, `"escepticismo"` o
   `"recitado"`.
 
-## Test automático (headless, sin editor)
-
-`game/tests/puzzle_flow_test.tscn` verifica la máquina de estados y que cada archivo de diálogo
-resuelve texto no vacío para cada estado alcanzable — sin simular clics ni la caminata física de
-Nicanor (eso todavía requiere una pasada manual, ver `docs/PLAYTEST.md`).
+## Tests automáticos (headless, sin editor)
 
 ```bash
 godot --headless --path game res://tests/puzzle_flow_test.tscn
+godot --headless --path game res://tests/intro_flow_test.tscn
+godot --headless --path game res://tests/walkable_area_test.tscn
 ```
 
-Debe imprimir `PUZZLE FLOW TEST: OK`.
+Cada uno debe imprimir `... TEST: OK`.
+
+- **`puzzle_flow_test`** — la máquina de estados y que cada archivo de diálogo resuelve texto no
+  vacío para cada estado alcanzable.
+- **`intro_flow_test`** — que el video de intro está asignado como `VideoStreamTheora` y que la
+  transición a la oficina es idempotente.
+- **`walkable_area_test`** — que el polígono caminable deja a Nicanor fuera de la huella de la
+  mesa y del escritorio del frente, que todos los `approach_point` de los hotspots caen sobre piso
+  pisable, y las invariantes de orden de dibujado (la mesa y el sello siempre delante de él, el
+  vidrio de la ventanilla siempre detrás).
+
+Ninguno simula clics reales ni la caminata física de Nicanor — eso todavía requiere una pasada
+manual, ver `docs/PLAYTEST.md`.

@@ -56,8 +56,7 @@ y_sort_enabled = true
 position = Vector2(400, 620)
 y_sort_enabled = true
 script = ExtResource("2_nicanor")
-walkable_bounds = Rect2(80, 540, 1140, 100)
-excluded_zones = Array[Rect2]([Rect2(845, 540, 375, 45), Rect2(628, 540, 380, 40)])
+walkable_polygon = PackedVector2Array(80, 540, 645, 540, 645, 578, 795, 578, 795, 640, 420, 640, 360, 606, 80, 566)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Nicanor"]
 sprite_frames = ExtResource("3_nicanorframes")
@@ -74,8 +73,11 @@ texture = ExtResource("7_carpidle")
 offset = Vector2(0, -362)
 scale = Vector2(0.29, 0.29)
 
-[node name="Mesa" type="Sprite2D" parent="World"]
-position = Vector2(1055, 584)
+[node name="MesaSortAnchor" type="Node2D" parent="World"]
+position = Vector2(1055, 690)
+
+[node name="Mesa" type="Sprite2D" parent="World/MesaSortAnchor"]
+position = Vector2(0, -106)
 scale = Vector2(0.2736, 0.2736)
 texture = ExtResource("15_mesa")
 
@@ -187,10 +189,10 @@ texture = ExtResource("9_formulario")
 scale = Vector2(0.122, 0.122)
 
 [node name="SelloAnchor" type="Node2D" parent="World/Hotspots"]
-position = Vector2(1010, 595)
+position = Vector2(1010, 700)
 
 [node name="Sello" parent="World/Hotspots/SelloAnchor" instance=ExtResource("5_hotspot")]
-position = Vector2(0, -90)
+position = Vector2(0, -195)
 hotspot_name = "Sello"
 hitbox_size = Vector2(100, 100)
 invisible = true

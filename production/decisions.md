@@ -216,3 +216,26 @@ via the 1280/1672≈0.7654 scale factor to scene coordinates) instead of estimat
   pero tampoco parece triste.") in `oficina_licencias_poeticas.tscn`. This is new (if minor)
   content beyond what was given — flagged here for approval/replacement via `/dialogue`, not
   silently treated as canon.
+- **El piso caminable de la recepción es un polígono, no un rectángulo.** `NicanorController`
+  tenía `walkable_bounds: Rect2` más una lista de `excluded_zones: Array[Rect2]`. Un piso en
+  perspectiva con muebles en las esquinas cercanas es un trapecio con mordiscos: los rectángulos
+  alineados a los ejes no lo describen, y en la práctica las zonas de exclusión quedaron cubriendo
+  solo 45px de una banda de 100, dejando libre justo la mitad donde Nicanor se paraba encima de la
+  mesa y del escritorio del frente. Ahora se define `walkable_polygon: PackedVector2Array` y un
+  click fuera resuelve al punto más cercano del borde (`Geometry2D`). `walkable_bounds` queda como
+  fallback para las escenas viejas de prototipo que no definen polígono.
+- **Los props ordenan profundidad por su punto de apoyo, no por el centro del sprite.** Godot
+  ordena por el Y global del nodo; un `Sprite2D` centrado usa el medio de su imagen, que en la mesa
+  con ruedas estaba 106px por encima de donde las ruedas tocan el piso. Resultado: Nicanor se
+  dibujaba delante de una mesa que en realidad está más cerca de cámara que cualquier punto donde
+  él puede pararse. El patrón adoptado es envolver el prop en un `*SortAnchor` (`Node2D`) colocado
+  en su línea de contacto con el piso, con el sprite desplazado hacia arriba para no moverse
+  visualmente — igual que `SelloAnchor` y `ServiceWindowSortAnchor`. Las invariantes quedan
+  cubiertas por `game/tests/walkable_area_test.tscn`.
+- **Los props de primer plano pintados en el fondo no pueden tapar a nadie.** El escritorio del
+  frente izquierdo está dentro de `scene_background_counterless.png`, que se dibuja antes que todo
+  `World`, así que ninguna corrección de orden puede hacer que ocluya a Nicanor. Por ahora se
+  resuelve por distancia (el polígono lo mantiene a ~30px de despeje del borde del escritorio).
+  La solución de raíz es recortarlo como overlay transparente sobre el mismo lienzo 1672×941, igual
+  que se hizo con la ventanilla — ese asset todavía no existe y no se improvisa recortando el fondo
+  a mano.
