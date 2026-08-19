@@ -3,29 +3,40 @@
     "INICIO": [
       "\"Constancia de presencia obligatoria.\"",
       "\"Buenas tardes. Buenas tardes.\"",
+      "\"Yo me quiero ir a mi casa. Buenas tardes. Buenas tardes.\"",
       "\"El Ministerio agradece su presencia. Acredítela.\""
     ],
     "MAQUINA_EXAMINADA": [
       "\"Sin constancia no hay número. Sin número no hay trámite. Sin trámite no hay usted.\"",
-      "\"Toda demora es responsabilidad del usuario.\""
+      "\"Toda demora es responsabilidad del usuario.\"",
+      "\"Acá no se elimina a nadie. Se optimizan registros redundantes.\"",
+      "\"Toda máquina es infalible. El usuario no.\""
     ],
     "REQUISITO_DESCUBIERTO": [
       "\"La presencia se acredita. No se supone.\"",
       "\"Complete todos los campos. Especialmente los que no correspondan.\"",
-      "\"Si duda de un campo, deje constancia de la duda.\""
+      "\"Este silencio es un espacio publicitario disponible.\"",
+      "\"Si duda de un campo, deje constancia de la duda.\"",
+      "\"El Ministerio no complica. Ordena.\""
     ],
     "DECLARACION_OBTENIDA": [
       "\"Toda constancia vence. Consulte cuándo venció la suya.\"",
+      "\"Acá no se pierden expedientes. Se traspapelan con éxito.\"",
       "\"Una constancia sin sello es una intención.\"",
-      "\"El papel no miente. El papel no puede.\""
+      "\"El papel no miente. El papel no puede.\"",
+      "\"Formulario completo. Contenido no verificado.\""
     ],
     "TURNO_0_RECIBIDO": [
       "\"El cero se atiende antes de empezar.\"",
+      "\"Su espera es muy importante para nosotros. Su espera continúa.\"",
       "\"Los turnos no se pierden. Se reasignan a nadie.\"",
-      "\"Todos los números son importantes. Algunos más.\""
+      "\"Todos los números son importantes. Algunos más.\"",
+      "\"Su turno es único. Como todos.\""
     ],
     "ACCESO_AUTORIZADO": [
       "\"Puede pasar. Puede pasar.\"",
+      "\"No corra. No se detenga. No vuelva.\"",
+      "\"Gracias por su visita. Quedará registrada.\"",
       "\"Circule. Circular es un derecho y una obligación.\""
     ],
     "ESCENA_TERMINADA": [
@@ -33,10 +44,10 @@
     ]
   },
   "remate_by_state": {
-    "MAQUINA_EXAMINADA": "\"Toda máquina es infalible. El usuario no.\"",
-    "REQUISITO_DESCUBIERTO": "\"El Ministerio no complica. Ordena.\"",
-    "DECLARACION_OBTENIDA": "\"Formulario completo. Contenido no verificado.\"",
-    "TURNO_0_RECIBIDO": "\"Su turno es único. Como todos.\"",
+    "MAQUINA_EXAMINADA": "\"Si la máquina dice que no, es no. Si dice que sí, consulte igual.\"",
+    "REQUISITO_DESCUBIERTO": "\"Prohibido esperar de pie. Prohibido sentarse.\"",
+    "DECLARACION_OBTENIDA": "\"Gracias por completar. Su letra será evaluada.\"",
+    "TURNO_0_RECIBIDO": "\"Aguarde su turno. Su turno ya fue aguardado.\"",
     "ACCESO_AUTORIZADO": "\"Autorizado no es lo mismo que bienvenido.\""
   },
   "remate_final": "\"Gracias por su ausencia.\""

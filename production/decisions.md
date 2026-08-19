@@ -5,6 +5,39 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — Vuelta de la Planta, Sello nuevo, y el Loro reescrito por variedad de mecanismo
+
+Primer playtest real del usuario sobre la pasada anterior. Tres correcciones.
+
+- **La Planta vuelve a decir lo mismo con los dos verbos.** El usuario extrañó el chiste de las tres
+  reestructuraciones edilicias, que yo había dejado solo en observar. Revertido tal cual estaba.
+  Queda anotado en `dialogue-structure.md` §9 como **excepción elegida**, no como pendiente: la
+  invariante que dice que duplicar los dos verbos es la opción pobre sigue valiendo por defecto,
+  pero la Planta y el Cartel de normas están duplicados a propósito y no se "arreglan" sin preguntar.
+- **El Sello.** No gustaba la línea del piolín tenso; el pedido fue algo que subraye la burocracia.
+  Ahora: "Nicanor lo levanta. Debajo hay un cartel: PROHIBIDO SELLAR SIN AUTORIZACIÓN PARA SELLAR."
+  Es la lógica recursiva de `game-bible.md` §3 (hace falta un trámite para poder hacer el trámite)
+  aplicada al objeto, y explica por qué el sello está atado, que es lo que ya decía el observar.
+  **El texto de observar no se tocó** — es original y el pedido se leía como referido al clic
+  izquierdo, que es lo que yo había cambiado.
+- **El Loro: el problema no eran los chistes, era que todos tenían la misma forma.** Las trece
+  líneas anteriores eran todas el mismo molde — aforismo institucional corto con giro deadpan en la
+  segunda mitad. Ocho seguidos del mismo molde dejan de sorprender por más que cada uno funcione
+  aislado. La reescritura no buscó chistes mejores sino **mecanismos distintos**: órdenes
+  contradictorias apiladas ("Prohibido esperar de pie. Prohibido sentarse."), eufemismo para el
+  horror — canon §3 — ("Acá no se elimina a nadie. Se optimizan registros redundantes."), la
+  publicidad meténdose en todos lados — canon §3 — ("Este silencio es un espacio publicitario
+  disponible."), la voz del call center ("Su espera es muy importante para nosotros. Su espera
+  continúa."), y sobre todo **la miseria laboral que se le escapa y vuelve al libreto** ("Yo me
+  quiero ir a mi casa. Buenas tardes. Buenas tardes."), que es lo que mejor aprovecha que sea un
+  loro y no un cartel.
+- De 23 líneas a 34, ninguna repetida, y todos los estados pasaron de 2–3 variantes a 4–5, así que
+  clickearlo varias veces seguidas rinde más. Los cinco remates se reemplazaron por otros con más
+  filo y los cuatro viejos que seguían siendo buenos bajaron a las variantes de idle en vez de
+  perderse.
+- Verificado: `puzzle_flow_test` y `walkable_area_test` en verde (113/75), y una captura real del
+  Sello — 88 caracteres con la mitad en mayúsculas entran justos en un renglón, sin cortarse.
+
 ## 2026-08-19 — El concurso de poesía en la intro, el Loro como altoparlante, y Reiniciar roto
 
 Pedido del usuario, en dos partes: que Nicanor diga que viene a inscribirse al concurso de poesía

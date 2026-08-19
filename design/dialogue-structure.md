@@ -301,10 +301,13 @@ Detectados al escribir este contrato. La pasada de revisión de diálogos del 20
 2. ~~**`loro.json` no distinguía `DECLARACION_USADA`**~~ **Cerrado de rebote.** Heredába
    "Presente la constancia en la máquina", que en ese instante ya era falso. El texto heredado hoy
    es una consigna atemporal, así que la herencia dejó de mentir.
-3. ~~**Cuatro hotspots repetían el mismo texto en ambos verbos.**~~ **Cerrado salvo uno.**
-   Mostrador, Planta y Sello tienen línea de interacción propia. El Cartel de normas conserva el
-   mismo texto a propósito: es la pista escrita del puzle y tiene que decir lo mismo se lo mire o
-   se lo toque.
+3. ~~**Cuatro hotspots repetían el mismo texto en ambos verbos.**~~ **Cerrado como decisión, no
+   como arreglo.** Mostrador y Sello tienen línea de interacción propia. Los otros dos conservan el
+   texto duplicado **a propósito y por pedido del usuario**: el Cartel de normas porque es la
+   pista escrita del puzle y tiene que decir lo mismo se lo mire o se lo toque, y la Planta porque
+   el chiste de las tres reestructuraciones es el que se quiere en los dos verbos. La invariante
+   §6.6 sigue diciendo que duplicar es la opción pobre por defecto; estos dos son la excepción
+   elegida, no un olvido. No "arreglar" ninguno de los dos sin preguntar.
 4. **`interact_text_alt` del Formulario sigue siendo inalcanzable** — el hotspot se apaga al
    completarlo (`decisions.md`, 2026-08-19). Se conserva a propósito como red de seguridad; queda
    anotado para que no se lea como contenido activo.
