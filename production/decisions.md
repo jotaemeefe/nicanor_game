@@ -1,9 +1,56 @@
 # Decisions Log — El Ministerio de los Ausentes
 
 - Status: Active
-- Last updated: 2026-08-16
+- Last updated: 2026-08-19
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
+
+## 2026-08-19 — Playtest: Nicanor encima de los props, y perspectiva del cartel
+
+Ronda de playtest sobre la escena de recepción. Los tres primeros puntos son el mismo síntoma
+reportado ("se para encima de las cosas") con tres causas distintas; el cuarto cierra un punto
+que había quedado a medias en dos rondas anteriores.
+
+- **El piso caminable de la recepción es un polígono, no un rectángulo.** `NicanorController`
+  tenía `walkable_bounds: Rect2` más una lista de `excluded_zones: Array[Rect2]`. Un piso en
+  perspectiva con muebles en las esquinas cercanas es un trapecio con mordiscos: los rectángulos
+  alineados a los ejes no lo describen, y en la práctica las zonas de exclusión quedaron cubriendo
+  solo 45px de una banda de 100, dejando libre justo la mitad donde Nicanor se paraba encima de la
+  mesa y del escritorio del frente. Ahora se define `walkable_polygon: PackedVector2Array` y un
+  click fuera resuelve al punto más cercano del borde (`Geometry2D`). `walkable_bounds` queda como
+  fallback para las escenas viejas de prototipo que no definen polígono.
+- **Los props ordenan profundidad por su punto de apoyo, no por el centro del sprite.** Godot
+  ordena por el Y global del nodo; un `Sprite2D` centrado usa el medio de su imagen, que en la mesa
+  con ruedas estaba 106px por encima de donde las ruedas tocan el piso. Resultado: Nicanor se
+  dibujaba delante de una mesa que en realidad está más cerca de cámara que cualquier punto donde
+  él puede pararse. El patrón adoptado es envolver el prop en un `*SortAnchor` (`Node2D`) colocado
+  en su línea de contacto con el piso, con el sprite desplazado hacia arriba para no moverse
+  visualmente — igual que `SelloAnchor` y `ServiceWindowSortAnchor`. Las invariantes quedan
+  cubiertas por `game/tests/walkable_area_test.tscn`.
+- **Los props de primer plano pintados en el fondo no pueden tapar a nadie.** El escritorio del
+  frente izquierdo y el atril alto están dentro de `scene_background_counterless.png`, que se
+  dibuja antes que todo `World`, así que ninguna corrección de orden puede hacer que ocluyan a
+  Nicanor. Por ahora se resuelve por distancia: el polígono lo mantiene a ~30px de despeje del
+  borde del escritorio, y **completamente fuera** de la silueta del atril. Esto último obliga a que
+  el borde izquierdo del polígono sea diagonal y no vertical: el ancho dibujado de Nicanor crece
+  con la profundidad (`scale_at_back` 0.42 → `scale_at_front` 0.64), así que cuanto más adelante
+  está, más a la derecha tiene que empezar el piso pisable. Un borde vertical calculado para el
+  fondo lo deja pisando el atril en el frente, que es exactamente lo que se reportó en el playtest.
+  La solución de raíz es recortarlo como overlay transparente sobre el mismo lienzo 1672×941, igual
+  que se hizo con la ventanilla — ese asset todavía no existe y no se improvisa recortando el fondo
+  a mano.
+- **El cartel de estado se dibuja con una transformación proyectiva, no con `rotation`.** El arte
+  de `status_board_3_states_clean.png` está renderizado de frente, y la pared donde cuelga se aleja
+  de la cámara. Los nodos 2D de Godot solo ofrecen transformaciones afines (`rotation`, `scale`,
+  `skew`), y una transformación afín mantiene paralelas las aristas paralelas: puede inclinar el
+  cartel pero nunca achatarlo. Por eso el intento anterior (`Sprite2D` con `rotation = -0.05`) se
+  reportó dos veces seguidas como que "no respeta la perspectiva" — era correcto, un sprite
+  inclinado sigue leyéndose como una calcomanía pegada sobre el fondo. Ahora es un
+  `PerspectiveQuad` (`game/scripts/perspective_quad.gd`): un `Polygon2D` que mapea la textura por
+  una homografía real y subdivide en una grilla, porque cada celda se sigue rasterizando afín.
+  Los ángulos (borde superior −10,3°, inferior −5,8°, lado derecho ~16% más alto que el izquierdo)
+  se midieron sobre `scene_master_reference.png`, la composición de referencia del artista, no se
+  eligieron a ojo. El nodo es reutilizable para cualquier otro prop plano sobre una pared en fuga.
 
 ## 2026-08-16 — Real screenshot verification found the actual root causes
 
@@ -216,31 +263,3 @@ via the 1280/1672≈0.7654 scale factor to scene coordinates) instead of estimat
   pero tampoco parece triste.") in `oficina_licencias_poeticas.tscn`. This is new (if minor)
   content beyond what was given — flagged here for approval/replacement via `/dialogue`, not
   silently treated as canon.
-- **El piso caminable de la recepción es un polígono, no un rectángulo.** `NicanorController`
-  tenía `walkable_bounds: Rect2` más una lista de `excluded_zones: Array[Rect2]`. Un piso en
-  perspectiva con muebles en las esquinas cercanas es un trapecio con mordiscos: los rectángulos
-  alineados a los ejes no lo describen, y en la práctica las zonas de exclusión quedaron cubriendo
-  solo 45px de una banda de 100, dejando libre justo la mitad donde Nicanor se paraba encima de la
-  mesa y del escritorio del frente. Ahora se define `walkable_polygon: PackedVector2Array` y un
-  click fuera resuelve al punto más cercano del borde (`Geometry2D`). `walkable_bounds` queda como
-  fallback para las escenas viejas de prototipo que no definen polígono.
-- **Los props ordenan profundidad por su punto de apoyo, no por el centro del sprite.** Godot
-  ordena por el Y global del nodo; un `Sprite2D` centrado usa el medio de su imagen, que en la mesa
-  con ruedas estaba 106px por encima de donde las ruedas tocan el piso. Resultado: Nicanor se
-  dibujaba delante de una mesa que en realidad está más cerca de cámara que cualquier punto donde
-  él puede pararse. El patrón adoptado es envolver el prop en un `*SortAnchor` (`Node2D`) colocado
-  en su línea de contacto con el piso, con el sprite desplazado hacia arriba para no moverse
-  visualmente — igual que `SelloAnchor` y `ServiceWindowSortAnchor`. Las invariantes quedan
-  cubiertas por `game/tests/walkable_area_test.tscn`.
-- **Los props de primer plano pintados en el fondo no pueden tapar a nadie.** El escritorio del
-  frente izquierdo y el atril alto están dentro de `scene_background_counterless.png`, que se
-  dibuja antes que todo `World`, así que ninguna corrección de orden puede hacer que ocluyan a
-  Nicanor. Por ahora se resuelve por distancia: el polígono lo mantiene a ~30px de despeje del
-  borde del escritorio, y **completamente fuera** de la silueta del atril. Esto último obliga a que
-  el borde izquierdo del polígono sea diagonal y no vertical: el ancho dibujado de Nicanor crece
-  con la profundidad (`scale_at_back` 0.42 → `scale_at_front` 0.64), así que cuanto más adelante
-  está, más a la derecha tiene que empezar el piso pisable. Un borde vertical calculado para el
-  fondo lo deja pisando el atril en el frente, que es exactamente lo que se reportó en el playtest.
-  La solución de raíz es recortarlo como overlay transparente sobre el mismo lienzo 1672×941, igual
-  que se hizo con la ventanilla — ese asset todavía no existe y no se improvisa recortando el fondo
-  a mano.

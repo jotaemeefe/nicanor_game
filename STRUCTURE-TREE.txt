@@ -752,6 +752,8 @@ nicanor_game
 │   │   ├── nicanor_controller.gd.uid
 │   │   ├── office_scene_controller.gd
 │   │   ├── office_scene_controller.gd.uid
+│   │   ├── perspective_quad.gd
+│   │   ├── perspective_quad.gd.uid
 │   │   ├── scene_controller.gd
 │   │   └── scene_controller.gd.uid
 │   ├── tests
@@ -761,7 +763,11 @@ nicanor_game
 │   │   ├── puzzle_flow_test.gd
 │   │   ├── puzzle_flow_test.gd.uid
 │   │   ├── puzzle_flow_test.tscn
+│   │   ├── status_board_test.gd
+│   │   ├── status_board_test.gd.uid
+│   │   ├── status_board_test.tscn
 │   │   ├── walkable_area_test.gd
+│   │   ├── walkable_area_test.gd.uid
 │   │   └── walkable_area_test.tscn
 │   ├── .gitignore
 │   ├── project.godot

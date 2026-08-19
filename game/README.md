@@ -80,6 +80,7 @@ game/
     puzzle_flow_test.gd / .tscn    # test headless del estado/diálogo (ver abajo)
     intro_flow_test.gd / .tscn     # test headless del video de intro
     walkable_area_test.gd / .tscn  # test headless del piso caminable y orden de dibujado
+    status_board_test.gd / .tscn   # test headless de la perspectiva del cartel de estado
   TODO_ASSETS.md
 ```
 
@@ -130,6 +131,7 @@ Todo el texto vive en JSON (`data/dialogues/`), nunca hardcodeado en GDScript.
 godot --headless --path game res://tests/puzzle_flow_test.tscn
 godot --headless --path game res://tests/intro_flow_test.tscn
 godot --headless --path game res://tests/walkable_area_test.tscn
+godot --headless --path game res://tests/status_board_test.tscn
 ```
 
 Cada uno debe imprimir `... TEST: OK`.
@@ -142,6 +144,11 @@ Cada uno debe imprimir `... TEST: OK`.
   mesa y del escritorio del frente, que todos los `approach_point` de los hotspots caen sobre piso
   pisable, y las invariantes de orden de dibujado (la mesa y el sello siempre delante de él, el
   vidrio de la ventanilla siempre detrás).
+- **`status_board_test`** — que el cartel de estado sigue siendo un `PerspectiveQuad` y que su
+  deformación es un trapecio de verdad (no un paralelogramo, que es lo que da cualquier transformación
+  afín), que los vértices generados caen exactamente sobre las esquinas configuradas, y que los tres
+  estados del cartel comparten tamaño de textura — la malla no se reconstruye al cambiar de estado,
+  así que las UV solo son válidas mientras eso se cumpla.
 
 Ninguno simula clics reales ni la caminata física de Nicanor — eso todavía requiere una pasada
 manual, ver `docs/PLAYTEST.md`.

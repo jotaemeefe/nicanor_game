@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/office_scene_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://scripts/nicanor_controller.gd" id="2_nicanor"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" path="res://assets/props/cartel_estado/cartel_apagado_new.png" id="14_cartelestado"]
 [ext_resource type="Texture2D" path="res://assets/furniture/rolling_table_clean.png" id="15_mesa"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/service_window_foreground_overlay.png" id="16_windowfg"]
+[ext_resource type="Script" path="res://scripts/perspective_quad.gd" id="17_perspquad"]
 
 [node name="OficinaRecepcion" type="Node2D"]
 script = ExtResource("1_controller")
@@ -33,11 +34,14 @@ sprite_frames = ExtResource("13_fanframes")
 animation = &"spin"
 autoplay = "spin"
 
-[node name="CartelEstado" type="Sprite2D" parent="."]
-position = Vector2(1010, 82)
-rotation = -0.05
-scale = Vector2(0.19, 0.19)
+[node name="CartelEstado" type="Polygon2D" parent="."]
+position = Vector2(990, 90)
 texture = ExtResource("14_cartelestado")
+script = ExtResource("17_perspquad")
+top_left = Vector2(-63, -39)
+top_right = Vector2(63, -62)
+bottom_right = Vector2(63, 44)
+bottom_left = Vector2(-63, 57)
 
 [node name="Audio" type="Node" parent="."]
 

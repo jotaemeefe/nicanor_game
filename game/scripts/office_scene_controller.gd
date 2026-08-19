@@ -33,7 +33,9 @@ const CARTEL_ROJO := preload("res://assets/props/cartel_estado/cartel_rojo_new.p
 @onready var _loro_sprite: AnimatedSprite2D = get_node_or_null("World/Hotspots/Loro/AnimatedSprite2D")
 @onready var _machine_sprite: Sprite2D = get_node_or_null("World/Hotspots/Dispensador/Sprite2D")
 @onready var _door_sprite: Sprite2D = get_node_or_null("World/Hotspots/Puerta/Sprite2D")
-@onready var _cartel_estado_sprite: Sprite2D = get_node_or_null("CartelEstado")
+## A PerspectiveQuad, not a Sprite2D: the board's art is frontal and the wall it
+## hangs on recedes, so it needs a projective warp rather than a transform.
+@onready var _cartel_estado_sprite: Polygon2D = get_node_or_null("CartelEstado")
 @onready var _hotspots: Node2D = $World/Hotspots
 @onready var _hover_label: Label = $UI/HoverLabel
 @onready var _dialogue_box: DialogueBox = $UI/DialogueBox
