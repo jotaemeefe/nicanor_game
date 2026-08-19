@@ -56,7 +56,7 @@ y_sort_enabled = true
 position = Vector2(400, 620)
 y_sort_enabled = true
 script = ExtResource("2_nicanor")
-walkable_polygon = PackedVector2Array(80, 540, 645, 540, 645, 578, 795, 578, 795, 640, 420, 640, 360, 606, 80, 566)
+walkable_polygon = PackedVector2Array(225, 540, 645, 540, 645, 578, 795, 578, 795, 640, 420, 640, 360, 615, 255, 600)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Nicanor"]
 sprite_frames = ExtResource("3_nicanorframes")
@@ -166,7 +166,7 @@ position = Vector2(120, 190)
 hotspot_name = "Planta de oficina"
 hitbox_size = Vector2(110, 100)
 invisible = true
-approach_point = Vector2(4, 400)
+approach_point = Vector2(140, 380)
 look_direction = "left"
 observe_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
 interact_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
@@ -176,7 +176,7 @@ position = Vector2(63, 430)
 hotspot_name = "Formulario"
 hitbox_size = Vector2(90, 65)
 invisible = true
-approach_point = Vector2(150, 150)
+approach_point = Vector2(192, 155)
 look_direction = "left"
 observe_text = "Tiene más casilleros que preguntas."
 interact_text = "Nicanor completa el formulario como puede. Hay una pregunta que no entiende y contesta con una fecha."

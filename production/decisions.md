@@ -233,9 +233,14 @@ via the 1280/1672≈0.7654 scale factor to scene coordinates) instead of estimat
   visualmente — igual que `SelloAnchor` y `ServiceWindowSortAnchor`. Las invariantes quedan
   cubiertas por `game/tests/walkable_area_test.tscn`.
 - **Los props de primer plano pintados en el fondo no pueden tapar a nadie.** El escritorio del
-  frente izquierdo está dentro de `scene_background_counterless.png`, que se dibuja antes que todo
-  `World`, así que ninguna corrección de orden puede hacer que ocluya a Nicanor. Por ahora se
-  resuelve por distancia (el polígono lo mantiene a ~30px de despeje del borde del escritorio).
+  frente izquierdo y el atril alto están dentro de `scene_background_counterless.png`, que se
+  dibuja antes que todo `World`, así que ninguna corrección de orden puede hacer que ocluyan a
+  Nicanor. Por ahora se resuelve por distancia: el polígono lo mantiene a ~30px de despeje del
+  borde del escritorio, y **completamente fuera** de la silueta del atril. Esto último obliga a que
+  el borde izquierdo del polígono sea diagonal y no vertical: el ancho dibujado de Nicanor crece
+  con la profundidad (`scale_at_back` 0.42 → `scale_at_front` 0.64), así que cuanto más adelante
+  está, más a la derecha tiene que empezar el piso pisable. Un borde vertical calculado para el
+  fondo lo deja pisando el atril en el frente, que es exactamente lo que se reportó en el playtest.
   La solución de raíz es recortarlo como overlay transparente sobre el mismo lienzo 1672×941, igual
   que se hizo con la ventanilla — ese asset todavía no existe y no se improvisa recortando el fondo
   a mano.

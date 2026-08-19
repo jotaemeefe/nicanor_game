@@ -22,6 +22,16 @@ const DESK_EDGE_RIGHT_X := 360.0
 ## How much visible floor has to stay between his feet and that edge.
 const DESK_CLEARANCE := 30.0
 
+## The standing lectern on the left, measured off the rendered background:
+## its silhouette spans x 5..118, y 388..610, and its foot rests at y ~610 —
+## nearer to camera than any floor Nicanor can reach. It is painted into the
+## background too, so the only way he doesn't read as standing on it is to
+## never overlap it: his drawn half-width grows with depth, so the clearance
+## has to be checked against his scale at that spot, not a fixed margin.
+const LECTERN_RIGHT_X := 118.0
+## Half the sprite's width in texture pixels (nicanor idle frames are 420 wide).
+const SPRITE_HALF_WIDTH := 210.0
+
 func _desk_edge_y(x: float) -> float:
 	var t := clampf(x / DESK_EDGE_RIGHT_X, 0.0, 1.0)
 	return lerpf(DESK_EDGE_LEFT_Y, DESK_EDGE_RIGHT_Y, t)
@@ -57,6 +67,22 @@ func _ready() -> void:
 	var onto_desk := _resolve(nicanor, Vector2(110, 700))
 	_expect(onto_desk.y <= _desk_edge_y(onto_desk.x) - DESK_CLEARANCE,
 		"a click on the front desk should resolve behind it: got %s, desk edge at y=%.1f there" % [onto_desk, _desk_edge_y(onto_desk.x)])
+
+	# Nowhere he can stand may put his drawn silhouette over the lectern.
+	# Swept across the room rather than checked at one point, because the
+	# binding constraint moves with depth: he is drawn widest at the front.
+	var worst_spot := Vector2.ZERO
+	var worst_left_edge := INF
+	for sample_x in range(0, 1290, 10):
+		for sample_y in range(500, 710, 10):
+			var spot := _resolve(nicanor, Vector2(sample_x, sample_y))
+			var left_edge: float = spot.x - SPRITE_HALF_WIDTH * nicanor._depth_scale_for_y(spot.y)
+			if left_edge < worst_left_edge:
+				worst_left_edge = left_edge
+				worst_spot = spot
+	_expect(worst_left_edge > LECTERN_RIGHT_X,
+		"closest reachable spot %s draws out to x=%.0f, over the lectern (right edge %.0f)"
+			% [worst_spot, worst_left_edge, LECTERN_RIGHT_X])
 
 	# Far outside the room entirely — still has to produce a usable spot.
 	var far_away := _resolve(nicanor, Vector2(-500, 50))
