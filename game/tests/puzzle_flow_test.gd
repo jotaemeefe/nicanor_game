@@ -8,6 +8,8 @@ extends Node
 ##   2. Every dialogue/hotspot-text JSON resolves a non-empty string for
 ##      every reachable puzzle state (catches typos in state names and gaps
 ##      in branch coverage without needing the editor open).
+##   3. Props that appear or disappear with the puzzle state actually do, and
+##      go back when the scene is reset.
 ## Run as a scene (not --script — autoloads aren't available to a bare
 ## SceneTree --script entry point): godot --headless --path . res://tests/puzzle_flow_test.tscn
 
@@ -21,6 +23,7 @@ func _ready() -> void:
 	_check_state_text("res://data/hotspots/maquina_turnos.json", "interact_by_state")
 	_check_state_text("res://data/dialogues/loro.json", "idle_by_state")
 	_check_final_dialogue()
+	await _check_formulario_disappears()
 
 	if _failures.is_empty():
 		print("PUZZLE FLOW TEST: OK — %d checks passed, no failures." % _pass_count)
@@ -35,6 +38,39 @@ func _expect(condition: bool, message: String) -> void:
 		_pass_count += 1
 	else:
 		_failures.append(message)
+
+## Nicanor takes the form with him once he fills it in, so it has to leave the
+## desk — and it has to come back on Reiniciar, since the scene is reset by
+## putting GameState back to INICIO rather than by reloading. `input_pickable`
+## is checked as well as `visible`: an invisible Area2D still answers to hover
+## and clicks, which would leave a phantom hotspot over an empty desk.
+func _check_formulario_disappears() -> void:
+	GameState.reset()
+	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
+	add_child(office)
+	await get_tree().process_frame
+
+	var formulario: Hotspot = office.get_node_or_null("World/Hotspots/Formulario")
+	_expect(formulario != null, "the scene should still have a Formulario hotspot")
+	if formulario == null:
+		return
+
+	_expect(formulario.visible and formulario.input_pickable,
+		"the form should be on the desk at INICIO")
+
+	for state in [GameState.State.DECLARACION_OBTENIDA, GameState.State.TURNO_0_RECIBIDO,
+			GameState.State.ESCENA_TERMINADA]:
+		GameState.set_state(state)
+		await get_tree().process_frame
+		_expect(not formulario.visible and not formulario.input_pickable,
+			"the form should be gone at %s" % GameState.state_name(state))
+
+	GameState.reset()
+	await get_tree().process_frame
+	_expect(formulario.visible and formulario.input_pickable,
+		"the form should be back on the desk after a reset")
+
+	office.queue_free()
 
 func _check_state_machine() -> void:
 	var order := [

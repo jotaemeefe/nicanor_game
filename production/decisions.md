@@ -5,6 +5,30 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — La pantalla de estado sobre la puerta, y el formulario se va con Nicanor
+
+- **La pantalla pasó a la pared de arriba de la puerta** (de (990, 90) a (1158, 82)). El fondo ahí
+  está limpio, así que no se superpone con nada pintado, y queda con 28 px de pared libre por
+  encima del marco de la puerta. No hizo falta remedir la perspectiva: los ángulos del
+  `PerspectiveQuad` actual, medidos en su momento sobre el maestro, coinciden dentro de 3 px con los
+  del cartel que el maestro tiene colgado sobre la puerta (borde superior con caída de 0,206 por px
+  de ancho contra 0,183; lado derecho 11% más alto que el izquierdo, contra 10%). Es la misma pared.
+- **Los botones Reiniciar/Menú se fueron abajo a la derecha.** Estaban anclados arriba a la derecha
+  en x 1060..1260, y 20..56 — exactamente el lugar de la pantalla. Se consultó y el usuario eligió
+  mover los botones antes que achicar la pantalla: la pantalla es escenografía con tres estados que
+  hay que poder leer, los botones son chrome de utilidad. Quedan en y 674..710, debajo del panel de
+  diálogo (que termina en 670), así que tampoco se pisan entre ellos.
+- **El formulario desaparece al completarlo.** Nicanor se lo lleva, así que a partir de
+  `DECLARACION_OBTENIDA` el hotspot se oculta. Ocultar el sprite no alcanza: un `Area2D` invisible
+  se sigue levantando en el picking, así que quedaría un hotspot fantasma respondiendo al hover y al
+  clic sobre un escritorio vacío — se apaga también `input_pickable`. Y como `mouse_exited` no se
+  dispara para un área que deja de ser pickable, se esconde a mano el cartelito del nombre.
+  El estado se deriva de `GameState` en `_sync_state_visuals`, no de un flag de una sola vía, así
+  que Reiniciar lo devuelve al escritorio. Queda cubierto por seis chequeos nuevos en
+  `puzzle_flow_test`, incluido el de que vuelve tras el reset.
+- El `interact_text_alt` del formulario ("ya está completo") queda inalcanzable, pero se deja como
+  red de seguridad por si alguna vez vuelve a ser clickeable.
+
 ## 2026-08-19 — El ventilador gira en su eje en vez de saltar de lugar
 
 Reporte: el ventilador "se mueve de lugar"; propuesta del usuario, usar una sola imagen y rotarla.

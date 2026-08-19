@@ -34,6 +34,7 @@ const CARTEL_ROJO := preload("res://assets/props/cartel_estado/cartel_rojo_new.p
 ## in front of the window glass, so it needs a sort key past the window overlay
 ## while staying drawn (and clickable) up at the ledge — same reason as SelloAnchor.
 @onready var _loro_sprite: AnimatedSprite2D = get_node_or_null("World/Hotspots/LoroAnchor/Loro/AnimatedSprite2D")
+@onready var _formulario: Hotspot = get_node_or_null("World/Hotspots/Formulario")
 @onready var _machine_sprite: Sprite2D = get_node_or_null("World/Hotspots/Dispensador/Sprite2D")
 @onready var _door_sprite: Sprite2D = get_node_or_null("World/Hotspots/Puerta/Sprite2D")
 ## A PerspectiveQuad, not a Sprite2D: the board's art is frontal and the wall it
@@ -98,12 +99,30 @@ func _go_to_menu() -> void:
 # --- State-driven prop visuals (independent of any dialogue being shown) ---
 
 func _sync_state_visuals() -> void:
+	_sync_formulario(GameState.is_at_least(GameState.State.DECLARACION_OBTENIDA))
 	if _machine_sprite:
 		_machine_sprite.texture = _machine_texture_for_state(GameState.current)
 	if _door_sprite:
 		_door_sprite.texture = _door_texture_for_state(GameState.current)
 	if _cartel_estado_sprite:
 		_cartel_estado_sprite.texture = _cartel_estado_texture_for_state(GameState.current)
+
+## Once Nicanor fills the form in he takes it with him, so it leaves the desk.
+## Hiding the sprite is not enough: an Area2D keeps being picked while invisible,
+## so the hotspot would still answer to hover and clicks over an empty desk.
+## Reversible on purpose — Reiniciar puts the state back to INICIO and this runs
+## again from the state, not from a one-way flag.
+func _sync_formulario(taken: bool) -> void:
+	if not _formulario:
+		return
+	if _formulario.visible == not taken:
+		return
+	_formulario.visible = not taken
+	_formulario.input_pickable = not taken
+	# mouse_exited never fires for an area that stops being pickable, so a name
+	# left under the cursor would stay on screen.
+	if taken:
+		_hover_label.hide()
 
 func _machine_texture_for_state(state: GameState.State) -> Texture2D:
 	match state:
