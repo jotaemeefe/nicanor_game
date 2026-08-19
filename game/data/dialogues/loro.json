@@ -2,22 +2,28 @@
   "idle_by_state": {
     "INICIO": [
       "\"Constancia de presencia obligatoria.\"",
-      "\"Buenas tardes. Buenas tardes.\""
+      "\"Buenas tardes. Buenas tardes.\"",
+      "\"El Ministerio agradece su presencia. Acredítela.\""
     ],
     "MAQUINA_EXAMINADA": [
-      "\"Sin constancia no hay número. Sin número no hay trámite. Sin trámite no hay usted.\""
+      "\"Sin constancia no hay número. Sin número no hay trámite. Sin trámite no hay usted.\"",
+      "\"Toda demora es responsabilidad del usuario.\""
     ],
     "REQUISITO_DESCUBIERTO": [
-      "\"El formulario está sobre el mostrador.\""
+      "\"La presencia se acredita. No se supone.\"",
+      "\"Complete todos los campos. Especialmente los que no correspondan.\""
     ],
     "DECLARACION_OBTENIDA": [
-      "\"Presente la constancia en la máquina.\""
+      "\"Toda constancia vence. Consulte cuándo venció la suya.\"",
+      "\"Una constancia sin sello es una intención.\""
     ],
     "TURNO_0_RECIBIDO": [
-      "\"El cero se atiende antes de empezar.\""
+      "\"El cero se atiende antes de empezar.\"",
+      "\"Los turnos no se pierden. Se reasignan a nadie.\""
     ],
     "ACCESO_AUTORIZADO": [
-      "\"Puede pasar. Puede pasar.\""
+      "\"Puede pasar. Puede pasar.\"",
+      "\"Circule. Circular es un derecho y una obligación.\""
     ],
     "ESCENA_TERMINADA": [
       "\"Vuelva mañana. Vuelva mañana.\""

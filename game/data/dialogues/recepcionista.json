@@ -10,7 +10,11 @@
           { "text": "Si hubiera venido, no sería una ausencia.", "pose": "escepticismo" },
           { "text": "No. Por eso estoy acá y no en otro lado.", "pose": "neutral" }
         ] },
-        { "speaker": "Recepcionista", "text": "Entonces va a necesitar una constancia de presencia. Suya, no de la ausencia." }
+        { "speaker": "Recepcionista", "text": "Entonces va a necesitar una constancia de presencia. Suya, no de la ausencia." },
+        { "speaker": "Nicanor", "text": "¿Una constancia de presencia para declarar una ausencia?", "pose": "escepticismo" },
+        { "speaker": "Recepcionista", "text": "Es para evitar ausencias fraudulentas." },
+        { "speaker": "Nicanor", "text": "¿Y qué prueba la constancia?", "pose": "neutral" },
+        { "speaker": "Recepcionista", "text": "Que usted está presente. Que sea usted se tramita en otra ventanilla." }
       ],
       "effects": { "set_state": "REQUISITO_DESCUBIERTO" }
     },
@@ -20,16 +24,16 @@
       "max_state": "REQUISITO_DESCUBIERTO",
       "lines": [
         { "speaker": "Recepcionista", "text": "El formulario está sobre el mostrador. Complételo y vuelva a la máquina." },
-        { "speaker": "Nicanor", "text": "¿Y si no tengo nada que declarar todavía?", "pose": "explicacion" },
-        { "speaker": "Recepcionista", "text": "Entonces complete lo que tenga. De todos modos va a valer lo mismo." }
+        { "speaker": "Nicanor", "text": "No sé qué poner. La ausencia no tiene fecha exacta.", "pose": "explicacion" },
+        { "speaker": "Recepcionista", "text": "Ponga una aproximada. De todos modos va a valer lo mismo." }
       ]
     },
     {
       "id": "reminder_use_machine",
       "min_state": "DECLARACION_OBTENIDA",
-      "max_state": "DECLARACION_OBTENIDA",
+      "max_state": "DECLARACION_USADA",
       "lines": [
-        { "speaker": "Recepcionista", "text": "Ya tiene la constancia. Presentéla en la máquina, no a mí." }
+        { "speaker": "Recepcionista", "text": "Ya tiene la constancia. Preséntela en la máquina, no a mí." }
       ]
     },
     {

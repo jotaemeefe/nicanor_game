@@ -36,7 +36,8 @@ que dependa del estado**, se muda a `data/hotspots/` (como la Máquina). No hay 
 entradas.
 
 Criterio inverso, igual de importante: **no promover a `branches` algo que no ramifica.** El Loro
-tiene siete textos distintos y sigue siendo un dict plano, porque nunca conversa.
+tiene trece consignas repartidas en siete estados y sigue siendo un dict plano, porque nunca
+conversa.
 
 ## 2. Esquema — conversación con ramas
 
@@ -268,27 +269,27 @@ desde cero, y **ninguna se construye sin aprobación explícita del usuario**.
 - **Condiciones compuestas** (`requires`, `unless`, expresiones): rechazada. Introduce un lenguaje
   de scripting dentro del JSON, que es exactamente lo que la separación dato/lógica quiere evitar.
 
-## 9. Hallazgos abiertos sobre el contenido actual
+## 9. Hallazgos sobre el contenido actual
 
-Detectados al escribir este contrato, ordenados por riesgo. Son observaciones, no cambios aplicados.
+Detectados al escribir este contrato. La pasada de revisión de diálogos del 2026-08-19 (ver
+`production/decisions.md`) cerró los tres primeros; los dos últimos siguen abiertos.
 
-1. **`DECLARACION_USADA` no tiene rama de la Recepcionista.** Las cinco ramas cubren los otros siete
-   estados; en ese hueco `pick_branch` devuelve `{}` y hablarle **no hace absolutamente nada**. Hoy
-   es inalcanzable en la práctica (el estado dura lo que tarda la secuencia de la máquina, con la
-   caja de diálogo abierta, y `on_done` salta a `TURNO_0_RECIBIDO`), pero es una trampa latente y el
-   test no la ve: la tabla `expectations` enumera 7 de los 8 estados y omite justo ese. Arreglo
-   mínimo: `max_state: "DECLARACION_USADA"` en `reminder_use_machine`, más la fila que falta en el
-   test.
-2. **`interact_text_alt` del Formulario es inalcanzable** — el hotspot se apaga al completarlo
-   (`decisions.md`, 2026-08-19). Ya está documentado y se conserva a propósito; queda anotado acá
-   para que no se lea como contenido activo.
-3. **`loro.json` no distingue `DECLARACION_USADA`**: hereda "Presente la constancia en la máquina",
-   que en ese instante ya es falso. Inofensivo por lo transitorio del estado, pero es el caso exacto
-   que §3 marca como herencia que miente.
-4. **Cuatro hotspots repiten el mismo texto en ambos verbos** (Mostrador, Cartel de normas, Planta,
-   Sello). Legal (§6.6) y probablemente deliberado en el Cartel — es una pista, y conviene que diga
-   lo mismo se lo mire o se lo toque — pero Planta y Sello tienen remate visual y podrían ganar una
-   línea de interacción propia.
-5. **Ninguna variante de insistencia.** `puzzles.md` §5 promete "variantes cortas de esperá su
-   turno"; las ramas de recordatorio se repiten idénticas. O se implementa `seen_branches` (§8), o
-   conviene corregir `puzzles.md` para que no prometa algo que el sistema no da.
+1. ~~**`DECLARACION_USADA` no tenía rama de la Recepcionista.**~~ **Cerrado.** `pick_branch`
+   devolvía `{}` en ese estado y hablarle no hacía absolutamente nada — inalcanzable en la
+   práctica, pero el test enumeraba 7 de los 8 estados y omitía justo ese. `reminder_use_machine`
+   ahora llega hasta `DECLARACION_USADA` y el test cubre los 8.
+2. ~~**`loro.json` no distinguía `DECLARACION_USADA`**~~ **Cerrado de rebote.** Heredába
+   "Presente la constancia en la máquina", que en ese instante ya era falso. El texto heredado hoy
+   es una consigna atemporal, así que la herencia dejó de mentir.
+3. ~~**Cuatro hotspots repetían el mismo texto en ambos verbos.**~~ **Cerrado salvo uno.**
+   Mostrador, Planta y Sello tienen línea de interacción propia. El Cartel de normas conserva el
+   mismo texto a propósito: es la pista escrita del puzle y tiene que decir lo mismo se lo mire o
+   se lo toque.
+4. **`interact_text_alt` del Formulario sigue siendo inalcanzable** — el hotspot se apaga al
+   completarlo (`decisions.md`, 2026-08-19). Se conserva a propósito como red de seguridad; queda
+   anotado para que no se lea como contenido activo.
+5. **Ninguna variante de insistencia en la Recepcionista.** `puzzles.md` §5 promete "variantes
+   cortas de esperar su turno"; sus ramas de recordatorio se repiten idénticas. El Loro sí tiene
+   dos consignas por estado, que cubre el caso ambiental, pero la promesa de `puzzles.md` es sobre
+   ella. O se implementa `seen_branches` (§8), o conviene corregir `puzzles.md` para que no prometa
+   algo que el sistema no da. **Es la única brecha viva entre diseño e implementación.**

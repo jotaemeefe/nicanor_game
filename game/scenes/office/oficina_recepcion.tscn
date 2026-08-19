@@ -150,7 +150,7 @@ invisible = true
 approach_point = Vector2(-47, 230)
 look_direction = "right"
 observe_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
-interact_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
+interact_text = "Nicanor apoya los codos donde los apoyaron todos los demás. El mostrador no se inmuta."
 
 [node name="RecepcionistaHotspot" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
 position = Vector2(826, 292)
@@ -210,7 +210,7 @@ invisible = true
 approach_point = Vector2(140, 380)
 look_direction = "left"
 observe_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
-interact_text = "Sobrevivió a tres reestructuraciones edilicias. Nadie la riega. Igual sigue ahí."
+interact_text = "Nicanor le vuelca lo que queda de un vaso. Es lo más parecido a un acto de rebeldía que va a hacer hoy."
 
 [node name="Formulario" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
 position = Vector2(63, 430)
@@ -240,7 +240,7 @@ invisible = true
 approach_point = Vector2(-262, 155)
 look_direction = "right"
 observe_text = "El instrumento más poderoso del edificio. Por eso está atado."
-interact_text = "El instrumento más poderoso del edificio. Por eso está atado."
+interact_text = "Nicanor lo levanta. El piolín se tensa a dos centímetros del papel, con precisión de reglamento."
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/SelloAnchor/Sello"]
 position = Vector2(26, 13)

@@ -152,6 +152,9 @@ func _check_recepcionista_branches() -> void:
 		GameState.State.MAQUINA_EXAMINADA: "intro",
 		GameState.State.REQUISITO_DESCUBIERTO: "reminder_formulario",
 		GameState.State.DECLARACION_OBTENIDA: "reminder_use_machine",
+		# DECLARACION_USADA used to fall through every branch range, so pick_branch
+		# returned {} and talking to her there opened nothing at all.
+		GameState.State.DECLARACION_USADA: "reminder_use_machine",
 		GameState.State.TURNO_0_RECIBIDO: "turno_cero",
 		GameState.State.ACCESO_AUTORIZADO: "post_autorizado",
 		GameState.State.ESCENA_TERMINADA: "post_autorizado",

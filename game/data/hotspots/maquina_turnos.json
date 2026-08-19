@@ -1,16 +1,16 @@
 {
   "observe_by_state": {
     "INICIO": "Una máquina roja, atornillada al piso. El visor pide una constancia de presencia antes de entregar número.",
-    "MAQUINA_EXAMINADA": "El visor sigue pidiendo la constancia de presencia.",
-    "REQUISITO_DESCUBIERTO": "La máquina sigue pidiendo la constancia. Nicanor todavía no la tiene.",
+    "MAQUINA_EXAMINADA": "El cartel sobre el visor está más gastado que la máquina. La exigencia es más vieja que el aparato.",
+    "REQUISITO_DESCUBIERTO": "El visor repite la exigencia con la paciencia de algo que no tiene nada más que hacer.",
     "DECLARACION_OBTENIDA": "Ahora sí: la constancia está lista para pasar por la ranura.",
     "TURNO_0_RECIBIDO": "El visor muestra un solo número: 0.",
     "ACCESO_AUTORIZADO": "El visor sigue mostrando el 0, indiferente a que ya no importe."
   },
   "interact_by_state": {
     "INICIO": "\"ERROR: falta constancia de presencia.\" La máquina no entrega nada.",
-    "MAQUINA_EXAMINADA": "\"ERROR: falta constancia de presencia.\" Sigue sin entregar nada.",
-    "REQUISITO_DESCUBIERTO": "La ranura para la constancia sigue vacía. Habrá que conseguir una.",
+    "MAQUINA_EXAMINADA": "\"ERROR: falta constancia de presencia.\" El mensaje aparece más rápido, como si ya lo esperara.",
+    "REQUISITO_DESCUBIERTO": "La ranura espera un papel que Nicanor todavía no tiene. Ninguno de los dos parece apurado.",
     "TURNO_0_RECIBIDO": "La máquina ya hizo su trabajo. El número 0 está en la mano de Nicanor.",
     "ACCESO_AUTORIZADO": "La máquina ya cumplió su función. El resto ya no depende de ella."
   },

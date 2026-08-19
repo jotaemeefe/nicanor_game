@@ -5,6 +5,59 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — Pasada de revisión de diálogos: faltaba el remate que la biblia ya tenía escrito
+
+Pedido del usuario: "podés ayudarme a mejorar los diálogos de esta escena?". Revisión completa de
+`recepcionista.json`, `loro.json`, `final.json`, `maquina_turnos.json` y los strings exportados de
+los hotspots.
+
+- **El hallazgo principal no fue una línea floja, fue una línea faltante.** `game-bible.md` §6
+  define el sistema de humor en cuatro tiempos y usa **esta escena exacta** como ejemplo, terminando
+  en "la constancia demuestra que Nicanor está presente, pero no que sea él". La conversación
+  implementada se cortaba en el tercer tiempo: pedía la constancia y nunca explicaba qué prueba.
+  El chiste central de la escena estaba escrito en el canon y sin usar. La rama `intro` suma cuatro
+  entradas cortas que cierran los tiempos 3 y 4 — "Es para evitar ausencias fraudulentas" y "Que
+  usted está presente. Que sea usted se tramita en otra ventanilla". No es material nuevo: es canon
+  que no había bajado a los datos.
+- **`Presentéla` → `Preséntela`.** Error de acentuación en texto que ve el jugador; es esdrújula.
+- **El Loro hablaba como cartel indicador, no como loro.** `REQUISITO_DESCUBIERTO` decía "El
+  formulario está sobre el mostrador" y `DECLARACION_OBTENIDA` "Presente la constancia en la
+  máquina": instrucciones de juego, no consignas. `narrative.md` lo define como alguien que
+  "repite consignas oficiales... no comenta, no razona". Además duplicaban la pista que ya daba la
+  Recepcionista. Reemplazadas por consignas ("La presencia se acredita. No se supone.", "Toda
+  constancia vence. Consulte cuándo venció la suya."), y **cada estado pasó a tener dos variantes**
+  en vez de una — el Loro es el único personaje al que da gusto clickear repetidamente, y el
+  sistema ya sorteaba entre variantes sin que nadie lo usara salvo en `INICIO`.
+- **La máquina daba el mismo error dos veces y hablaba en voz de tutorial.** `MAQUINA_EXAMINADA`
+  repetía casi textual el mensaje de `INICIO`; ahora escala ("El mensaje aparece más rápido, como
+  si ya lo esperara"). Y se sacaron los "Habrá que conseguir una" / "Nicanor todavía no la tiene",
+  que eran la interfaz hablando, no el narrador.
+- **Tres hotspots repetían el mismo texto en ambos verbos** (Mostrador, Planta, Sello) y ahora
+  tienen línea de interacción propia, cada una atada a su línea de observación: la Planta que
+  "nadie riega" ahora recibe lo que queda de un vaso, el Sello "por eso está atado" tensa el piolín
+  a dos centímetros del papel. El Cartel de normas conserva el texto duplicado a propósito: es la
+  pista escrita del puzle.
+- **La línea final se acortó, y esto es lo único de la pasada que conviene que el usuario mire.**
+  Era "Un número que nadie llamó. Un lugar que nadie ocupa. Quizás no sea tan distinto de lo que
+  vine a declarar." La tercera oración dice en voz alta la metáfora que las dos primeras ya
+  construían, y tanto `game-bible.md` §2 como `narrative.md` prohiben explicarla. Quedaron las dos
+  primeras. **Cambio provisional**: es el cierre emocional de la escena y es territorio del autor,
+  no de una regla de estilo — revertir es una línea.
+- **Un arreglo estructural de paso**: `reminder_use_machine` ahora llega hasta `DECLARACION_USADA`.
+  Ese estado no lo cubría ninguna rama, así que `pick_branch` devolvía `{}` y hablarle a la
+  Recepcionista ahí no abría nada. Era inalcanzable en la práctica (el estado dura lo que tarda la
+  secuencia de la máquina), pero el test enumeraba 7 de los 8 estados y omitía justo ese; ahora
+  cubre los 8.
+- Verificado: los cuatro tests headless en verde (88/75/17/8 chequeos) y una captura real de la
+  escena con la línea nueva más larga en la caja — entra en un renglón, con acentos y retrato.
+  Todo el texto de la escena está dentro del presupuesto de `design/dialogue-structure.md` §6
+  (máximo 106 caracteres sobre un tope de 240).
+- **Lo que no se tocó**: `turno_cero` — la cadena lógica del número cero es lo mejor que tenía la
+  escena y no necesitaba ayuda. Y sigue abierta la única brecha real entre diseño e
+  implementación: `puzzles.md` §5 promete variantes cortas al insistir con la Recepcionista, y sus
+  ramas de recordatorio se siguen repitiendo idénticas. Requiere `seen_branches`
+  (`dialogue-structure.md` §8), que es código y no se hace sin aprobación.
+
 ## 2026-08-19 — Clic sobre el personaje durante un diálogo: se lo tragaba el hotspot
 
 Reporte: hablando con la Recepcionista, "a veces el usuario se puede confundir y se repite el
