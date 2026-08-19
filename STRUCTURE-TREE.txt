@@ -694,11 +694,10 @@ nicanor_game
 │   │   │   ├── ventilador
 │   │   │   │   ├── ceiling_fan_4_frames.png
 │   │   │   │   ├── ceiling_fan_4_frames.png.import
-│   │   │   │   ├── fan_a.png
-│   │   │   │   ├── fan_a.png.import
-│   │   │   │   ├── fan_b.png
-│   │   │   │   ├── fan_b.png.import
-│   │   │   │   └── fan_frames.tres
+│   │   │   │   ├── fan_mount.png
+│   │   │   │   ├── fan_mount.png.import
+│   │   │   │   ├── fan_rotor.png
+│   │   │   │   └── fan_rotor.png.import
 │   │   │   ├── campana.png
 │   │   │   ├── campana.png.import
 │   │   │   ├── carnet.png
@@ -736,6 +735,8 @@ nicanor_game
 │   │   ├── hotspot.tscn
 │   │   └── oficina_licencias_poeticas.tscn
 │   ├── scripts
+│   │   ├── ceiling_fan.gd
+│   │   ├── ceiling_fan.gd.uid
 │   │   ├── dialogue_box.gd
 │   │   ├── dialogue_box.gd.uid
 │   │   ├── dialogue_manager.gd

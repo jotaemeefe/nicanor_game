@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bn12qwfi8d4b2"
-path="res://.godot/imported/fan_b.png-aa46b72cfe0f2a7548af9219f96e3492.ctex"
+uid="uid://5cht33s26582"
+path="res://.godot/imported/fan_mount.png-1e67706323b83bcf36397b97d5b2011c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/props/ventilador/fan_b.png"
-dest_files=["res://.godot/imported/fan_b.png-aa46b72cfe0f2a7548af9219f96e3492.ctex"]
+source_file="res://assets/props/ventilador/fan_mount.png"
+dest_files=["res://.godot/imported/fan_mount.png-1e67706323b83bcf36397b97d5b2011c.ctex"]
 
 [params]
 

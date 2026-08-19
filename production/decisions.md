@@ -5,6 +5,39 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — El ventilador gira en su eje en vez de saltar de lugar
+
+Reporte: el ventilador "se mueve de lugar"; propuesta del usuario, usar una sola imagen y rotarla.
+
+- **La causa era el recorte, no la animación.** `fan_a.png` y `fan_b.png` son los dos lienzos de
+  900×724 con el ventilador en posiciones distintas: el arte de `fan_a` ocupa x 345..899 y el de
+  `fan_b` x 147..661. A escala 0,211 eso son ~42 px de salto lateral cada 1,4 s. Además `fan_a`
+  llega hasta la última columna del lienzo, o sea que estaba recortado.
+- **Se implementó la propuesta, con el eje separado.** Del cuadro 4 de
+  `ceiling_fan_4_frames.png` (el único con hueco a ambos lados — las aspas de los cuadros 2 y 3 se
+  superponen — y con el caño vertical) se cortaron por script dos PNG nuevos, ambos centrados en el
+  buje: `fan_rotor.png` (aspas + buje, gira) y `fan_mount.png` (caño + florón, fijo, dibujado
+  encima para que un aspa que pasa por detrás del caño quede tapada por él, como en la realidad).
+  Arriba del buje la banda del caño no contiene ni un píxel de aspa, así que quitarlo no le saca
+  nada al rotor.
+- **La rotación es en el plano del ventilador, no en el de la pantalla.** Rotar el sprite solo
+  haría voltear toda la elipse y se leería como bamboleo. La cadena de transformaciones lo resuelve
+  sin tocar el arte: el padre (`FanPlane`) achata Y por el escorzo con que están dibujadas las aspas
+  y el rotor deshace ese achatamiento con su propia escala, así que en reposo el arte se dibuja
+  exactamente como fue pintado y en cualquier otro ángulo barre esa misma elipse. El factor
+  (k = 0,62) se despejó de las tres puntas de aspa del cuadro 4 imponiendo que las tres estén al
+  mismo radio real: da 0,568 y 0,679 según qué par se use, y se tomó el promedio.
+- **Velocidad**: 0,25 vueltas por segundo, una vuelta cada cuatro segundos. Es mucho más lento que
+  un ventilador real, a propósito: su propio texto de observación dice que "gira con una lentitud
+  casi filosófica".
+- **Tamaño y brillo, contra el maestro.** El ventilador estaba a ~44% del tamaño del pintado en el
+  maestro; ahora el radio de barrido coincide (163 px de pantalla, medido sobre la punta del aspa
+  izquierda del maestro, que cae casi sobre el semieje mayor). Y el recorte venía 1,5× más brillante
+  que el ventilador pintado — se agregó `modulate` con la relación medida entre los brillos
+  (0,66/0,66/0,56), que deja las luces del prop en 112/98/65 contra 109/97/63 del maestro. Ambas
+  cosas son de una línea si se quieren revertir.
+- Se borraron `fan_a.png`, `fan_b.png` y `fan_frames.tres`, que ya no referencia nadie.
+
 ## 2026-08-19 — Orientación de la Recepcionista, Loro al mostrador, Sello sobre la mesa
 
 Segunda ronda contra el maestro (`scene_master_reference.png`), medida sobre capturas reales y
