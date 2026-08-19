@@ -66,6 +66,8 @@ var _dialogue_closed_at_msec: int = -REOPEN_GRACE_MSEC
 var _line_queue: Array = []
 var _on_queue_done: Callable = Callable()
 var _pending_choice_options: Array = []
+## Name of the GameState.State whose parrot remate is owed, or "" for none.
+var _pending_parrot_state: String = ""
 
 func _ready() -> void:
 	_recepcionista_data = DialogueManager.load_json(RECEPCIONISTA_DIALOGUE_PATH)
@@ -80,6 +82,7 @@ func _ready() -> void:
 	_dialogue_box.advance_requested.connect(_advance_queue)
 	_dialogue_box.choice_selected.connect(_on_choice_selected)
 	GameState.state_changed.connect(func(_prev, _cur): _sync_state_visuals())
+	GameState.state_changed.connect(_queue_parrot_remate)
 
 	# find_children(recursive) instead of get_children(): some hotspots (e.g.
 	# Sello) sit under a plain Node2D "sort anchor" that gives them a
@@ -98,11 +101,23 @@ func _ready() -> void:
 
 	_sync_state_visuals()
 
+## GameState is an autoload, so it survives reload_current_scene() - without
+## resetting it by hand, Reiniciar redrew the scene with the puzzle still
+## solved (form gone, door unlocked). Every visual is derived from the state
+## in _sync_state_visuals, so putting the state back is the whole restart.
 func _restart_scene() -> void:
+	_reset_puzzle_state()
 	get_tree().reload_current_scene()
 
 func _go_to_menu() -> void:
+	_reset_puzzle_state()
 	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")
+
+## Split out from _restart_scene so it can be checked without reloading the
+## tree, which a test harness cannot survive.
+func _reset_puzzle_state() -> void:
+	GameState.reset()
+	_pending_parrot_state = ""
 
 # --- State-driven prop visuals (independent of any dialogue being shown) ---
 
@@ -267,6 +282,24 @@ func _handle_loro() -> void:
 	var text := DialogueManager.pick_state_text(_loro_data.get("idle_by_state", {}), GameState.current)
 	_play_lines([{ "speaker": "Loro", "text": text }])
 
+## The parrot is the room's public-address system, so it gets the last word
+## after every puzzle beat, not only when the player goes over and clicks it.
+## The line is remembered rather than played on the spot: some beats change the
+## state *before* showing their own text (the machine's observe) and some
+## *after* it (every branch's on_done), so speaking here would either be
+## overwritten by the line that follows or cut into the one on screen. Waiting
+## for the queue to drain is correct for both.
+##
+## Exact match on purpose, not DialogueManager.pick_state_text: its backward
+## walk is right for "what is the parrot squawking now" and wrong here, where a
+## state with no remate of its own has to stay quiet instead of repeating the
+## previous beat's punchline.
+func _queue_parrot_remate(_previous: GameState.State, current: GameState.State) -> void:
+	var remates: Dictionary = _loro_data.get("remate_by_state", {})
+	var key := GameState.state_name(current)
+	if remates.has(key):
+		_pending_parrot_state = key
+
 # --- Formulario --------------------------------------------------------
 
 func _handle_formulario_interact(hotspot: Hotspot) -> void:
@@ -315,6 +348,7 @@ func _advance_queue() -> void:
 			var done := _on_queue_done
 			_on_queue_done = Callable()
 			done.call()
+		_flush_parrot_remate()
 		return
 	var entry: Variant = _line_queue.pop_front()
 	if entry is Dictionary and entry.has("choice"):
@@ -331,6 +365,20 @@ func _advance_queue() -> void:
 		text = entry
 	_apply_speaker_state(speaker, pose)
 	_dialogue_box.show_line(speaker, text, _portrait_for_speaker(speaker))
+
+## Runs once the box has closed. The visible check matters because on_done can
+## start a conversation of its own (the ending chains two lines that way), and
+## the parrot must not talk over it - it will still get its turn when that one
+## drains, since the pending state is only cleared by actually speaking.
+func _flush_parrot_remate() -> void:
+	if _pending_parrot_state == "" or _dialogue_box.visible:
+		return
+	var remates: Dictionary = _loro_data.get("remate_by_state", {})
+	var text: String = str(remates.get(_pending_parrot_state, ""))
+	_pending_parrot_state = ""
+	if text == "":
+		return
+	_play_lines([{ "speaker": "Loro", "text": text }])
 
 func _show_choice(options: Array) -> void:
 	_pending_choice_options = options

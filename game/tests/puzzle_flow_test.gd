@@ -23,6 +23,9 @@ func _ready() -> void:
 	_check_state_text("res://data/hotspots/maquina_turnos.json", "interact_by_state")
 	_check_state_text("res://data/dialogues/loro.json", "idle_by_state")
 	_check_final_dialogue()
+	_check_parrot_remates()
+	await _check_parrot_speaks_after_a_beat()
+	await _check_restart_resets_state()
 	await _check_formulario_disappears()
 	await _check_dialogue_click_routing()
 
@@ -186,6 +189,80 @@ func _check_state_text(path: String, key: String) -> void:
 	for state in GameState.State.values():
 		var text: String = DialogueManager.pick_state_text(by_state, state)
 		_expect(text != "", "%s.%s should resolve non-empty text for state %s" % [path, key, GameState.State.keys()[state]])
+
+## The parrot answers every puzzle beat, so each remate has to exist, be
+## unique (a repeated punchline reads as the game glitching, not as a running
+## gag), and stop short of ESCENA_TERMINADA - the ending already plays
+## remate_final, and a second parrot line there would step on it.
+func _check_parrot_remates() -> void:
+	var data := DialogueManager.load_json("res://data/dialogues/loro.json")
+	var remates: Dictionary = data.get("remate_by_state", {})
+	_expect(not remates.is_empty(), "loro.json should have remate_by_state")
+	var seen: Array[String] = []
+	for key in remates:
+		var name := str(key)
+		_expect(GameState.State.keys().has(name), "remate_by_state key %s should be a real state" % name)
+		var text := str(remates[key])
+		_expect(text != "", "remate for %s should not be empty" % name)
+		_expect(not seen.has(text), "remate for %s repeats an earlier one" % name)
+		seen.append(text)
+	_expect(not remates.has("ESCENA_TERMINADA"),
+		"ESCENA_TERMINADA must have no remate - remate_final already plays there")
+	_expect(not remates.has("INICIO"), "INICIO is the starting state, it is never entered")
+
+## The remate is deferred until the line queue drains, because some beats move
+## the state before showing their own text and some after. This drives the
+## before case (the machine's observe) end to end: the machine speaks first,
+## and only once the player dismisses it does the parrot get the last word.
+func _check_parrot_speaks_after_a_beat() -> void:
+	GameState.reset()
+	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
+	add_child(office)
+	await get_tree().process_frame
+
+	var box: DialogueBox = office.get_node("UI/DialogueBox")
+	var loro_data := DialogueManager.load_json("res://data/dialogues/loro.json")
+	var expected: String = str(loro_data.get("remate_by_state", {}).get("MAQUINA_EXAMINADA", ""))
+
+	office._handle_machine_observe()
+	await get_tree().process_frame
+	_expect(GameState.current == GameState.State.MAQUINA_EXAMINADA,
+		"observing the machine should move the state")
+	_expect(box.visible and box._full_text != expected,
+		"the machine should speak first, not the parrot")
+
+	office._advance_queue()
+	await get_tree().process_frame
+	_expect(box.visible and box._full_text == expected,
+		"the parrot should get the last word once the beat is dismissed")
+
+	office._advance_queue()
+	await get_tree().process_frame
+	_expect(not box.visible, "the parrot remate should close like any other line")
+
+	office._advance_queue()
+	await get_tree().process_frame
+	_expect(not box.visible, "a remate must fire once, not on every drain")
+
+	office.queue_free()
+
+## GameState is an autoload and survives reload_current_scene(), so Reiniciar
+## used to redraw the scene with the puzzle still solved.
+func _check_restart_resets_state() -> void:
+	GameState.reset()
+	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
+	add_child(office)
+	await get_tree().process_frame
+
+	GameState.set_state(GameState.State.ACCESO_AUTORIZADO)
+	await get_tree().process_frame
+	office._reset_puzzle_state()
+	_expect(GameState.current == GameState.State.INICIO,
+		"Reiniciar should put the puzzle back to INICIO, not just redraw the scene")
+	_expect(office._pending_parrot_state == "",
+		"a remate owed at the moment of the restart should not fire into the new run")
+
+	office.queue_free()
 
 func _check_final_dialogue() -> void:
 	var final_data := DialogueManager.load_json("res://data/dialogues/final.json")

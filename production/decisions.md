@@ -5,6 +5,54 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — El concurso de poesía en la intro, el Loro como altoparlante, y Reiniciar roto
+
+Pedido del usuario, en dos partes: que Nicanor diga que viene a inscribirse al concurso de poesía
+y que el carpincho pregunte si es el de Poesía Productiva con algún chiste; y que el Loro tenga
+"otro lugar, más presente y más chistoso".
+
+- **El concurso va primero, no después.** Se puso al principio de `intro`, antes de la ausencia, y
+  eso es una decisión de caracterización, no de orden: Nicanor arranca por lo que lo enorgullece,
+  se lo despachan en dos líneas, y recién entonces dice a qué vino en serio ("Entonces vengo a
+  declarar una ausencia"). La vanidad primero y la madre segundo es exactamente lo que dice
+  `characters/nicanor.md`, y deja la ausencia entrando de rebote en vez de anunciada.
+- **El chiste sale del canon, no de la nada.** `game-bible.md` §4 y §7 ya tienen el material: la
+  cultura convertida en contenido productivo, y que existir requiere demostrar utilidad. De ahí
+  salen "Hubo otro. No rindió." (hubo un concurso de poesía a secas y lo dieron de baja por no
+  rendir) y "las inscripciones son por Cultura, que cerró por improductiva".
+- **El concurso no es un segundo objetivo.** Se menciona y se cierra en la misma conversación; no
+  agrega hotspot, ni estado, ni trámite. `current-scope.md` difiere el Concurso **como sistema
+  jugable** y eso sigue en pie — esto es una siembra de subtrama de cuatro líneas.
+- **La intro quedó en 12 entradas** (eran 8). Es la conversación que establece la escena entera y
+  todas las líneas son cortas de ping-pong, pero es lo primero que hay que mirar en el próximo
+  playtest: si se hace larga, lo que sobra es la cadena de la constancia, no el concurso.
+- **"Otro lugar" para el Loro se leyó como otro rol, no como otra posición.** Moverlo físicamente
+  iría contra la decisión del 2026-08-19 que lo bajó al mostrador para coincidir con el maestro, y
+  no lo haría más gracioso. Ahora **cierra cada hito del puzle con un remate propio, sin que el
+  jugador lo toque**: cinco remates nuevos (`remate_by_state`), uno por transición de estado. Deja
+  de ser un hotspot que hay que ir a buscar y pasa a ser el altoparlante de la sala.
+- **El remate se difiere, y ahí estaba el detalle técnico.** Los hitos cambian el estado en dos
+  momentos distintos: el observar de la máquina lo cambia **antes** de mostrar su propio texto, y
+  cada rama lo cambia **después**, dentro de su `on_done`. Hablar en el momento de la señal
+  rompía el primer caso (la línea de la máquina lo pisaba) o el segundo. Se anota el remate y se
+  suelta cuando la cola de líneas se vacía, que es correcto para los dos. Chequea `visible` antes
+  de hablar porque un `on_done` puede abrir su propia conversación — el final encadena dos así.
+- **Coincidencia exacta, no la herencia hacia atrás.** `pick_state_value` camina hacia atrás, que
+  es correcto para "qué está graznando ahora" y es lo peor posible para un remate: un estado sin
+  remate propio repetiría el chiste del hito anterior. Se lee el diccionario directo.
+- **Y de paso: `Reiniciar` no reiniciaba.** `_restart_scene` hacía `reload_current_scene()`, pero
+  `GameState` es autoload y sobrevive a la recarga — nadie llamaba nunca a `GameState.reset()` en
+  el juego, solo los tests. O sea que Reiniciar redibujaba la escena con el puzle resuelto:
+  formulario ausente, puerta abierta, cartel en rojo. La entrada del 2026-08-19 sobre el formulario
+  daba por hecho que reiniciar volvía al estado inicial; la intención estaba escrita, la línea
+  faltaba. Ahora `_reset_puzzle_state()` — separado justo para poder testearlo sin recargar el
+  árbol, cosa que un test no sobrevive — y se llama también al volver al menú, que tenía el mismo
+  problema.
+- Verificado: los cuatro tests headless en verde (113/75/17/8 chequeos, 25 nuevos) y dos capturas
+  reales — la línea del concurso entra justa en un renglón, y el remate del Loro sale con su
+  retrato, su nombre y el sprite en pose de graznido. Ninguna línea de la escena pasa de 106
+  caracteres sobre un tope de 240.
+
 ## 2026-08-19 — Pasada de revisión de diálogos: faltaba el remate que la biblia ya tenía escrito
 
 Pedido del usuario: "podés ayudarme a mejorar los diálogos de esta escena?". Revisión completa de

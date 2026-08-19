@@ -11,15 +11,18 @@
     ],
     "REQUISITO_DESCUBIERTO": [
       "\"La presencia se acredita. No se supone.\"",
-      "\"Complete todos los campos. Especialmente los que no correspondan.\""
+      "\"Complete todos los campos. Especialmente los que no correspondan.\"",
+      "\"Si duda de un campo, deje constancia de la duda.\""
     ],
     "DECLARACION_OBTENIDA": [
       "\"Toda constancia vence. Consulte cuándo venció la suya.\"",
-      "\"Una constancia sin sello es una intención.\""
+      "\"Una constancia sin sello es una intención.\"",
+      "\"El papel no miente. El papel no puede.\""
     ],
     "TURNO_0_RECIBIDO": [
       "\"El cero se atiende antes de empezar.\"",
-      "\"Los turnos no se pierden. Se reasignan a nadie.\""
+      "\"Los turnos no se pierden. Se reasignan a nadie.\"",
+      "\"Todos los números son importantes. Algunos más.\""
     ],
     "ACCESO_AUTORIZADO": [
       "\"Puede pasar. Puede pasar.\"",
@@ -28,6 +31,13 @@
     "ESCENA_TERMINADA": [
       "\"Vuelva mañana. Vuelva mañana.\""
     ]
+  },
+  "remate_by_state": {
+    "MAQUINA_EXAMINADA": "\"Toda máquina es infalible. El usuario no.\"",
+    "REQUISITO_DESCUBIERTO": "\"El Ministerio no complica. Ordena.\"",
+    "DECLARACION_OBTENIDA": "\"Formulario completo. Contenido no verificado.\"",
+    "TURNO_0_RECIBIDO": "\"Su turno es único. Como todos.\"",
+    "ACCESO_AUTORIZADO": "\"Autorizado no es lo mismo que bienvenido.\""
   },
   "remate_final": "\"Gracias por su ausencia.\""
 }

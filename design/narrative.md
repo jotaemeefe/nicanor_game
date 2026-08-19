@@ -39,9 +39,11 @@ sí puede escribir texto provisional dentro de los hechos ya establecidos, marca
 - **Recepcionista (carpincho)**: agotado, correcto, trata cada regla delirante como un
   procedimiento normal. Nunca explica el sentido político de la escena.
 - **Loro institucional**: repite consignas oficiales, avisos y frases contradictorias como si
-  fueran verdades naturales — no comenta, no razona, solo reproduce. Algunas de sus líneas cambian
-  después de ciertos hitos del puzle. Funciona como remate y ambientación, nunca como puzle
-  independiente.
+  fueran verdades naturales — no comenta, no razona, solo reproduce. Sus consignas cambian con
+  los hitos del puzle, y **cierra cada hito con un remate propio sin que el jugador lo toque**:
+  es el altoparlante de la sala, no un personaje al que haya que ir a buscar. Nunca es un puzle
+  independiente ni da información que el jugador necesite para avanzar — si su línea desapareciera,
+  el puzle seguiría siendo resoluble.
 
 ## Escena activa: Recepción del Ministerio de los Ausentes
 
@@ -50,6 +52,15 @@ placeholder lineal sin puzle — ver `production/decisions.md` para el registro 
 establecer inmediatamente: quién es Nicanor, qué necesita, cómo funciona el humor, qué clase de
 institución es el Ministerio, la existencia de nombres o personas que dejan de figurar (apenas
 insinuada, no explicada), y el contraste entre lenguaje administrativo y pérdida humana.
+
+**Nicanor entra diciendo que viene a inscribirse en el concurso de poesía** — la Recepcionista le
+pregunta si es el de Poesía Productiva ([game-bible.md §4](game-bible.md)) y lo despacha en dos
+líneas: hubo otro concurso y no rindió, y las inscripciones son por Cultura, que cerró por
+improductiva. Recién después de ese desaire dice a qué vino en serio. Es caracterización y siembra
+de la subtrama, **no un segundo objetivo**: el concurso no se puede tramitar en esta escena y no
+toca el puzle. Que Nicanor no arranque por la ausencia es deliberado — la vanidad va primero y lo
+que de verdad le importa queda segundo, que es exactamente su carácter
+([characters/nicanor.md](characters/nicanor.md)).
 
 **Objetivo inmediato de Nicanor:** conseguir un número de la máquina de turnos para iniciar un
 trámite relacionado con una persona ausente.

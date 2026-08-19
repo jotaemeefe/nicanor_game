@@ -114,6 +114,26 @@ para algo que un personaje dice en voz alta.
 - El array de variantes es para color ambiental repetible (el Loro). No lo uses para información de
   puzle: el jugador no debería tener que hacer clic varias veces para ver la pista.
 
+### Remates del Loro (`remate_by_state`)
+
+Segundo diccionario de `loro.json`, con **semántica distinta al resto de los `*_by_state`**: se
+consulta por **coincidencia exacta**, sin el camino hacia atrás de `pick_state_value`. Un estado
+sin remate propio tiene que quedarse callado, no repetir el remate del hito anterior.
+
+Lo dispara `office_scene_controller.gd` en `state_changed`, pero **no lo dice en ese momento**: lo
+anota y lo suelta cuando la cola de líneas se vacía. Los hitos cambian el estado en dos momentos
+distintos — antes de mostrar su propio texto (el observar de la máquina) o después, dentro del
+`on_done` de una rama — y esperar a que la cola se vacíe es lo único correcto para los dos.
+
+Reglas de contenido:
+
+- **Uno por hito, y todos distintos.** Un remate repetido se lee como un bug, no como un chiste
+  recurrente. El test lo verifica.
+- **`INICIO` y `ESCENA_TERMINADA` no llevan remate.** Al primero no se entra nunca; en el segundo
+  ya suena `remate_final` y un segundo loro le pisaría el cierre emocional.
+- **Nunca información de puzle.** El remate comenta el hito que ya pasó; si el jugador lo saltea de
+  un clic no debe perderse nada.
+
 ## 4. Variables y estado
 
 **Hay exactamente una variable: `GameState.current`, un enum ordinal de 8 valores.** No hay flags,

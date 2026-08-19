@@ -4,7 +4,11 @@
       "id": "intro",
       "max_state": "MAQUINA_EXAMINADA",
       "lines": [
-        { "speaker": "Nicanor", "text": "Vengo a declarar una ausencia.", "pose": "neutral" },
+        { "speaker": "Nicanor", "text": "Vengo a inscribirme en el concurso de poesía.", "pose": "explicacion" },
+        { "speaker": "Recepcionista", "text": "¿El de Poesía Productiva?" },
+        { "speaker": "Nicanor", "text": "¿Hay otro?", "pose": "escepticismo" },
+        { "speaker": "Recepcionista", "text": "Hubo otro. No rindió. Las inscripciones son por Cultura, que cerró por improductiva." },
+        { "speaker": "Nicanor", "text": "Entonces vengo a declarar una ausencia.", "pose": "neutral" },
         { "speaker": "Recepcionista", "text": "¿La ausencia vino con usted?" },
         { "choice": [
           { "text": "Si hubiera venido, no sería una ausencia.", "pose": "escepticismo" },
@@ -12,9 +16,9 @@
         ] },
         { "speaker": "Recepcionista", "text": "Entonces va a necesitar una constancia de presencia. Suya, no de la ausencia." },
         { "speaker": "Nicanor", "text": "¿Una constancia de presencia para declarar una ausencia?", "pose": "escepticismo" },
-        { "speaker": "Recepcionista", "text": "Es para evitar ausencias fraudulentas." },
-        { "speaker": "Nicanor", "text": "¿Y qué prueba la constancia?", "pose": "neutral" },
-        { "speaker": "Recepcionista", "text": "Que usted está presente. Que sea usted se tramita en otra ventanilla." }
+        { "speaker": "Recepcionista", "text": "Es para evitar ausencias fraudulentas. Prueba que usted está presente." },
+        { "speaker": "Nicanor", "text": "¿Y que sea yo?", "pose": "neutral" },
+        { "speaker": "Recepcionista", "text": "Eso se tramita en otra ventanilla." }
       ],
       "effects": { "set_state": "REQUISITO_DESCUBIERTO" }
     },
