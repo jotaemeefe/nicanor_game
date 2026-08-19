@@ -27,7 +27,8 @@ texture = ExtResource("4_bg")
 
 [node name="AmbientFan" type="AnimatedSprite2D" parent="."]
 position = Vector2(413, 55)
-scale = Vector2(0.35, 0.35)
+offset = Vector2(50, 0)
+scale = Vector2(0.211, 0.211)
 sprite_frames = ExtResource("13_fanframes")
 animation = &"spin"
 autoplay = "spin"
@@ -56,6 +57,7 @@ position = Vector2(400, 620)
 y_sort_enabled = true
 script = ExtResource("2_nicanor")
 walkable_bounds = Rect2(80, 540, 1140, 100)
+excluded_zones = Array[Rect2]([Rect2(845, 540, 375, 45), Rect2(628, 540, 380, 40)])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Nicanor"]
 sprite_frames = ExtResource("3_nicanorframes")
@@ -77,6 +79,14 @@ position = Vector2(1055, 584)
 scale = Vector2(0.2736, 0.2736)
 texture = ExtResource("15_mesa")
 
+[node name="ServiceWindowSortAnchor" type="Node2D" parent="World"]
+position = Vector2(640, 470)
+
+[node name="ServiceWindowForeground" type="Sprite2D" parent="World/ServiceWindowSortAnchor"]
+position = Vector2(0, -110)
+scale = Vector2(0.765550239, 0.765550239)
+texture = ExtResource("16_windowfg")
+
 [node name="Hotspots" type="Node2D" parent="World"]
 y_sort_enabled = true
 
@@ -97,7 +107,7 @@ position = Vector2(765, 390)
 hotspot_name = "Mostrador"
 hitbox_size = Vector2(370, 50)
 invisible = true
-approach_point = Vector2(-65, 170)
+approach_point = Vector2(-65, 230)
 look_direction = "right"
 observe_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
 interact_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
@@ -107,16 +117,16 @@ position = Vector2(870, 280)
 hotspot_name = "Recepcionista"
 hitbox_size = Vector2(130, 220)
 invisible = true
-approach_point = Vector2(-220, 280)
+approach_point = Vector2(-220, 340)
 look_direction = "right"
 observe_text = "Lleva veinte años en el mismo mostrador. No sonríe, pero tampoco parece triste."
 
 [node name="Loro" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(1015, 300)
+position = Vector2(1060, 300)
 hotspot_name = "Loro"
 hitbox_size = Vector2(110, 160)
 invisible = true
-approach_point = Vector2(-115, 260)
+approach_point = Vector2(-160, 260)
 look_direction = "right"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Hotspots/Loro"]
@@ -177,14 +187,14 @@ texture = ExtResource("9_formulario")
 scale = Vector2(0.122, 0.122)
 
 [node name="SelloAnchor" type="Node2D" parent="World/Hotspots"]
-position = Vector2(985, 590)
+position = Vector2(1010, 595)
 
 [node name="Sello" parent="World/Hotspots/SelloAnchor" instance=ExtResource("5_hotspot")]
-position = Vector2(0, -95)
+position = Vector2(0, -90)
 hotspot_name = "Sello"
 hitbox_size = Vector2(100, 100)
 invisible = true
-approach_point = Vector2(-115, 145)
+approach_point = Vector2(-140, 135)
 look_direction = "right"
 observe_text = "El instrumento más poderoso del edificio. Por eso está atado."
 interact_text = "El instrumento más poderoso del edificio. Por eso está atado."
@@ -212,11 +222,6 @@ approach_point = Vector2(0, 455)
 look_direction = "right"
 observe_text = "Marca una hora que no coincide con ninguna de las dos que importan hoy."
 interact_text = "Nicanor lo golpea suavemente, como si eso ayudara. No ayuda."
-
-[node name="ServiceWindowForeground" type="Sprite2D" parent="."]
-position = Vector2(640, 360)
-scale = Vector2(0.765550239, 0.765550239)
-texture = ExtResource("16_windowfg")
 
 [node name="UI" type="CanvasLayer" parent="."]
 

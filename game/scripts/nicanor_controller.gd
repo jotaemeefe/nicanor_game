@@ -12,6 +12,13 @@ class_name NicanorController
 @export var arrive_threshold: float = 4.0
 @export var walkable_bounds: Rect2 = Rect2(120, 420, 1040, 240)
 
+## Sub-regions of walkable_bounds that are off-limits — furniture footprints
+## and similar spots where standing would read as "on top of" a prop instead
+## of on the floor beside it. A click/approach point that lands inside one
+## gets pushed to its nearest edge instead of rejected outright, so the walk
+## still resolves to somewhere reasonable nearby.
+@export var excluded_zones: Array[Rect2] = []
+
 ## Sprite scale at the back (small Y) and front (large Y) of walkable_bounds;
 ## every point in between is linearly interpolated by Y. See
 ## production/decisions.md for why this exists — a constant scale made
@@ -51,10 +58,29 @@ func is_walking() -> bool:
 	return global_position.distance_to(_target_position) > arrive_threshold
 
 func _clamp_to_walkable(point: Vector2) -> Vector2:
-	return Vector2(
+	var clamped := Vector2(
 		clampf(point.x, walkable_bounds.position.x, walkable_bounds.position.x + walkable_bounds.size.x),
 		clampf(point.y, walkable_bounds.position.y, walkable_bounds.position.y + walkable_bounds.size.y)
 	)
+	for zone in excluded_zones:
+		if zone.has_point(clamped):
+			clamped = _push_out_of_zone(clamped, zone)
+	return clamped
+
+## Moves a point that's inside `zone` to whichever edge is closest.
+func _push_out_of_zone(point: Vector2, zone: Rect2) -> Vector2:
+	var dist_left := point.x - zone.position.x
+	var dist_right := (zone.position.x + zone.size.x) - point.x
+	var dist_top := point.y - zone.position.y
+	var dist_bottom := (zone.position.y + zone.size.y) - point.y
+	var closest := minf(minf(dist_left, dist_right), minf(dist_top, dist_bottom))
+	if closest == dist_left:
+		return Vector2(zone.position.x, point.y)
+	if closest == dist_right:
+		return Vector2(zone.position.x + zone.size.x, point.y)
+	if closest == dist_top:
+		return Vector2(point.x, zone.position.y)
+	return Vector2(point.x, zone.position.y + zone.size.y)
 
 func _depth_scale_for_y(y: float) -> float:
 	var back_y := walkable_bounds.position.y
