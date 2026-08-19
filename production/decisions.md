@@ -5,6 +5,40 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — La Recepcionista atiende detrás del mostrador (posición, no escala)
+
+Reporte: "el carpincho se ve raro, como si no estuviera bien posicionado el cuerpo y le faltara lo
+que está debajo del torso"; debe atender detrás del mostrador como en `scene_master_reference.png`.
+Medido antes de tocar nada, sobre una captura real (`--write-movie`) y sobre los assets:
+
+- **El torso no faltaba: el recorte del busto flotaba 15 px por encima del alféizar.**
+  `carp_idle_new.png` es un busto cuyo arte termina en la fila 595 de un lienzo de 724 (128 px de
+  transparencia abajo). Con la Recepcionista en y=388 y escala 0.29 el borde recortado caía en
+  y≈351 de pantalla, y la banda opaca del alféizar en `service_window_foreground_overlay.png`
+  empieza en y≈363: quedaba una franja de 15 px donde se veía el interior de la garita entre sus
+  brazos cortados y el mostrador. Ese corte recto en el aire es lo que se leía como "le falta el
+  cuerpo". Ahora está en y=412: el corte cae en y≈375, dentro de la banda que el alféizar tapa
+  (medida columna por columna sobre el overlay: seguro entre y=363,6 e y=382,0 en todo su ancho).
+- **También estaba corrido 44 px a la derecha.** En el maestro su cabeza queda centrada entre los
+  dos parantes del vidrio (pantalla x=772 y x=882 → centro 827); estaba en x≈872, casi encima del
+  parante derecho, lo que lo hacía ver apretado contra el borde. Ahora x=826.
+- **No se cambió la escala, a propósito.** El carpincho del maestro se ve más grande y más ancho,
+  pero es otro dibujo: está inclinado hacia adelante con los codos abiertos sobre el mostrador,
+  mientras el sprite es un busto erguido con las manos cruzadas. Un template match (NCC sobre
+  magnitud de gradiente) no encontró correspondencia real (score 0,34, posición absurda), justamente
+  porque no son la misma imagen a otra escala. Las medidas por landmark dan factores contradictorios
+  según qué se mida (alto de cabeza 1,05×, anteojos 1,23×, hombros 1,4×) porque el maestro está
+  escorzado. Lo que sí es comparable es la composición: altura de la coronilla al alféizar, 118 px
+  en el maestro contra 126 px ahora (6% de diferencia). Agrandarlo para igualar el ancho de hombros
+  lo dejaría 20-30 px más alto que en el maestro, es decir asomando por encima del mostrador en
+  lugar de atendiendo detrás — peor cambio que el que corrige. Si igual se lo quiere más grande, es
+  una línea: subir `scale` y bajar `position.y` para mantener el corte dentro de la banda del
+  alféizar.
+- **El hotspot se movió con él** (826, 292) y se achicó a 150×140 para cubrir solo lo que se ve del
+  personaje y dejar de solaparse con el hotspot del Mostrador (antes compartían 25 px). Su
+  `approach_point` se recalculó para que Nicanor siga parándose en el mismo punto absoluto del piso
+  (650, 620), verificado por `walkable_area_test`.
+
 ## 2026-08-19 — Playtest: Nicanor encima de los props, y perspectiva del cartel
 
 Ronda de playtest sobre la escena de recepción. Los tres primeros puntos son el mismo síntoma

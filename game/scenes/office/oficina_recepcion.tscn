@@ -69,7 +69,7 @@ offset = Vector2(0, -330)
 scale = Vector2(0.62, 0.62)
 
 [node name="Recepcionista" type="Node2D" parent="World"]
-position = Vector2(870, 388)
+position = Vector2(826, 412)
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Recepcionista"]
@@ -119,11 +119,11 @@ observe_text = "Un mostrador de madera gastada, pulido por décadas de codos apo
 interact_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
 
 [node name="RecepcionistaHotspot" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(870, 280)
+position = Vector2(826, 292)
 hotspot_name = "Recepcionista"
-hitbox_size = Vector2(130, 220)
+hitbox_size = Vector2(150, 140)
 invisible = true
-approach_point = Vector2(-220, 340)
+approach_point = Vector2(-176, 328)
 look_direction = "right"
 observe_text = "Lleva veinte años en el mismo mostrador. No sonríe, pero tampoco parece triste."
 
