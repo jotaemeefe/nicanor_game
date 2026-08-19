@@ -5,6 +5,30 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-19 — Clic sobre el personaje durante un diálogo: se lo tragaba el hotspot
+
+Reporte: hablando con la Recepcionista, "a veces el usuario se puede confundir y se repite el
+último mensaje varias veces"; sospecha del usuario, que vuelve a clickear al carpincho con la caja
+todavía abierta.
+
+- **La causa exacta**: `Hotspot._on_input_event` emite y llama a `set_input_as_handled()` en **todo**
+  clic izquierdo sobre su caja, y el controlador descartaba la interacción si la caja de diálogo
+  estaba visible. Como el evento ya quedó marcado como manejado, `_unhandled_input` — que es quien
+  le pasa el clic a la caja — nunca lo veía. Resultado: mientras hay una línea en pantalla, hacer
+  clic sobre el personaje con el que estás hablando no hacía absolutamente nada. Había que correr el
+  mouse fuera del hotspot para avanzar. De ahí la lectura de "no me responde" y después la de "se
+  repite el mensaje", cuando un clic posterior reabría la misma rama.
+- **Arreglo 1**: el clic sobre un hotspot con la caja abierta se reenvía a la caja
+  (`_on_hotspot_interacted`), así avanza el diálogo igual que un clic en cualquier otro lado. El
+  clic derecho (observar) durante un diálogo se ignora, no avanza.
+- **Arreglo 2, que es lo que pedía el usuario**: 350 ms de gracia después de que la caja se cierra
+  durante los cuales un clic en un hotspot no abre una conversación nueva. El clic que despacha la
+  última línea y un segundo clic por reflejo sobre el mismo personaje son indistinguibles en
+  intención, y volver a correr la misma rama se ve como si la caja nunca se hubiera cerrado. 350 ms
+  es más corto que un doble clic deliberado, así que volver a hablar sigue funcionando.
+- Cubierto por cinco chequeos nuevos en `puzzle_flow_test`, verificados al revés: con el arreglo 1
+  revertido, cuatro de ellos fallan.
+
 ## 2026-08-19 — La pantalla de estado sobre la puerta, y el formulario se va con Nicanor
 
 - **La pantalla pasó a la pared de arriba de la puerta** (de (990, 90) a (1158, 82)). El fondo ahí

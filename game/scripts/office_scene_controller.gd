@@ -54,7 +54,15 @@ var _loro_data: Dictionary = {}
 var _final_data: Dictionary = {}
 var _machine_data: Dictionary = {}
 
+## A hotspot click landing this soon after a conversation ended does not start a
+## new one. The click that dismisses the last line and a reflex second click on
+## the same character are indistinguishable in intent, and replaying the very
+## same branch looks like the box never closed — reported as "the last message
+## repeats several times". Short enough that a deliberate re-click still works.
+const REOPEN_GRACE_MSEC: int = 350
+
 var _busy: bool = false
+var _dialogue_closed_at_msec: int = -REOPEN_GRACE_MSEC
 var _line_queue: Array = []
 var _on_queue_done: Callable = Callable()
 var _pending_choice_options: Array = []
@@ -163,13 +171,27 @@ func _on_hotspot_unhovered(_hotspot: Hotspot) -> void:
 # --- Hotspot click routing ----------------------------------------------
 
 func _on_hotspot_observed(hotspot: Hotspot) -> void:
+	if _dialogue_box.visible:
+		return
 	_start_interaction(hotspot, true)
 
+## A click over a hotspot is consumed by its Area2D (which marks the input as
+## handled) before _unhandled_input can route it to the dialogue box, so while a
+## line is on screen the click has to be forwarded from here. Without this,
+## clicking the character you are talking to does nothing at all: the player has
+## to move the cursor off them to advance, which reads as the game ignoring the
+## click — and then as the same line repeating, once a later click reopens the
+## same conversation.
 func _on_hotspot_interacted(hotspot: Hotspot) -> void:
+	if _dialogue_box.visible:
+		_dialogue_box.handle_click()
+		return
 	_start_interaction(hotspot, false)
 
 func _start_interaction(hotspot: Hotspot, is_observe: bool) -> void:
-	if _busy or _dialogue_box.visible or GameState.current == GameState.State.ESCENA_TERMINADA:
+	if _busy or _dialogue_box.visible or _dialogue_just_closed():
+		return
+	if GameState.current == GameState.State.ESCENA_TERMINADA:
 		return
 	_busy = true
 	_nicanor.walk_to(hotspot.approach_global_position())
@@ -276,6 +298,9 @@ func _play_ending() -> void:
 
 # --- Generic line/choice queue ------------------------------------------
 
+func _dialogue_just_closed() -> bool:
+	return Time.get_ticks_msec() - _dialogue_closed_at_msec < REOPEN_GRACE_MSEC
+
 func _play_lines(lines: Array, on_done: Callable = Callable()) -> void:
 	_line_queue = lines.duplicate()
 	_on_queue_done = on_done
@@ -284,6 +309,7 @@ func _play_lines(lines: Array, on_done: Callable = Callable()) -> void:
 func _advance_queue() -> void:
 	if _line_queue.is_empty():
 		_dialogue_box.close()
+		_dialogue_closed_at_msec = Time.get_ticks_msec()
 		_set_speaker_idle_all()
 		if _on_queue_done.is_valid():
 			var done := _on_queue_done

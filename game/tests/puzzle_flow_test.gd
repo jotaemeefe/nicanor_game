@@ -24,6 +24,7 @@ func _ready() -> void:
 	_check_state_text("res://data/dialogues/loro.json", "idle_by_state")
 	_check_final_dialogue()
 	await _check_formulario_disappears()
+	await _check_dialogue_click_routing()
 
 	if _failures.is_empty():
 		print("PUZZLE FLOW TEST: OK — %d checks passed, no failures." % _pass_count)
@@ -38,6 +39,45 @@ func _expect(condition: bool, message: String) -> void:
 		_pass_count += 1
 	else:
 		_failures.append(message)
+
+## A hotspot's Area2D marks a click as handled before _unhandled_input can hand
+## it to the dialogue box, so a click on the character you are talking to used
+## to do nothing at all — the player had to move the cursor off them to advance.
+## Also checks the grace period that stops the click after the last line, or a
+## reflex second one, from immediately replaying the same conversation.
+func _check_dialogue_click_routing() -> void:
+	GameState.reset()
+	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
+	add_child(office)
+	await get_tree().process_frame
+
+	var box: DialogueBox = office.get_node("UI/DialogueBox")
+	var loro: Hotspot = office.get_node("World/Hotspots/LoroAnchor/Loro")
+
+	office._play_lines(["uno", "dos"])
+	await get_tree().process_frame
+	_expect(box.visible and box._full_text == "uno", "the first line should be on screen")
+
+	# first click completes the typewriter, second one advances
+	office._on_hotspot_interacted(loro)
+	_expect(box._full_text == "uno" and not box._revealing,
+		"a click over a hotspot should complete the reveal, not be swallowed")
+	office._on_hotspot_interacted(loro)
+	await get_tree().process_frame
+	_expect(box.visible and box._full_text == "dos",
+		"a second click over a hotspot should advance to the next line")
+
+	office._on_hotspot_interacted(loro)
+	office._on_hotspot_interacted(loro)
+	await get_tree().process_frame
+	_expect(not box.visible, "the box should close after the last line")
+
+	# the reflex click right after it closes must not replay the same branch
+	office._on_hotspot_interacted(loro)
+	await get_tree().process_frame
+	_expect(not box.visible, "a click inside the grace period should not reopen the dialogue")
+
+	office.queue_free()
 
 ## Nicanor takes the form with him once he fills it in, so it has to leave the
 ## desk — and it has to come back on Reiniciar, since the scene is reset by
