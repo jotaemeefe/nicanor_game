@@ -35,6 +35,13 @@ que dependa del estado**, se muda a `data/hotspots/` (como la Máquina). No hay 
 `interact_text_alt` es un escape para un único "ya está hecho", no una máquina de estados de dos
 entradas.
 
+Hay un segundo disparador de ascenso, que estrenó el Formulario el 2026-08-20: **un beat que deja
+de ser una línea y pasa a ser una escena**. Al meterle el hallazgo del concurso, su interacción
+pasó de un string a once entradas con dos hablantes y una opción — eso ya no es utilería, es una
+conversación, y vive en `data/hotspots/formulario.json` bajo `interact_resolve_sequence`, la misma
+forma que usa la Máquina para su secuencia de resolución. El `interact_text` del `.tscn` se borró
+en el mismo commit: dejarlo habría dejado dos originales del mismo texto.
+
 Criterio inverso, igual de importante: **no promover a `branches` algo que no ramifica.** El Loro
 tiene trece consignas repartidas en siete estados y sigue siendo un dict plano, porque nunca
 conversa.
@@ -177,9 +184,13 @@ consigue contestando — pero hay que escribirlas sabiéndolo:
 - **Las opciones nunca prometen consecuencia.** Ninguna puede sugerir información distinta, un
   atajo, ni un riesgo. Si dos opciones no son intercambiables desde el punto de vista del trámite,
   la opción está mintiendo.
-- **Dos opciones, dos actitudes.** El par existente ("Si hubiera venido, no sería una ausencia." /
-  "No. Por eso estoy acá y no en otro lado.") es el modelo: misma información, distinto grado de
-  soberbia.
+- **Dos opciones, dos actitudes.** El par existente ("¿Y esto dónde se entrega?" / "Pregunto por un
+  amigo que escribe.") es el modelo: misma información, distinto grado de vergüenza.
+- **Misma respuesta con adorno no es una opción.** Corolario del punto anterior, y el error más
+  fácil de cometer: un par donde una opción es la otra más larga ("Hijo." / "Soy el hijo. Nicanor
+  Sosa. Poeta.") le pide al jugador una decisión que no existe, y se nota. Si las dos no expresan
+  **actitudes distintas** — no longitudes distintas de la misma actitud — la línea va sola, sin
+  `choice`. Rechazado por el usuario en la pasada del 2026-08-20, ver `decisions.md`.
 - **La opción elegida no se vuelve a mostrar.** El texto del botón ya *es* la línea de Nicanor
   (`decisions.md`). Escribila como diálogo terminado, no como resumen de intención: "Pregunto qué
   falta" está mal; "¿Qué me falta?" está bien.

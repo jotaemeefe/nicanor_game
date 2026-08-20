@@ -718,6 +718,7 @@ nicanor_game
 │   │   │   ├── loro.json
 │   │   │   └── recepcionista.json
 │   │   └── hotspots
+│   │       ├── formulario.json
 │   │       └── maquina_turnos.json
 │   ├── docs
 │   │   ├── MVP_SCOPE.md

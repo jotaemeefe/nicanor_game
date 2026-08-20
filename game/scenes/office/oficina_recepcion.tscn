@@ -220,7 +220,6 @@ invisible = true
 approach_point = Vector2(192, 155)
 look_direction = "left"
 observe_text = "Tiene más casilleros que preguntas."
-interact_text = "Nicanor completa el formulario como puede. Hay una pregunta que no entiende y contesta con una fecha."
 interact_text_alt = "El formulario ya está completo. Romperlo no cambiaría nada."
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Hotspots/Formulario"]

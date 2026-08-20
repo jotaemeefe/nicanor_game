@@ -1,9 +1,72 @@
 # Decisions Log — Ministerio de los Ausentes
 
 - Status: Active
-- Last updated: 2026-08-19
+- Last updated: 2026-08-20
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
+
+## 2026-08-20 — El concurso se descubre adentro del Ministerio, no en la puerta
+
+Pedido del usuario mientras armaba el pitch: el diálogo de apertura con el carpincho no cerraba y
+había que decidir **cómo entra el tema del concurso de poesía**.
+
+- **El diagnóstico salió de mirar la intro, no el JSON.** El video (38 s) muestra un archivo donde
+  una mano sella un formulario que dice NAME, y después a Nicanor leyendo un documento **con el
+  campo del nombre tapado por una barra negra**, con la foto familiar al lado. O sea que el papel
+  que recibe ya es el borrado. Con esa carga emocional encima, que su primera línea fuera "vengo a
+  inscribirme en el concurso de poesía" (decisión del 2026-08-19) no se leía como vanidad sino
+  **como que se olvidó**. Los dos órdenes posibles no eran equivalentes: el pitch contaba concurso
+  primero y el juego contaba borrado primero.
+- **La solución la propuso el usuario y es mejor que las tres que yo había ofrecido**: entra por la
+  ausencia, y el concurso lo **descubre adentro del edificio**. No toca el video, y convierte la
+  vanidad de algo que va *antes* del duelo en algo que lo *interrumpe*, que es más gracioso y más
+  triste.
+- **Dónde lo descubre: al dorso de su propio trámite.** La constancia de presencia está impresa
+  atrás de las bases del Concurso de Poesía Productiva, porque sobró papel de Cultura. El Ministerio
+  imprime sus formularios de ausencia con el descarte de su programa cultural — canon §4 y §7 sin
+  que nadie lo explique. Y el remate viejo ("cerró por improductiva") ya no viene pegado: se demora
+  tres entradas y cae solo.
+- **"Trimestral. Se puede." es el corazón del beat.** Lee una condición delirante del concurso
+  (canon §4: proyección de impacto emocional trimestral) y en vez de indignarse **la evalúa y le
+  parece hacible**, en el medio del trámite de su madre.
+- **Por qué los chistes de mi primera versión eran malos, que es lo que reportó el usuario.** Dos
+  fallas estructurales, no de pulido: le había dado **ingenio a Nicanor**, cuando
+  `characters/nicanor.md` dice que su humor sale de la cobardía y la vanidad y **nunca** de su
+  ingenio — y si él también es rápido, el carpincho deja de tener a quién ganarle. Y todas las
+  líneas tenían **la misma forma** (corrección seca y corta), que es exactamente el diagnóstico que
+  el usuario ya había hecho sobre el Loro el 2026-08-19 y yo repetí. La reescritura buscó
+  mecanismos distintos por beat: distinción falsa, campo de formulario, eufemismo para el horror,
+  non sequitur, inversión.
+- **La apertura la reescribió el usuario y quedó mejor.** Yo tenía a Nicanor bajando solo su
+  "reclamo" a "consulta"; él propuso que la distinción falsa la ofrezca **ella** ("¿Consulta o
+  reclamo?") y que Nicanor pregunte lo que está preguntando el jugador ("¿Cuál es la diferencia?").
+  De yapa quedó un eco no buscado: la escena **abre** con "las dos se hacen en esta misma
+  ventanilla" y **cierra** con "eso se tramita en otra ventanilla".
+- **Se sacó la opción del vínculo.** Yo había puesto "Hijo." / "Soy el hijo. Nicanor Sosa. Poeta.";
+  el usuario las rechazó porque **no son dos opciones, son la misma respuesta con adorno**. Tiene
+  razón y la regla se anotó en `dialogue-structure.md` §5 como invariante, no como caso: si las dos
+  opciones no expresan actitudes distintas, la línea va sola. Nicanor dice "Hijo." y listo. La
+  única opción de la escena quedó en el beat del concurso, donde el par sí son dos actitudes
+  (preguntar de frente / "pregunto por un amigo que escribe", que es la vergüenza de mostrar lo que
+  escribe, canon de `nicanor.md`).
+- **Las tres líneas más cortas hacen el trabajo emocional**: "Hijo.", "Ah." y "No.". La 8
+  ("Administrativamente, a usted no le pasó nada") reemplazó una vuelta recursiva sobre el verbo
+  *figurar* que el usuario marcó como pesada y confusa — tres usos de "figurar" en tres líneas se
+  vuelven un acertijo de vocabulario. La versión nueva es más clara *y* más cruel, porque le niega
+  el duelo **a él**, no la existencia a ella.
+- **Cableado**: el Formulario ascendió de string fijo a `data/hotspots/formulario.json`
+  (`interact_resolve_sequence`), y su `interact_text` se borró del `.tscn` para no dejar dos
+  originales del mismo texto. Ver `dialogue-structure.md` §1.
+- **Un error propio que vale registrar**: para verificar el ancho de las líneas nuevas lancé Godot
+  con ventana y `--write-movie`, se colgó, y al matar el proceso me llevé puesto el editor que el
+  usuario tenía abierto — de ahí el "Couldn't connect to the GDScript language server at
+  127.0.0.1:6008" de la extensión godot-tools, que no tenía nada que ver ni con el MCP ni con el
+  juego. `CLAUDE.md` ya advertía que no se lance eso con una sesión del usuario abierta. La
+  verificación visual de las líneas nuevas queda pendiente para el playtest manual; **no está
+  hecha**.
+- Verificado: los cuatro tests headless en verde (141/8/75/17, 28 chequeos nuevos). El nuevo
+  `_check_formulario_sequence` maneja la secuencia entera hasta el final eligiendo en la opción,
+  porque una opción que no avanza dejaría el puzle sin terminar y en silencio.
 
 ## 2026-08-19 — Vuelta de la Planta, Sello nuevo, y el Loro reescrito por variedad de mecanismo
 

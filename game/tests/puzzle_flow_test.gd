@@ -24,6 +24,7 @@ func _ready() -> void:
 	_check_state_text("res://data/dialogues/loro.json", "idle_by_state")
 	_check_final_dialogue()
 	_check_parrot_remates()
+	await _check_formulario_sequence()
 	await _check_parrot_speaks_after_a_beat()
 	await _check_restart_resets_state()
 	await _check_formulario_disappears()
@@ -115,6 +116,57 @@ func _check_formulario_disappears() -> void:
 
 	office.queue_free()
 
+## Filling the form is where the poetry contest enters the game, so that beat
+## grew from a single .tscn string into a multi-speaker sequence with a choice,
+## living in data/hotspots/formulario.json. Two things can silently break: the
+## data file going missing (the form would fill in in total silence) and the
+## choice stalling the queue so DECLARACION_OBTENIDA never lands, which would
+## make the puzzle unfinishable. This drives the whole sequence to the end.
+func _check_formulario_sequence() -> void:
+	var data := DialogueManager.load_json("res://data/hotspots/formulario.json")
+	var sequence: Array = data.get("interact_resolve_sequence", [])
+	_expect(sequence.size() > 0, "formulario.json should have a non-empty interact_resolve_sequence")
+
+	var choices := 0
+	for entry in sequence:
+		if entry is Dictionary and entry.has("choice"):
+			choices += 1
+			_expect((entry["choice"] as Array).size() == 2, "the formulario choice should offer 2 options")
+		else:
+			_expect(str(entry.get("text", "")) != "", "every formulario line should have text")
+	_expect(choices == 1, "the formulario sequence should contain exactly 1 choice, has %d" % choices)
+
+	GameState.reset()
+	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
+	add_child(office)
+	await get_tree().process_frame
+
+	var box: DialogueBox = office.get_node("UI/DialogueBox")
+	var formulario: Hotspot = office.get_node("World/Hotspots/Formulario")
+	GameState.set_state(GameState.State.REQUISITO_DESCUBIERTO)
+	await get_tree().process_frame
+
+	office._handle_formulario_interact(formulario)
+	await get_tree().process_frame
+	_expect(box.visible, "filling the form should open the dialogue box")
+
+	# Drain it the way a player would, picking the first option at the choice.
+	# The cap is a guard against a stall, not an expected length.
+	var guard := 0
+	while box.visible and guard < 50:
+		guard += 1
+		if box.is_choice_mode():
+			office._on_choice_selected(0)
+		else:
+			office._advance_queue()
+		await get_tree().process_frame
+	_expect(guard < 50, "the formulario sequence should end, not stall at the choice")
+	_expect(GameState.current == GameState.State.DECLARACION_OBTENIDA,
+		"finishing the formulario sequence should reach DECLARACION_OBTENIDA, got %s"
+			% GameState.state_name(GameState.current))
+
+	office.queue_free()
+
 func _check_state_machine() -> void:
 	var order := [
 		GameState.State.INICIO,
@@ -167,15 +219,16 @@ func _check_recepcionista_branches() -> void:
 		_expect(not branch.is_empty(), "a branch should exist for %s" % GameState.State.keys()[state])
 		_expect(branch.get("id", "") == expectations[state], "state %s should pick branch '%s', got '%s'" % [GameState.State.keys()[state], expectations[state], branch.get("id", "<none>")])
 
-	# The "intro" branch must contain a choice entry (exercises the
-	# options/branching capability the dialogue system is required to support).
+	# The intro deliberately carries no choice any more. The pair that used to
+	# sit here ("Hijo." / "Soy el hijo. Nicanor Sosa. Poeta.") was the same
+	# answer twice at different lengths, which is not a real option — Nicanor
+	# just says it. The scene's one choice moved to formulario.json, where the
+	# two options are actually different attitudes; _check_formulario_sequence
+	# is what exercises the branching capability now.
 	var intro: Dictionary = DialogueManager.pick_branch(branches, GameState.State.INICIO)
-	var has_choice := false
 	for line in intro.get("lines", []):
-		if line is Dictionary and line.has("choice"):
-			has_choice = true
-			_expect((line["choice"] as Array).size() == 2, "intro choice should offer 2 options")
-	_expect(has_choice, "intro branch should contain a choice entry")
+		_expect(not (line is Dictionary and line.has("choice")),
+			"the intro branch should carry no choice — the scene's choice lives in formulario.json")
 
 	# turno_cero must flip the state forward via effects.set_state
 	var turno_branch: Dictionary = DialogueManager.pick_branch(branches, GameState.State.TURNO_0_RECIBIDO)

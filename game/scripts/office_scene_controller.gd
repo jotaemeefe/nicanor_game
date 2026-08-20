@@ -10,6 +10,7 @@ const RECEPCIONISTA_DIALOGUE_PATH := "res://data/dialogues/recepcionista.json"
 const LORO_DIALOGUE_PATH := "res://data/dialogues/loro.json"
 const FINAL_DIALOGUE_PATH := "res://data/dialogues/final.json"
 const MAQUINA_HOTSPOT_DATA_PATH := "res://data/hotspots/maquina_turnos.json"
+const FORMULARIO_HOTSPOT_DATA_PATH := "res://data/hotspots/formulario.json"
 
 const CARP_IDLE := preload("res://assets/characters/recepcionista/carp_idle_new.png")
 const CARP_HABLANDO := preload("res://assets/characters/recepcionista/carp_hablando_new.png")
@@ -53,6 +54,7 @@ var _recepcionista_data: Dictionary = {}
 var _loro_data: Dictionary = {}
 var _final_data: Dictionary = {}
 var _machine_data: Dictionary = {}
+var _formulario_data: Dictionary = {}
 
 ## A hotspot click landing this soon after a conversation ended does not start a
 ## new one. The click that dismisses the last line and a reflex second click on
@@ -74,6 +76,7 @@ func _ready() -> void:
 	_loro_data = DialogueManager.load_json(LORO_DIALOGUE_PATH)
 	_final_data = DialogueManager.load_json(FINAL_DIALOGUE_PATH)
 	_machine_data = DialogueManager.load_json(MAQUINA_HOTSPOT_DATA_PATH)
+	_formulario_data = DialogueManager.load_json(FORMULARIO_HOTSPOT_DATA_PATH)
 
 	_hover_label.hide()
 	_dialogue_box.hide()
@@ -302,11 +305,20 @@ func _queue_parrot_remate(_previous: GameState.State, current: GameState.State) 
 
 # --- Formulario --------------------------------------------------------
 
+## Filling the form is also where the poetry contest enters the game: the
+## constancia is printed on the back of the contest's terms, so Nicanor finds
+## it in his own hands, in the middle of his mother's paperwork. That turned a
+## one-line beat into a multi-speaker sequence with a choice, so the text moved
+## out of the .tscn strings and into data/hotspots/formulario.json — same shape
+## as the machine's interact_resolve_sequence (dialogue-structure.md §1).
+## `interact_text_alt` stays on the node: it is the unreachable safety net for
+## the already-filled case (the hotspot switches off at DECLARACION_OBTENIDA).
 func _handle_formulario_interact(hotspot: Hotspot) -> void:
 	if GameState.is_at_least(GameState.State.DECLARACION_OBTENIDA):
 		_play_lines([hotspot.interact_text_alt])
 	else:
-		_play_lines([hotspot.interact_text], func() -> void:
+		var sequence: Array = _formulario_data.get("interact_resolve_sequence", [])
+		_play_lines(sequence, func() -> void:
 			GameState.set_state(GameState.State.DECLARACION_OBTENIDA)
 		)
 

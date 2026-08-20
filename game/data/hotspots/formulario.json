@@ -1,0 +1,58 @@
+{
+  "interact_resolve_sequence": [
+    {
+      "text": "Nicanor completa el formulario como puede. Hay una pregunta que no entiende y contesta con una fecha."
+    },
+    {
+      "text": "El formulario está impreso de los dos lados."
+    },
+    {
+      "speaker": "Nicanor",
+      "text": "\"Concurso Nacional de Poesía Productiva. Adjunte proyección de impacto emocional trimestral.\"",
+      "pose": "recitado"
+    },
+    {
+      "speaker": "Nicanor",
+      "text": "Trimestral. Se puede.",
+      "pose": "explicacion"
+    },
+    {
+      "speaker": "Recepcionista",
+      "text": "El otro lado es su trámite. Es el mismo papel."
+    },
+    {
+      "speaker": "Nicanor",
+      "text": "¿Por qué el concurso está impreso atrás del formulario?",
+      "pose": "escepticismo"
+    },
+    {
+      "speaker": "Recepcionista",
+      "text": "Al revés. El formulario está impreso atrás del concurso. Sobró papel de Cultura."
+    },
+    {
+      "choice": [
+        {
+          "text": "¿Y esto dónde se entrega?",
+          "pose": "explicacion"
+        },
+        {
+          "text": "Pregunto por un amigo que escribe.",
+          "pose": "neutral"
+        }
+      ]
+    },
+    {
+      "speaker": "Recepcionista",
+      "text": "En Cultura."
+    },
+    {
+      "speaker": "Nicanor",
+      "text": "¿Dónde queda Cultura?",
+      "pose": "neutral"
+    },
+    {
+      "speaker": "Recepcionista",
+      "text": "Cerró. Por improductiva."
+    }
+  ]
+}

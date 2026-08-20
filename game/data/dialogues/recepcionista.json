@@ -4,21 +4,20 @@
       "id": "intro",
       "max_state": "MAQUINA_EXAMINADA",
       "lines": [
-        { "speaker": "Nicanor", "text": "Vengo a inscribirme en el concurso de poesía.", "pose": "explicacion" },
-        { "speaker": "Recepcionista", "text": "¿El de Poesía Productiva?" },
-        { "speaker": "Nicanor", "text": "¿Hay otro?", "pose": "escepticismo" },
-        { "speaker": "Recepcionista", "text": "Hubo otro. No rindió. Las inscripciones son por Cultura, que cerró por improductiva." },
-        { "speaker": "Nicanor", "text": "Entonces vengo a declarar una ausencia.", "pose": "neutral" },
+        { "speaker": "Nicanor", "text": "Vengo a hacer una consulta.", "pose": "neutral" },
+        { "speaker": "Recepcionista", "text": "¿Consulta o reclamo?" },
+        { "speaker": "Nicanor", "text": "¿Cuál es la diferencia?", "pose": "escepticismo" },
+        { "speaker": "Recepcionista", "text": "El tono. Las dos se hacen en esta misma ventanilla." },
+        { "text": "Nicanor apoya el papel en el mostrador. Donde va el nombre hay una barra negra." },
+        { "speaker": "Recepcionista", "text": "Depuración familiar. ¿Vínculo con la persona depurada?" },
+        { "speaker": "Nicanor", "text": "Hijo.", "pose": "neutral" },
+        { "speaker": "Recepcionista", "text": "Ese vínculo requiere una persona registrada. Administrativamente, a usted no le pasó nada." },
+        { "speaker": "Nicanor", "text": "Ah.", "pose": "neutral" },
         { "speaker": "Recepcionista", "text": "¿La ausencia vino con usted?" },
-        { "choice": [
-          { "text": "Si hubiera venido, no sería una ausencia.", "pose": "escepticismo" },
-          { "text": "No. Por eso estoy acá y no en otro lado.", "pose": "neutral" }
-        ] },
+        { "speaker": "Nicanor", "text": "No.", "pose": "neutral" },
         { "speaker": "Recepcionista", "text": "Entonces va a necesitar una constancia de presencia. Suya, no de la ausencia." },
         { "speaker": "Nicanor", "text": "¿Una constancia de presencia para declarar una ausencia?", "pose": "escepticismo" },
-        { "speaker": "Recepcionista", "text": "Es para evitar ausencias fraudulentas. Prueba que usted está presente." },
-        { "speaker": "Nicanor", "text": "¿Y que sea yo?", "pose": "neutral" },
-        { "speaker": "Recepcionista", "text": "Eso se tramita en otra ventanilla." }
+        { "speaker": "Recepcionista", "text": "Para evitar ausencias fraudulentas. Prueba que usted está presente, no que sea usted. Eso se tramita en otra ventanilla." }
       ],
       "effects": { "set_state": "REQUISITO_DESCUBIERTO" }
     },

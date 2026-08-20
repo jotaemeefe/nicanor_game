@@ -53,14 +53,26 @@ establecer inmediatamente: quién es Nicanor, qué necesita, cómo funciona el h
 institución es el Ministerio, la existencia de nombres o personas que dejan de figurar (apenas
 insinuada, no explicada), y el contraste entre lenguaje administrativo y pérdida humana.
 
-**Nicanor entra diciendo que viene a inscribirse en el concurso de poesía** — la Recepcionista le
-pregunta si es el de Poesía Productiva ([game-bible.md §4](game-bible.md)) y lo despacha en dos
-líneas: hubo otro concurso y no rindió, y las inscripciones son por Cultura, que cerró por
-improductiva. Recién después de ese desaire dice a qué vino en serio. Es caracterización y siembra
-de la subtrama, **no un segundo objetivo**: el concurso no se puede tramitar en esta escena y no
-toca el puzle. Que Nicanor no arranque por la ausencia es deliberado — la vanidad va primero y lo
-que de verdad le importa queda segundo, que es exactamente su carácter
+**Nicanor entra por la ausencia, no por el concurso.** Llega con el papel donde el nombre está
+tapado por una barra negra — el mismo que la intro lo muestra recibiendo — y lo apoya en el
+mostrador. Es lo que vino a hacer y es lo primero que hace: cualquier otra cosa en boca de un
+personaje que acaba de ver ese papel se lee como olvido, no como caracterización.
+
+**El Concurso de Poesía Productiva ([game-bible.md §4](game-bible.md)) aparece adentro del
+Ministerio, no en la puerta.** Nicanor lo descubre al completar la constancia de presencia: el
+formulario está impreso **al dorso de las bases del concurso**, porque sobró papel de Cultura. O
+sea que el Ministerio imprime sus trámites de ausencia con el descarte de su propio programa
+cultural — eso baja el tema del juego sin que ningún personaje lo explique.
+
+Ese hallazgo es donde entra su vanidad, y entra **interrumpiendo el trámite de su madre**: lee una
+condición delirante del concurso y en vez de indignarse la evalúa y le parece hacible. La vanidad
+que va antes del duelo es incoherencia; la vanidad que lo interrumpe es carácter
 ([characters/nicanor.md](characters/nicanor.md)).
+
+Sigue siendo siembra de subtrama y **no un segundo objetivo**: el concurso no se puede tramitar en
+esta escena, no agrega hotspot ni estado, y si esas líneas desaparecieran el puzle seguiría igual.
+Que se descubra adentro del edificio, además, deja sembrado sin decirlo que el concurso puede ser
+más adelante la vía de acceso de Nicanor a sectores restringidos.
 
 **Objetivo inmediato de Nicanor:** conseguir un número de la máquina de turnos para iniciar un
 trámite relacionado con una persona ausente.
