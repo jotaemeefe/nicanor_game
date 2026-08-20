@@ -1,7 +1,7 @@
 # Dialogue Structure — Ministerio de los Ausentes
 
 - Status: Active
-- Last updated: 2026-08-19
+- Last updated: 2026-08-20
 - Related docs: [narrative.md](narrative.md) (voz y canon), [puzzles.md](puzzles.md) (qué estado
   desbloquea qué), [../game/README.md](../game/README.md) (cómo agregar un diálogo, versión corta),
   [../production/decisions.md](../production/decisions.md)
@@ -129,7 +129,7 @@ sin remate propio tiene que quedarse callado, no repetir el remate del hito ante
 
 Lo dispara `office_scene_controller.gd` en `state_changed`, pero **no lo dice en ese momento**: lo
 anota y lo suelta cuando la cola de líneas se vacía. Los hitos cambian el estado en dos momentos
-distintos — antes de mostrar su propio texto (el observar de la máquina) o después, dentro del
+distintos — antes de mostrar su propio texto (el primer clic en la máquina) o después, dentro del
 `on_done` de una rama — y esperar a que la cola se vacíe es lo único correcto para los dos.
 
 Reglas de contenido:
@@ -216,10 +216,12 @@ Chequeos que valen para cualquier diálogo nuevo. Los marcados ✅ ya los verifi
    `effects.set_state`, o quedar acotada por `max_state` a un estado del que se salga por otra vía.
    Si no, el jugador la puede volver a disparar entera.
 5. ⚠️ **Vocabularios cerrados.** `speaker` y `pose` solo con los valores de §2.
-6. ⚠️ **Doble verbo respondido.** Todo hotspot contesta al clic izquierdo *y* al derecho. Repetir el
-   mismo texto en ambos es legal para utilería (Mostrador, Cartel, Planta, Sello) pero es la opción
-   pobre: donde hay un remate físico, la interacción merece línea propia — Ventilador y Reloj son el
-   modelo.
+6. ✅ **Un solo verbo, una sola respuesta.** Desde el 2026-08-20 los dos botones del mouse hacen lo
+   mismo. Los dos campos del `Hotspot` sobreviven, pero ya no son dos verbos: en un objeto de
+   utilería el clic reproduce `observe_text` y después `interact_text` **como un solo beat**,
+   salteando los vacíos y los repetidos. Por eso el Cartel y la Planta, que llevan el mismo texto en
+   los dos campos a propósito, dicen una línea y no dos. Escribir el segundo campo solo si agrega
+   algo — el Ventilador quedó con uno y el Sello con dos.
 
 ### Longitudes (medidas contra la caja real, no estimadas)
 
@@ -312,13 +314,10 @@ Detectados al escribir este contrato. La pasada de revisión de diálogos del 20
 2. ~~**`loro.json` no distinguía `DECLARACION_USADA`**~~ **Cerrado de rebote.** Heredába
    "Presente la constancia en la máquina", que en ese instante ya era falso. El texto heredado hoy
    es una consigna atemporal, así que la herencia dejó de mentir.
-3. ~~**Cuatro hotspots repetían el mismo texto en ambos verbos.**~~ **Cerrado como decisión, no
-   como arreglo.** Mostrador y Sello tienen línea de interacción propia. Los otros dos conservan el
-   texto duplicado **a propósito y por pedido del usuario**: el Cartel de normas porque es la
-   pista escrita del puzle y tiene que decir lo mismo se lo mire o se lo toque, y la Planta porque
-   el chiste de las tres reestructuraciones es el que se quiere en los dos verbos. La invariante
-   §6.6 sigue diciendo que duplicar es la opción pobre por defecto; estos dos son la excepción
-   elegida, no un olvido. No "arreglar" ninguno de los dos sin preguntar.
+3. ~~**Cuatro hotspots repetían el mismo texto en ambos verbos.**~~ **Disuelto por el verbo único
+   del 2026-08-20.** Ya no hay dos verbos que puedan repetirse: el Cartel y la Planta llevan el
+   mismo string en los dos campos y `_prop_lines` lo colapsa a una línea, que es exactamente el
+   comportamiento que el usuario había pedido. El Mostrador dejó de ser hotspot en la misma pasada.
 4. **`interact_text_alt` del Formulario sigue siendo inalcanzable** — el hotspot se apaga al
    completarlo (`decisions.md`, 2026-08-19). Se conserva a propósito como red de seguridad; queda
    anotado para que no se lea como contenido activo.

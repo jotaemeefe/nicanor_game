@@ -42,9 +42,9 @@ godot --headless --path game scenes/office/oficina_recepcion.tscn --quit-after 6
 ## Controles
 
 - **Clic izquierdo** sobre el piso: caminar hasta ese punto.
-- **Clic izquierdo** sobre un hotspot: acción principal (hablar/usar/interactuar). Si Nicanor no
-  está ya en el punto de aproximación del hotspot, primero camina hasta ahí.
-- **Clic derecho** sobre un hotspot: observar/examinar.
+- **Clic** sobre un hotspot: la única acción que tiene (mirar/hablar/usar — el juego usa **un solo
+  verbo**, y los dos botones del mouse hacen lo mismo). Si Nicanor no está ya en el punto de
+  aproximación del hotspot, primero camina hasta ahí.
 - Pasar el mouse sobre un hotspot muestra su nombre arriba a la izquierda.
 - Durante un diálogo: clic izquierdo completa el texto instantáneamente si todavía se está
   revelando (efecto de máquina de escribir), o avanza a la siguiente línea si ya está completo.
@@ -90,7 +90,7 @@ Nicanor necesita un número de turno para declarar la ausencia de una persona, p
 una "constancia de presencia". Diseño completo del puzle (objetivo, pistas, respuestas a intentos
 incorrectos, ausencia de softlocks): `../design/puzzles.md`.
 
-Resumen: examinar/hablar para descubrir el requisito → completar el Formulario del mostrador →
+Resumen: examinar/hablar para descubrir el requisito → completar el Formulario del atril →
 usarlo en la máquina → recibir el turno 0 → volver a hablar con la Recepcionista → autorización por
 una contradicción reglamentaria → salir por la Puerta → cierre melancólico + remate del Loro.
 

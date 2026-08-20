@@ -5,6 +5,57 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-20 — Un solo verbo, el Mostrador fuera, y siete correcciones de playtest
+
+Siete pedidos del usuario en una sola pasada, sobre la versión recién commiteada.
+
+- **Un solo verbo.** "No tiene mucho sentido lo del clic izquierdo y derecho, que sea todo lo
+  mismo." Contradice `game-bible.md` y `AGENTS.md`, que definían un set de dos verbos estilo
+  LucasArts; se lo dije y lo confirmó, así que **el canon se actualizó en vez de quedar mintiendo**
+  (game-bible §"Genre and structure", AGENTS.md, CLAUDE.md, current-scope, README, PLAYTEST).
+- **El verbo único no tira texto a la basura, y esa fue la decisión de criterio.** Colapsar a un
+  verbo tenía la salida fácil de quedarse con `interact_text` y perder `observe_text` en todos
+  los hotspots. En lugar de eso, un objeto de utilería reproduce **las dos líneas como un solo
+  beat** — mirás y después tocás — con `_prop_lines` salteando vacíos y repetidos. Por eso el
+  Cartel y la Planta, que llevan el mismo string a propósito en los dos campos, siguen diciendo una
+  sola línea. Lo único que sí muere es el observar de personajes, máquina y formulario, donde el
+  clic tiene que hacer la acción: se perdió la descripción de la Recepcionista ("Lleva veinte años
+  en el mismo mostrador") y la del Formulario ("Tiene más casilleros que preguntas").
+- **La máquina era el nudo técnico.** Su avance `INICIO → MAQUINA_EXAMINADA` colgaba del verbo
+  observar, que ya no existe; ahora lo hace el clic. Los textos se leen **antes** de mover el
+  estado, porque si no el primer clic mostraría la variante de MAQUINA_EXAMINADA ("el mensaje
+  aparece más rápido, como si ya lo esperara") en vez del ERROR pelado. Y en
+  `DECLARACION_OBTENIDA` se usa solo la mitad de observar: `interact_by_state` no tiene entrada
+  para ese estado y el camino hacia atrás de `pick_state_text` habría heredado "la ranura espera un
+  papel que Nicanor todavía no tiene", que es falso justo cuando ya lo tiene. Herencia no vacía no
+  es herencia verdadera (`dialogue-structure.md` §3).
+- **El Mostrador dejó de ser hotspot.** Se borró el nodo entero, no se lo escondió.
+- **El formulario está en el atril, no en el mostrador**, y la Recepcionista ya no dice
+  "Complételo": en `REQUISITO_DESCUBIERTO` Nicanor todavía no lo vio, así que darle instrucciones
+  de completar algo que no miró era una línea que sabía más que el jugador. Quedó en una sola línea
+  corta, que además es lo correcto para una rama de recordatorio que se repite idéntica
+  (`dialogue-structure.md` §6, invariante 3).
+- **El chiste de la fecha aproximada no se perdió: se mudó.** "No sé qué poner. La ausencia no
+  tiene fecha exacta." / "Ponga una aproximada. De todos modos va a valer lo mismo." vivía en la
+  rama de recordatorio, donde Nicanor no estaba mirando el formulario. Ahora abre la secuencia del
+  Formulario, que es el único momento en que la línea es verdad.
+- **Ventilador y Reloj.** El saludo al ventilador se borró — queda el empleado más antiguo del
+  edificio, que era el buen chiste. El reloj pasó de dos líneas flojas a una: "Está parado.
+  Probablemente el tiempo nunca avanzó en esta oficina."
+- **El cierre.** "Un número que nadie llamó. Un lugar que nadie ocupa." era una imagen bonita sobre
+  el trámite, no una reflexión del personaje. La nueva la dice **como poeta y sobre sí mismo**:
+  *"Dije 'una ausencia'. Dije 'el vínculo'. No dije 'mamá' ni una vez."* Cierra el arco de la
+  escena — entró hablando el idioma del Ministerio y recién al salir lo escucha — y es la única vez
+  en todo el prototipo que se nombra a la madre, después de que el formulario la llamara "la
+  persona depurada". No explica la metáfora, que es lo que pide `narrative.md`.
+- **El menú** perdió "VERTICAL SLICE" (quedó "PROTOTIPO") y la línea de controles pasó a "Clic:
+  caminar, mirar, hablar, usar".
+- Verificado: cuatro tests headless en verde (165/8/64/17). El `walkable_area_test` bajó de 75 a 64
+  chequeos **porque el Mostrador ya no existe**, no por una regresión. El nuevo
+  `_check_single_verb` cubre lo que puede romperse en silencio: que el clic derecho resuelva a
+  algo, que no quede el Mostrador, y que ningún objeto repita una línea dentro del mismo beat.
+  Sigue **sin haber verificación visual** — ver la nota de la entrada anterior.
+
 ## 2026-08-20 — El concurso se descubre adentro del Ministerio, no en la puerta
 
 Pedido del usuario mientras armaba el pitch: el diálogo de apertura con el carpincho no cerraba y

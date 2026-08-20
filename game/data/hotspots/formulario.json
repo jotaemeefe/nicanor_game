@@ -1,6 +1,15 @@
 {
   "interact_resolve_sequence": [
     {
+      "speaker": "Nicanor",
+      "text": "No sé qué poner. La ausencia no tiene fecha exacta.",
+      "pose": "explicacion"
+    },
+    {
+      "speaker": "Recepcionista",
+      "text": "Ponga una aproximada. De todos modos va a valer lo mismo."
+    },
+    {
       "text": "Nicanor completa el formulario como puede. Hay una pregunta que no entiende y contesta con una fecha."
     },
     {

@@ -25,6 +25,7 @@ func _ready() -> void:
 	_check_final_dialogue()
 	_check_parrot_remates()
 	await _check_formulario_sequence()
+	await _check_single_verb()
 	await _check_parrot_speaks_after_a_beat()
 	await _check_restart_resets_state()
 	await _check_formulario_disappears()
@@ -167,6 +168,69 @@ func _check_formulario_sequence() -> void:
 
 	office.queue_free()
 
+## The scene runs on one verb (2026-08-20): both mouse buttons do the same
+## thing. The failure this guards against is a silent one — a right click that
+## resolves to nothing, or a prop that says its single line twice because its
+## two old verbs carried identical strings on purpose (the Cartel is the
+## puzzle's written clue and reads the same either way).
+func _check_single_verb() -> void:
+	GameState.reset()
+	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
+	add_child(office)
+	await get_tree().process_frame
+
+	_expect(office.get_node_or_null("World/Hotspots/Mostrador") == null,
+		"the Mostrador should no longer be a hotspot")
+
+	var by_name := {}
+	for hotspot in office.get_node("World/Hotspots").find_children("*", "Hotspot", true, false):
+		by_name[hotspot.hotspot_name] = hotspot
+
+	# Every prop must answer with at least one line, and never repeat itself.
+	for prop_name in ["Cartel de normas", "Planta de oficina", "Sello",
+			"Ventilador de techo", "Reloj"]:
+		var hotspot = by_name.get(prop_name)
+		_expect(hotspot != null, "the scene should still have a %s hotspot" % prop_name)
+		if hotspot == null:
+			continue
+		var lines: Array = office._prop_lines(hotspot)
+		_expect(lines.size() >= 1, "%s should answer a click with at least one line" % prop_name)
+		_expect(lines.size() == lines.size() - _duplicate_count(lines),
+			"%s repeats a line inside one beat" % prop_name)
+
+	_expect(office._prop_lines(by_name["Cartel de normas"]).size() == 1,
+		"the Cartel carries the same string in both verbs, so it should collapse to one line")
+	_expect(office._prop_lines(by_name["Sello"]).size() == 2,
+		"the Sello's two different strings should both survive as one beat")
+	_expect(office._prop_lines(by_name["Ventilador de techo"]).size() == 1,
+		"the Ventilador should be down to its one remaining line")
+
+	# Right click has to land somewhere, not nowhere. Nicanor is parked on the
+	# approach point first so walk_to() has nothing to do and the whole thing
+	# resolves in one frame — otherwise this would be racing a real walk.
+	var reloj: Hotspot = by_name["Reloj"]
+	var box: DialogueBox = office.get_node("UI/DialogueBox")
+	office._nicanor.global_position = reloj.approach_global_position()
+	await get_tree().process_frame
+
+	office._on_hotspot_observed(reloj)
+	await get_tree().process_frame
+	_expect(box.visible, "right click on a prop should still say something")
+	_expect(box._full_text == str(office._prop_lines(reloj)[0]),
+		"right click should open the prop's own first line, got '%s'" % box._full_text)
+
+	office.queue_free()
+
+func _duplicate_count(lines: Array) -> int:
+	var seen: Array = []
+	var dupes := 0
+	for line in lines:
+		if seen.has(line):
+			dupes += 1
+		else:
+			seen.append(line)
+	return dupes
+
 func _check_state_machine() -> void:
 	var order := [
 		GameState.State.INICIO,
@@ -265,8 +329,11 @@ func _check_parrot_remates() -> void:
 
 ## The remate is deferred until the line queue drains, because some beats move
 ## the state before showing their own text and some after. This drives the
-## before case (the machine's observe) end to end: the machine speaks first,
-## and only once the player dismisses it does the parrot get the last word.
+## before case (the machine's first click) end to end: the machine speaks
+## first, and only once the player dismisses *every* line of the beat does the
+## parrot get the last word. Draining rather than counting clicks matters now
+## that one verb makes that beat two lines instead of one — a test that assumed
+## a fixed length would have to be rewritten every time a prop gains a line.
 func _check_parrot_speaks_after_a_beat() -> void:
 	GameState.reset()
 	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
@@ -277,15 +344,21 @@ func _check_parrot_speaks_after_a_beat() -> void:
 	var loro_data := DialogueManager.load_json("res://data/dialogues/loro.json")
 	var expected: String = str(loro_data.get("remate_by_state", {}).get("MAQUINA_EXAMINADA", ""))
 
-	office._handle_machine_observe()
+	office._handle_machine_interact()
 	await get_tree().process_frame
 	_expect(GameState.current == GameState.State.MAQUINA_EXAMINADA,
-		"observing the machine should move the state")
+		"clicking the machine should move the state")
 	_expect(box.visible and box._full_text != expected,
 		"the machine should speak first, not the parrot")
 
-	office._advance_queue()
-	await get_tree().process_frame
+	# Drain the machine's own lines; the parrot is whatever is still talking
+	# after they run out.
+	var guard := 0
+	while box.visible and box._full_text != expected and guard < 20:
+		guard += 1
+		office._advance_queue()
+		await get_tree().process_frame
+	_expect(guard < 20, "the machine's beat should end")
 	_expect(box.visible and box._full_text == expected,
 		"the parrot should get the last word once the beat is dismissed")
 

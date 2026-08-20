@@ -38,7 +38,6 @@ efecto, y qué dice en voz alta (si algo le hizo gracia, o lo confundió).
 
 **Durante la partida**, observá sin intervenir:
 - ¿Cuánto tarda en entender que puede caminar haciendo clic en el piso?
-- ¿Prueba el clic derecho (observar) espontáneamente, o solo usa el izquierdo?
 - ¿En qué momento se da cuenta de que la máquina necesita algo? ¿Lo descubre por el cartel, por el
   loro, o hablando con la recepcionista?
 - ¿Duda en algún punto sobre qué hacer a continuación? ¿Dónde exactamente?
@@ -47,7 +46,7 @@ efecto, y qué dice en voz alta (si algo le hizo gracia, o lo confundió).
 **Después de terminar (o de 10 minutos, lo que pase primero)**, preguntá:
 1. ¿En algún momento no supiste qué hacer? ¿Dónde?
 2. ¿Hubo algún chiste que no entendiste, o que te pareció que no funcionaba?
-3. Del 1 al 5, ¿qué tan claro te resultó el sistema de clics (caminar / hablar / observar)?
+3. Del 1 al 5, ¿qué tan claro te resultó el sistema de clics (caminar / interactuar)?
 4. ¿Qué personaje te generó más curiosidad o simpatía? ¿Por qué?
 5. ¿El tono del lugar (burocrático, absurdo) te resultó claro? ¿Cómo lo describirías con tus
    propias palabras?
@@ -56,9 +55,9 @@ efecto, y qué dice en voz alta (si algo le hizo gracia, o lo confundió).
 
 ## Parte C — Solución de referencia (no mostrar al jugador de prueba)
 
-1. Examinar (clic derecho) la Máquina de turnos.
-2. Hablar (clic izquierdo) con la Recepcionista — revela que hace falta una constancia de presencia.
-3. Interactuar con el Formulario sobre el mostrador.
+1. Hacer clic en la Máquina de turnos.
+2. Hablar con la Recepcionista — revela que hace falta una constancia de presencia.
+3. Interactuar con el Formulario del atril.
 4. Interactuar con la Máquina de turnos — entrega el turno 0.
 5. Hablar de nuevo con la Recepcionista.
 6. Interactuar con la Puerta.

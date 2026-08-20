@@ -142,16 +142,6 @@ look_direction = "left"
 texture = ExtResource("8_maquina")
 scale = Vector2(0.233, 0.233)
 
-[node name="Mostrador" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
-position = Vector2(747, 390)
-hotspot_name = "Mostrador"
-hitbox_size = Vector2(335, 50)
-invisible = true
-approach_point = Vector2(-47, 230)
-look_direction = "right"
-observe_text = "Un mostrador de madera gastada, pulido por décadas de codos apoyados."
-interact_text = "Nicanor apoya los codos donde los apoyaron todos los demás. El mostrador no se inmuta."
-
 [node name="RecepcionistaHotspot" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
 position = Vector2(826, 292)
 hotspot_name = "Recepcionista"
@@ -254,7 +244,6 @@ invisible = true
 approach_point = Vector2(-12, 525)
 look_direction = "right"
 observe_text = "Gira con una lentitud casi filosófica. Es, técnicamente, el empleado más antiguo del edificio."
-interact_text = "Nicanor lo saluda con la mano. El ventilador no corresponde el gesto."
 
 [node name="Reloj" parent="World/Hotspots" instance=ExtResource("5_hotspot")]
 position = Vector2(640, 145)
@@ -263,8 +252,7 @@ hitbox_size = Vector2(110, 150)
 invisible = true
 approach_point = Vector2(0, 455)
 look_direction = "right"
-observe_text = "Marca una hora que no coincide con ninguna de las dos que importan hoy."
-interact_text = "Nicanor lo golpea suavemente, como si eso ayudara. No ayuda."
+observe_text = "Está parado. Probablemente el tiempo nunca avanzó en esta oficina."
 
 [node name="UI" type="CanvasLayer" parent="."]
 

@@ -160,8 +160,9 @@ replace the framework; it constrains which parts of it apply here.
 
 - A 2D point-and-click adventure, **Godot 4.6.x, GDScript only** (no C#, no .NET).
 - Title: **Ministerio de los Ausentes** (named on 2026-08-19; the article is not part of it).
-- Structural inspiration: classic LucasArts-style adventures — verbs reduced to two: a primary
-  interaction (left click) and observe (right click).
+- Structural inspiration: classic LucasArts-style adventures, but with **a single verb**: one
+  click walks, looks, talks and uses. Both mouse buttons do the same thing. Reduced from the
+  earlier two-verb set (interact / observe) on 2026-08-20 — see `production/decisions.md`.
 - Puzzles are built from concrete objects, conversations, and actions — never abstract or
   systemic mechanics. See [design/puzzles.md](design/puzzles.md).
 - Poetry is narrative content in this game, not a magic system or a reusable mechanic.

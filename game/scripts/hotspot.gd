@@ -2,7 +2,9 @@ extends Area2D
 class_name Hotspot
 
 ## Reusable, Inspector-configurable point-and-click hotspot.
-## Left click = primary interaction, right click = observe.
+## The game runs on a single verb: both mouse buttons mean the same thing. The
+## two signals are kept separate because the Area2D reports the button, but the
+## scene controller routes them to the same place (2026-08-20 user decision).
 ## Hitbox and placeholder visual are generated at runtime from exported
 ## properties, so every instance stays a plain property override in its
 ## scene file (no per-instance sub-resource overrides needed).

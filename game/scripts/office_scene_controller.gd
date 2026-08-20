@@ -188,10 +188,13 @@ func _on_hotspot_unhovered(_hotspot: Hotspot) -> void:
 
 # --- Hotspot click routing ----------------------------------------------
 
+## The scene runs on a single verb (user decision, 2026-08-20): the right-click
+## "observe" verb is gone, so a right click does exactly what a left click does
+## rather than nothing at all — a dead button is worse than a redundant one.
 func _on_hotspot_observed(hotspot: Hotspot) -> void:
 	if _dialogue_box.visible:
 		return
-	_start_interaction(hotspot, true)
+	_start_interaction(hotspot)
 
 ## A click over a hotspot is consumed by its Area2D (which marks the input as
 ## handled) before _unhandled_input can route it to the dialogue box, so while a
@@ -204,9 +207,9 @@ func _on_hotspot_interacted(hotspot: Hotspot) -> void:
 	if _dialogue_box.visible:
 		_dialogue_box.handle_click()
 		return
-	_start_interaction(hotspot, false)
+	_start_interaction(hotspot)
 
-func _start_interaction(hotspot: Hotspot, is_observe: bool) -> void:
+func _start_interaction(hotspot: Hotspot) -> void:
 	if _busy or _dialogue_box.visible or _dialogue_just_closed():
 		return
 	if GameState.current == GameState.State.ESCENA_TERMINADA:
@@ -217,54 +220,73 @@ func _start_interaction(hotspot: Hotspot, is_observe: bool) -> void:
 		await _nicanor.arrived
 	_nicanor.face(hotspot.look_direction)
 	_busy = false
-	_resolve_hotspot(hotspot, is_observe)
+	_resolve_hotspot(hotspot)
 
-func _resolve_hotspot(hotspot: Hotspot, is_observe: bool) -> void:
+## One verb: every hotspot has exactly one response to a click. Things that do
+## something (the machine, the people, the form, the door) do it. Plain props
+## play what used to be their two verbs as one short beat — look, then touch —
+## which is why _prop_lines exists instead of picking one of the two strings
+## and throwing the other away.
+func _resolve_hotspot(hotspot: Hotspot) -> void:
 	match hotspot.hotspot_name:
 		"Máquina de turnos":
-			if is_observe:
-				_handle_machine_observe()
-			else:
-				_handle_machine_interact()
+			_handle_machine_interact()
 		"Recepcionista":
-			if is_observe:
-				_play_lines([hotspot.observe_text])
-			else:
-				_handle_recepcionista_interact()
+			_handle_recepcionista_interact()
 		"Loro":
 			_handle_loro()
 		"Formulario":
-			if is_observe:
-				_play_lines([hotspot.observe_text])
-			else:
-				_handle_formulario_interact(hotspot)
+			_handle_formulario_interact(hotspot)
 		"Puerta":
-			if is_observe:
-				_play_lines([hotspot.observe_text])
-			else:
-				_handle_puerta_interact(hotspot)
+			_handle_puerta_interact(hotspot)
 		_:
-			var text := hotspot.interact_text if not is_observe else hotspot.observe_text
-			_play_lines([text])
+			_play_lines(_prop_lines(hotspot))
+
+## observe_text then interact_text, minus the empties and minus the duplicate.
+## Several props deliberately carry the same string in both (the Cartel is the
+## puzzle's written clue and has to read the same however you touch it), so
+## without the dedupe they would say it twice in a row and look broken.
+func _prop_lines(hotspot: Hotspot) -> Array:
+	var lines: Array = []
+	for text in [hotspot.observe_text, hotspot.interact_text]:
+		if text != "" and not lines.has(text):
+			lines.append(text)
+	return lines
 
 # --- Máquina de turnos ---------------------------------------------------
 
-func _handle_machine_observe() -> void:
-	if GameState.current == GameState.State.INICIO:
-		GameState.set_state(GameState.State.MAQUINA_EXAMINADA)
-	var text := DialogueManager.pick_state_text(_machine_data.get("observe_by_state", {}), GameState.current)
-	_play_lines([text])
-
+## Same one-verb shape as a prop — description first, then what the machine
+## actually does — except both halves are per-state, and this is also the beat
+## that moves INICIO forward. The texts are read *before* the state changes on
+## purpose: the first click has to show the plain ERROR, not MAQUINA_EXAMINADA's
+## "the message comes up faster, as if it already expected it" variant.
 func _handle_machine_interact() -> void:
 	if GameState.current == GameState.State.DECLARACION_OBTENIDA:
+		# Only the observe half leads here. interact_by_state has no entry for
+		# this state, and pick_state_text's backward walk would inherit "la
+		# ranura espera un papel que Nicanor todavía no tiene" — false from the
+		# moment he has it. Inheritance being non-empty is not the same as it
+		# being true (dialogue-structure.md §3).
+		var lead := DialogueManager.pick_state_text(_machine_data.get("observe_by_state", {}), GameState.current)
 		GameState.set_state(GameState.State.DECLARACION_USADA)
-		var sequence: Array = _machine_data.get("interact_resolve_sequence", [])
-		_play_lines(sequence, func() -> void:
+		var resolve: Array = [] if lead == "" else [lead]
+		resolve.append_array(_machine_data.get("interact_resolve_sequence", []))
+		_play_lines(resolve, func() -> void:
 			GameState.set_state(GameState.State.TURNO_0_RECIBIDO)
 		)
-	else:
-		var text := DialogueManager.pick_state_text(_machine_data.get("interact_by_state", {}), GameState.current)
-		_play_lines([text])
+		return
+	var lines: Array = _machine_state_lines()
+	if GameState.current == GameState.State.INICIO:
+		GameState.set_state(GameState.State.MAQUINA_EXAMINADA)
+	_play_lines(lines)
+
+func _machine_state_lines() -> Array:
+	var lines: Array = []
+	for key in ["observe_by_state", "interact_by_state"]:
+		var text := DialogueManager.pick_state_text(_machine_data.get(key, {}), GameState.current)
+		if text != "" and not lines.has(text):
+			lines.append(text)
+	return lines
 
 # --- Recepcionista ---------------------------------------------------------
 

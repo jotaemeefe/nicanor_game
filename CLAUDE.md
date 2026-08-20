@@ -126,8 +126,9 @@ One autoload, all text as data, one controller per scene.
   `game/README.md` documents both JSON shapes and how to add a hotspot or a dialogue.
 - **`Hotspot` (`scripts/hotspot.gd` + `scenes/hotspot.tscn`)** — reusable `Area2D` configured
   entirely from the Inspector; hitbox and placeholder polygon are generated at runtime so each
-  instance stays a plain property override in the scene file. Left click = interact, right click =
-  observe, `approach_point` is where Nicanor walks first.
+  instance stays a plain property override in the scene file. **One verb**: both mouse buttons
+  resolve to the same thing, and a plain prop plays `observe_text` then `interact_text` as one
+  beat (deduped). `approach_point` is where Nicanor walks first.
 - **`office_scene_controller.gd`** — the active scene's controller and the only place puzzle logic
   lives (`_resolve_hotspot` switches on `hotspot_name`). It collects hotspots with
   `find_children(recursive)` because some sit under sort anchors rather than directly under

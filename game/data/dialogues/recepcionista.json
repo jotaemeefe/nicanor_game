@@ -4,31 +4,81 @@
       "id": "intro",
       "max_state": "MAQUINA_EXAMINADA",
       "lines": [
-        { "speaker": "Nicanor", "text": "Vengo a hacer una consulta.", "pose": "neutral" },
-        { "speaker": "Recepcionista", "text": "¿Consulta o reclamo?" },
-        { "speaker": "Nicanor", "text": "¿Cuál es la diferencia?", "pose": "escepticismo" },
-        { "speaker": "Recepcionista", "text": "El tono. Las dos se hacen en esta misma ventanilla." },
-        { "text": "Nicanor apoya el papel en el mostrador. Donde va el nombre hay una barra negra." },
-        { "speaker": "Recepcionista", "text": "Depuración familiar. ¿Vínculo con la persona depurada?" },
-        { "speaker": "Nicanor", "text": "Hijo.", "pose": "neutral" },
-        { "speaker": "Recepcionista", "text": "Ese vínculo requiere una persona registrada. Administrativamente, a usted no le pasó nada." },
-        { "speaker": "Nicanor", "text": "Ah.", "pose": "neutral" },
-        { "speaker": "Recepcionista", "text": "¿La ausencia vino con usted?" },
-        { "speaker": "Nicanor", "text": "No.", "pose": "neutral" },
-        { "speaker": "Recepcionista", "text": "Entonces va a necesitar una constancia de presencia. Suya, no de la ausencia." },
-        { "speaker": "Nicanor", "text": "¿Una constancia de presencia para declarar una ausencia?", "pose": "escepticismo" },
-        { "speaker": "Recepcionista", "text": "Para evitar ausencias fraudulentas. Prueba que usted está presente, no que sea usted. Eso se tramita en otra ventanilla." }
+        {
+          "speaker": "Nicanor",
+          "text": "Vengo a hacer una consulta.",
+          "pose": "neutral"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "¿Consulta o reclamo?"
+        },
+        {
+          "speaker": "Nicanor",
+          "text": "¿Cuál es la diferencia?",
+          "pose": "escepticismo"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "El tono. Las dos se hacen en esta misma ventanilla."
+        },
+        {
+          "text": "Nicanor apoya el papel en el mostrador. Donde va el nombre hay una barra negra."
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "Depuración familiar. ¿Vínculo con la persona depurada?"
+        },
+        {
+          "speaker": "Nicanor",
+          "text": "Hijo.",
+          "pose": "neutral"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "Ese vínculo requiere una persona registrada. Administrativamente, a usted no le pasó nada."
+        },
+        {
+          "speaker": "Nicanor",
+          "text": "Ah.",
+          "pose": "neutral"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "¿La ausencia vino con usted?"
+        },
+        {
+          "speaker": "Nicanor",
+          "text": "No.",
+          "pose": "neutral"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "Entonces va a necesitar una constancia de presencia. Suya, no de la ausencia."
+        },
+        {
+          "speaker": "Nicanor",
+          "text": "¿Una constancia de presencia para declarar una ausencia?",
+          "pose": "escepticismo"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "Para evitar ausencias fraudulentas. Prueba que usted está presente, no que sea usted. Eso se tramita en otra ventanilla."
+        }
       ],
-      "effects": { "set_state": "REQUISITO_DESCUBIERTO" }
+      "effects": {
+        "set_state": "REQUISITO_DESCUBIERTO"
+      }
     },
     {
       "id": "reminder_formulario",
       "min_state": "REQUISITO_DESCUBIERTO",
       "max_state": "REQUISITO_DESCUBIERTO",
       "lines": [
-        { "speaker": "Recepcionista", "text": "El formulario está sobre el mostrador. Complételo y vuelva a la máquina." },
-        { "speaker": "Nicanor", "text": "No sé qué poner. La ausencia no tiene fecha exacta.", "pose": "explicacion" },
-        { "speaker": "Recepcionista", "text": "Ponga una aproximada. De todos modos va a valer lo mismo." }
+        {
+          "speaker": "Recepcionista",
+          "text": "El formulario está en el atril. La máquina no atiende sin él."
+        }
       ]
     },
     {
@@ -36,7 +86,10 @@
       "min_state": "DECLARACION_OBTENIDA",
       "max_state": "DECLARACION_USADA",
       "lines": [
-        { "speaker": "Recepcionista", "text": "Ya tiene la constancia. Preséntela en la máquina, no a mí." }
+        {
+          "speaker": "Recepcionista",
+          "text": "Ya tiene la constancia. Preséntela en la máquina, no a mí."
+        }
       ]
     },
     {
@@ -44,20 +97,46 @@
       "min_state": "TURNO_0_RECIBIDO",
       "max_state": "TURNO_0_RECIBIDO",
       "lines": [
-        { "speaker": "Nicanor", "text": "La máquina me dio el número cero.", "pose": "neutral" },
-        { "speaker": "Recepcionista", "text": "Llegó tarde. El cero se atiende antes de empezar." },
-        { "speaker": "Nicanor", "text": "¿Antes de empezar qué?", "pose": "escepticismo" },
-        { "speaker": "Recepcionista", "text": "Antes de empezar a atender. Su turno era mañana." },
-        { "speaker": "Nicanor", "text": "Mañana todavía no llegó.", "pose": "explicacion" },
-        { "speaker": "Recepcionista", "text": "Por eso mismo. Si ya perdió el turno de mañana, hoy no tiene ninguno pendiente. Puede pasar." }
+        {
+          "speaker": "Nicanor",
+          "text": "La máquina me dio el número cero.",
+          "pose": "neutral"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "Llegó tarde. El cero se atiende antes de empezar."
+        },
+        {
+          "speaker": "Nicanor",
+          "text": "¿Antes de empezar qué?",
+          "pose": "escepticismo"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "Antes de empezar a atender. Su turno era mañana."
+        },
+        {
+          "speaker": "Nicanor",
+          "text": "Mañana todavía no llegó.",
+          "pose": "explicacion"
+        },
+        {
+          "speaker": "Recepcionista",
+          "text": "Por eso mismo. Si ya perdió el turno de mañana, hoy no tiene ninguno pendiente. Puede pasar."
+        }
       ],
-      "effects": { "set_state": "ACCESO_AUTORIZADO" }
+      "effects": {
+        "set_state": "ACCESO_AUTORIZADO"
+      }
     },
     {
       "id": "post_autorizado",
       "min_state": "ACCESO_AUTORIZADO",
       "lines": [
-        { "speaker": "Recepcionista", "text": "Ya está autorizado. La puerta, y no yo, es su próximo problema." }
+        {
+          "speaker": "Recepcionista",
+          "text": "Ya está autorizado. La puerta, y no yo, es su próximo problema."
+        }
       ]
     }
   ]

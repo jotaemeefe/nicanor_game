@@ -18,11 +18,11 @@ It implements, and nothing more:
 - Nicanor controlable: clic-para-caminar sobre área caminable, ciclo de caminata real (6 frames),
   4 poses de diálogo reales (neutral, explicación, escepticismo, recitado).
 - Recepcionista (carpincho) y Loro institucional como NPCs interactuables.
-- Hotspots: Máquina de turnos, Mostrador, Recepcionista, Loro, Cartel de normas, Puerta, Planta de
-  oficina, Cesto de basura, Formulario, y dos objetos puramente cómicos (Ventilador, Reloj) que
-  reutilizan detalles ya pintados en el fondo.
-- Nombre del hotspot al pasar el cursor (hover); clic izquierdo = interacción principal; clic
-  derecho = observar; acercamiento automático de Nicanor al punto de aproximación del hotspot antes
+- Hotspots: Máquina de turnos, Recepcionista, Loro, Cartel de normas, Puerta, Planta de oficina,
+  Cesto de basura, Sello, Formulario, y dos objetos puramente cómicos (Ventilador, Reloj) que
+  reutilizan detalles ya pintados en el fondo. El Mostrador dejó de ser clickeable el 2026-08-20.
+- Nombre del hotspot al pasar el cursor (hover); **un solo verbo** — los dos botones del mouse
+  hacen lo mismo; acercamiento automático de Nicanor al punto de aproximación del hotspot antes
   de resolver la interacción.
 - Un puzle completo con seis estados (`GameState`) — ver `design/puzzles.md` para el diseño
   aprobado antes de implementarse.

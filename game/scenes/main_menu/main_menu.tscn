@@ -118,7 +118,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 modulate = Color(0.839, 0.804, 0.686, 0.62)
 theme_override_font_sizes/font_size = 15
-text = "PROTOTIPO  ·  VERTICAL SLICE"
+text = "PROTOTIPO"
 
 [node name="Spacer1" type="Control" parent="Title"]
 custom_minimum_size = Vector2(0, 18)
@@ -190,7 +190,7 @@ offset_bottom = -34.0
 grow_vertical = 0
 modulate = Color(0.839, 0.804, 0.686, 0.5)
 theme_override_font_sizes/font_size = 15
-text = "Clic izquierdo: caminar, hablar, usar        Clic derecho: observar"
+text = "Clic: caminar, mirar, hablar, usar"
 
 [node name="Pie" type="Label" parent="."]
 anchor_left = 1.0

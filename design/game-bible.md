@@ -162,9 +162,11 @@ destruya su efecto.
 
 ## Genre and structure (resumen técnico)
 
-2D point-and-click adventure. Verb set reducido: interacción primaria (clic izquierdo) y observar
-(clic derecho). Puzzles construidos con objetos/diálogo/acciones concretas, sin sistemas
-abstractos.
+2D point-and-click adventure. **Un solo verbo**: un clic camina, mira, habla y usa, y los dos
+botones del mouse hacen lo mismo. Venía de un set de dos verbos (interactuar / observar) que se
+unificó el 2026-08-20 porque la distinción no se sostenía jugando — ver
+[../production/decisions.md](../production/decisions.md). Puzzles construidos con
+objetos/diálogo/acciones concretas, sin sistemas abstractos.
 
 ## What this game is not
 

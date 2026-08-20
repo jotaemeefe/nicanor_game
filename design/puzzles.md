@@ -40,7 +40,7 @@ persona.
 - Hablar con la Recepcionista: puede preguntársele directamente qué hace falta.
 - El loro institucional repite avisos ambientales que mencionan la constancia de presencia como
   requisito obligatorio, reforzando la pista sin resolverla por el jugador.
-- El formulario ya está visible sobre el mostrador — no hace falta encontrarlo en otra escena.
+- El formulario ya está visible en el atril — no hace falta encontrarlo en otra escena.
 
 ### 3. Solución (objetos/diálogos/acciones concretas)
 
@@ -48,7 +48,7 @@ persona.
    entrega números, exige constancia de presencia) sin resolver el paso siguiente.
 2. Hablar con la Recepcionista → diálogo corto revela explícitamente el requisito → estado
    `REQUISITO_DESCUBIERTO`.
-3. Interactuar con el Formulario sobre el mostrador → Nicanor lo completa in situ (una línea
+3. Interactuar con el Formulario en el atril → Nicanor lo completa in situ (una secuencia corta
    cómica sobre la vaguedad del trámite) → estado `DECLARACION_OBTENIDA`. No se implementa como
    objeto de inventario: es una acción puntual con un formulario que ya está en la escena, evitando
    un sistema de inventario que el MVP no necesita.
@@ -64,7 +64,7 @@ persona.
 ### 4. Pistas disponibles y dónde aparecen
 
 - Cartel de normas (examinar, disponible desde el inicio): pista visual temprana.
-- Loro institucional (interactuar/observar, en cualquier momento antes de `REQUISITO_DESCUBIERTO`):
+- Loro institucional (un clic, en cualquier momento antes de `REQUISITO_DESCUBIERTO`):
   refuerza ambientalmente la misma pista sin adelantarse a la Recepcionista.
 - Recepcionista (hablar, paso 2): confirma el requisito de forma explícita y definitiva.
 - Máquina de turnos (examinar, paso 1): plantea el problema que dispara la búsqueda de la pista.
