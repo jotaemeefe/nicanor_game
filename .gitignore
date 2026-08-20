@@ -4,6 +4,9 @@ coverage/
 .DS_Store
 
 temp/
+
+# exported game builds (wasm + pck, tens of MB) are artefacts, not sources
+/build/
 .game-dev/
 
 # Personal configs (if any)

@@ -772,6 +772,7 @@ nicanor_game
 │   │   ├── walkable_area_test.gd.uid
 │   │   └── walkable_area_test.tscn
 │   ├── .gitignore
+│   ├── export_presets.cfg
 │   ├── project.godot
 │   ├── README.md
 │   └── TODO_ASSETS.md

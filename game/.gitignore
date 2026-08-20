@@ -2,7 +2,8 @@
 .godot/
 *.translation
 export.cfg
-export_presets.cfg
+# export_presets.cfg IS tracked here on purpose: the Web preset carries no
+# credentials and documents how the published demo is built.
 
 # Imported translations (automatically generated from CSV files)
 *.translation

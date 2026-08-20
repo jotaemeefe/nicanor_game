@@ -1,4 +1,4 @@
-# Decisions Log — El Ministerio de los Ausentes
+# Decisions Log — Ministerio de los Ausentes
 
 - Status: Active
 - Last updated: 2026-08-19
@@ -138,6 +138,46 @@ los hotspots.
   implementación: `puzzles.md` §5 promete variantes cortas al insistir con la Recepcionista, y sus
   ramas de recordatorio se siguen repitiendo idénticas. Requiere `seen_branches`
   (`dialogue-structure.md` §8), que es código y no se hace sin aprobación.
+
+## 2026-08-19 — Build web para playtest cerrado, y el juego pasa a llamarse sin el artículo
+
+### Publicación
+
+- **Como artifact de Claude no se puede, y no por poco.** Un export web de Godot son tres piezas
+  que el runtime busca por red al arrancar (`index.js`, `index.wasm`, `index.pck`); el sandbox de
+  los artifacts bloquea todo fetch y tiene un techo de 16 MB por página. Esta build son 71 MB.
+- **Camino elegido: export Web de Godot + itch.io en modo Restricted**, que permite compartir con
+  gente puntual por contraseña sin publicar nada. GitHub Pages quedó descartado como primera opción
+  justamente por no tener ningún control de acceso.
+- **Sin soporte de hilos** (`variant/thread_support=false`). Con hilos el navegador exige
+  `SharedArrayBuffer` y el servidor tiene que mandar `COOP`/`COEP`; sin hilos anda en cualquier
+  hosting estático. El juego es 2D de un solo hilo igual.
+- **El preset se versiona** (`game/export_presets.cfg`), contra el `.gitignore` que trae Godot por
+  defecto: un preset Web no tiene credenciales — solo los de Android/iOS las tienen — y es el único
+  registro de cómo se produce la build publicada. La build en sí no se versiona.
+- **Peso real medido**: 42,7 MB servidos con gzip. El `.wasm` baja de 37,7 a 9,7 MB, pero el `.pck`
+  no comprime nada (33,1 → 33,0) porque ya son PNG y un `.ogv`. De esos 33 MB, **9,4 MB son el video
+  de intro**: es la primera pieza a tocar si hace falta adelgazarlo.
+- **Verificado en navegador de verdad**, no solo exportado: Chrome headless con renderizado por
+  software, menú → intro → escena de recepción, sin errores de consola.
+
+### Nombre
+
+El usuario definió que el juego se llama **Ministerio de los Ausentes**, sin el artículo. Se cambió
+donde el nombre es *el título*: `project.godot` (que es además el título de la ventana y del tab del
+navegador), el menú, y los encabezados de los documentos. **No** se tocaron las frases donde "el
+Ministerio" es la institución de la que se habla, que en castellano lleva artículo — por ejemplo la
+línea del Loro "El Ministerio agradece su presencia". Los 214 wrappers de comandos se regeneraron
+con `sync:wrappers`.
+
+### Portada
+
+El menú era un `ColorRect` plano con el retrato al costado. Ahora usa la propia oficina como fondo
+(bajada con `modulate` para que no compita con el título), un degradado que oscurece solo la columna
+del texto, y Nicanor de cuerpo entero apoyado en el borde inferior. De tagline se usa la regla que
+ya está pintada en la pared de la escena: «Toda declaración de ausencia requiere acreditar presencia
+previa». Y abajo a la izquierda quedaron los dos verbos del juego: quien lo pruebe por web no tiene
+README, así que los controles tienen que estar en la portada.
 
 ## 2026-08-19 — Clic sobre el personaje durante un diálogo: se lo tragaba el hotspot
 

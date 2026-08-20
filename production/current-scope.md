@@ -1,7 +1,7 @@
-# Current Scope — El Ministerio de los Ausentes
+# Current Scope — Ministerio de los Ausentes
 
 - Status: Active
-- Last updated: 2026-08-16
+- Last updated: 2026-08-19
 - Related docs: [../design/game-bible.md](../design/game-bible.md), [decisions.md](decisions.md)
 
 ## Active scope — vertical slice MVP
@@ -32,6 +32,12 @@ It implements, and nothing more:
 - Texto de diálogo saltable/acelerable.
 - Soporte de audio mínimo (ambiente de oficina, sonido de máquina, sonido de clic) — placeholders
   silenciosos donde no hay asset, documentados en `game/TODO_ASSETS.md`.
+- **Build web (WebAssembly) para playtest cerrado** (agregado el 2026-08-19 a pedido del usuario).
+  Export de Godot a la plataforma Web, sin soporte de hilos, publicable en itch.io en modo
+  Restricted (con contraseña) para que solo lo prueben las personas que el usuario elija. El preset
+  vive en `game/export_presets.cfg`, versionado a propósito. La build en sí no se versiona: son
+  ~72 MB de wasm + pck, artefactos, no fuentes.
+  Esto **no** habilita distribución pública, ni tienda, ni versión de descarga para escritorio.
 
 ## Explicitly deferred (do not build without a new approval)
 

@@ -1,4 +1,4 @@
-# El Ministerio de los Ausentes — juego (Godot)
+# Ministerio de los Ausentes — juego (Godot)
 
 Vertical slice jugable: **Recepción del Ministerio de los Ausentes**. Ver
 `../design/` para la biblia creativa y `../production/current-scope.md` para el alcance activo.
@@ -155,3 +155,45 @@ Cada uno debe imprimir `... TEST: OK`.
 
 Ninguno simula clics reales ni la caminata física de Nicanor — eso todavía requiere una pasada
 manual, ver `docs/PLAYTEST.md`.
+
+## Build web (WebAssembly)
+
+El juego exporta a navegador. El preset vive en `export_presets.cfg` (versionado a propósito: no
+tiene credenciales y es el único registro de cómo se arma la build publicada).
+
+Requisito único: tener instaladas las plantillas de exportación de la **misma versión** de Godot
+(`%APPDATA%\Godot\export_templates\4.7.1.stable\`). Se bajan del editor
+(Editor → Administrar plantillas de exportación) o del `.tpz` de la release.
+
+```bash
+godot --headless --path game --export-release "Web" "../build/web/index.html"
+python -m http.server 8099 --directory build/web     # abrir file:// NO funciona
+```
+
+`build/` está en `.gitignore`: son artefactos (~72 MB), no fuentes.
+
+### Por qué está exportado sin hilos
+
+`variant/thread_support=false` en el preset. Con hilos, el navegador exige `SharedArrayBuffer`, que
+a su vez exige que el servidor mande las cabeceras `COOP`/`COEP` — GitHub Pages no permite
+configurarlas. Sin hilos anda en cualquier hosting estático sin tocar nada del servidor, y este
+juego es 2D de un solo hilo igual.
+
+### Peso real para el jugador
+
+| Archivo | Crudo | Servido con gzip |
+|---|---|---|
+| `index.wasm` | 37,7 MB | 9,7 MB |
+| `index.pck` | 33,1 MB | 33,0 MB |
+| `index.js` | 0,3 MB | 0,1 MB |
+| **total** | **71 MB** | **42,7 MB** |
+
+El `.pck` no comprime porque ya son PNG y un `.ogv`. De esos 33 MB, **9,4 MB son el video de
+intro**: es la primera pieza a tocar si hay que bajar el peso. La intro ya se puede saltar con un
+clic y tiene fallback automático si el video no arranca (ver `scripts/intro.gd`), así que un
+navegador que no pueda decodificar Theora igual entra a la escena.
+
+### Verificado en navegador
+
+Chrome headless con renderizado por software (SwiftShader): menú, intro y la escena de recepción
+cargan y responden, sin errores de consola.
