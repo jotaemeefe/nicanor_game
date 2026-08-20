@@ -1,4 +1,4 @@
-# Dialogue Structure — El Ministerio de los Ausentes
+# Dialogue Structure — Ministerio de los Ausentes
 
 - Status: Active
 - Last updated: 2026-08-19

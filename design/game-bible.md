@@ -1,4 +1,4 @@
-# Game Bible — El Ministerio de los Ausentes
+# Game Bible — Ministerio de los Ausentes
 
 - Status: Active (canon — biblia creativa completa)
 - Related docs: [narrative.md](narrative.md), [characters/nicanor.md](characters/nicanor.md), [puzzles.md](puzzles.md), [art-bible.md](art-bible.md), [../production/current-scope.md](../production/current-scope.md)
@@ -41,7 +41,7 @@ observar sus consecuencias (ver [art-bible.md §13](art-bible.md#los-nombres-bor
 
 ## 3. El Ministerio
 
-El Ministerio de los Ausentes administra todo aquello cuya existencia no puede demostrarse
+El Ministerio administra todo aquello cuya existencia no puede demostrarse
 satisfactoriamente. No queda claro si su función es buscar a los ausentes, registrarlos, borrarlos
 o impedir que provoquen inconvenientes administrativos.
 
@@ -177,7 +177,7 @@ versus diferido.
 
 **Elementos que deben conservarse:**
 
-- Título provisional: "El Ministerio de los Ausentes".
+- Título: **Ministerio de los Ausentes** (definido el 2026-08-19; el artículo no forma parte del nombre).
 - Protagonista: Nicanor Sosa, calandria poeta.
 - Personajes animales antropomórficos.
 - Mundo argentino, no representado de forma literal.

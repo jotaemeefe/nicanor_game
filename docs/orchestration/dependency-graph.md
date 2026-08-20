@@ -582,7 +582,7 @@ graph LR
   classDef skill fill:#9e6a03,color:#ffffff,stroke:#7d4e00
 ```
 
-## Project: El Ministerio de los Ausentes
+## Project: Ministerio de los Ausentes
 
 ```mermaid
 graph LR

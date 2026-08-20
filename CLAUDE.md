@@ -12,7 +12,7 @@ Two layers live side by side, and it matters which one you are touching:
    keeping the Unity, Unreal, Godot, and web (HTML5) execution layers strictly isolated. Its own
    "code" is a Node.js (>=18, zero runtime deps) tooling layer under `scripts/` that **validates
    and generates** the scaffold's content so it can never drift out of sync.
-2. **A real game built with that scaffold**, under `game/` — *El Ministerio de los Ausentes*, a 2D
+2. **A real game built with that scaffold**, under `game/` — *Ministerio de los Ausentes*, a 2D
    point-and-click adventure in **Godot 4.7.x, GDScript only** (no C#, no .NET).
 
 Most sessions are game work. The scaffold layer changes only when the workflow itself changes.
@@ -195,7 +195,7 @@ not by hand-creating directories.
   source-of-truth doc (or recommend it) — keep documents alive.
 - Plan before non-trivial (multi-step / multi-role / architectural) work.
 
-## This project: El Ministerio de los Ausentes
+## This project: Ministerio de los Ausentes
 
 **`AGENTS.md` is the source of truth for scope, active profile, agent roster, and hard
 exclusions** — read it first, every session; do not restate or fork its rules here.

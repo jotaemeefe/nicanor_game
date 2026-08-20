@@ -1,5 +1,5 @@
 ---
-description: Write or revise dialogue for El Ministerio de los Ausentes in each character's voice, kept as data separate from game logic.
+description: Write or revise dialogue for Ministerio de los Ausentes in each character's voice, kept as data separate from game logic.
 ---
 
 # /dialogue

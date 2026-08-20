@@ -18,7 +18,7 @@
       "template": "Read .opencode/commands/art-3d-pass.md and execute the shared commands/art-3d-pass.md workflow."
     },
     "art-pass": {
-      "description": "Work a small placeholder-or-final 2D art asset set for El Ministerio de los Ausentes and verify it in context before approving it.",
+      "description": "Work a small placeholder-or-final 2D art asset set for Ministerio de los Ausentes and verify it in context before approving it.",
       "template": "Read .opencode/commands/art-pass.md and execute the shared commands/art-pass.md workflow."
     },
     "audio-pass": {
@@ -42,7 +42,7 @@
       "template": "Read .opencode/commands/context.md and execute the shared commands/context.md workflow."
     },
     "dialogue": {
-      "description": "Write or revise dialogue for El Ministerio de los Ausentes in each character's voice, kept as data separate from game logic.",
+      "description": "Write or revise dialogue for Ministerio de los Ausentes in each character's voice, kept as data separate from game logic.",
       "template": "Read .opencode/commands/dialogue.md and execute the shared commands/dialogue.md workflow."
     },
     "dialogue-design": {
@@ -146,7 +146,7 @@
       "template": "Read .opencode/commands/plan.md and execute the shared commands/plan.md workflow."
     },
     "playtest": {
-      "description": "Play El Ministerio de los Ausentes from a clean state and report technical errors separately from design problems — never declare success just because it compiles.",
+      "description": "Play Ministerio de los Ausentes from a clean state and report technical errors separately from design problems — never declare success just because it compiles.",
       "template": "Read .opencode/commands/playtest.md and execute the shared commands/playtest.md workflow."
     },
     "playtest-report": {
@@ -158,7 +158,7 @@
       "template": "Read .opencode/commands/procgen-design.md and execute the shared commands/procgen-design.md workflow."
     },
     "puzzle": {
-      "description": "Design a puzzle for El Ministerio de los Ausentes fully on paper before any implementation, then implement and test the full solve path.",
+      "description": "Design a puzzle for Ministerio de los Ausentes fully on paper before any implementation, then implement and test the full solve path.",
       "template": "Read .opencode/commands/puzzle.md and execute the shared commands/puzzle.md workflow."
     },
     "qa-plan": {
@@ -182,7 +182,7 @@
       "template": "Read .opencode/commands/save-system-review.md and execute the shared commands/save-system-review.md workflow."
     },
     "scene": {
-      "description": "Implement or revise one scene of El Ministerio de los Ausentes end to end, in place, and verify it runs before stopping.",
+      "description": "Implement or revise one scene of Ministerio de los Ausentes end to end, in place, and verify it runs before stopping.",
       "template": "Read .opencode/commands/scene.md and execute the shared commands/scene.md workflow."
     },
     "scene-bootstrap": {

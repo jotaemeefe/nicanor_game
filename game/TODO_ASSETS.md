@@ -1,4 +1,4 @@
-# TODO Assets — El Ministerio de los Ausentes
+# TODO Assets — Ministerio de los Ausentes
 
 - Status: Active
 - Last updated: 2026-08-16

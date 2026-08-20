@@ -150,7 +150,7 @@ If a task touches multiple domains, the agent should optimize for **clarity of o
 
 ---
 
-## Project: El Ministerio de los Ausentes
+## Project: Ministerio de los Ausentes
 
 This repository is not a generic scaffold checkout — it is the working repository for a real
 project. Everything below narrows the framework above to this project's scope. It does not
@@ -159,7 +159,7 @@ replace the framework; it constrains which parts of it apply here.
 ### What this project is
 
 - A 2D point-and-click adventure, **Godot 4.6.x, GDScript only** (no C#, no .NET).
-- Provisional title: **"El Ministerio de los Ausentes."**
+- Title: **Ministerio de los Ausentes** (named on 2026-08-19; the article is not part of it).
 - Structural inspiration: classic LucasArts-style adventures — verbs reduced to two: a primary
   interaction (left click) and observe (right click).
 - Puzzles are built from concrete objects, conversations, and actions — never abstract or

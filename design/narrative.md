@@ -1,4 +1,4 @@
-# Narrative — El Ministerio de los Ausentes
+# Narrative — Ministerio de los Ausentes
 
 - Status: Active (biblia creativa completa — ver [game-bible.md](game-bible.md) para el canon
   narrativo íntegro)

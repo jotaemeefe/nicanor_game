@@ -1,6 +1,6 @@
 extends Control
 
-@onready var _start_button: Button = $VBoxContainer/Comenzar
+@onready var _start_button: Button = %Comenzar
 
 func _ready() -> void:
 	_start_button.pressed.connect(_on_start_pressed)

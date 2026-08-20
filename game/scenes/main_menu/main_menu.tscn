@@ -1,7 +1,67 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_menu"]
 [ext_resource type="Texture2D" path="res://assets/characters/nicanor/portrait.png" id="2_portrait"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/scene_background_counterless.png" id="3_bg"]
+
+[sub_resource type="Gradient" id="Gradient_scrim"]
+offsets = PackedFloat32Array(0, 0.55, 1)
+colors = PackedColorArray(0.035, 0.043, 0.031, 0.97, 0.035, 0.043, 0.031, 0.72, 0.035, 0.043, 0.031, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_scrim"]
+gradient = SubResource("Gradient_scrim")
+width = 1024
+height = 8
+fill_from = Vector2(0, 0)
+fill_to = Vector2(1, 0)
+
+[sub_resource type="StyleBoxFlat" id="SB_normal"]
+content_margin_left = 30.0
+content_margin_top = 13.0
+content_margin_right = 30.0
+content_margin_bottom = 13.0
+bg_color = Color(0.078, 0.094, 0.075, 0.87)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.839, 0.804, 0.686, 0.42)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="SB_hover"]
+content_margin_left = 30.0
+content_margin_top = 13.0
+content_margin_right = 30.0
+content_margin_bottom = 13.0
+bg_color = Color(0.153, 0.176, 0.129, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.902, 0.867, 0.741, 0.85)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="SB_pressed"]
+content_margin_left = 30.0
+content_margin_top = 13.0
+content_margin_right = 30.0
+content_margin_bottom = 13.0
+bg_color = Color(0.055, 0.067, 0.051, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.902, 0.867, 0.741, 0.6)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -11,44 +71,139 @@ script = ExtResource("1_menu")
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.114, 0.129, 0.098, 1)
+color = Color(0.055, 0.067, 0.051, 1)
+
+; The room itself as the cover, pushed back with modulate so it reads as a
+; backdrop and never competes with the title.
+[node name="BackgroundArt" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+modulate = Color(0.44, 0.46, 0.4, 1)
+texture = ExtResource("3_bg")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="PortraitRect" type="TextureRect" parent="."]
 anchor_left = 1.0
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -520.0
-offset_top = -360.0
-offset_right = -40.0
-offset_bottom = 360.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -700.0
+offset_right = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("2_portrait")
 expand_mode = 1
 stretch_mode = 5
-texture = ExtResource("2_portrait")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.06
+; Dark wash under the text column, fading out to the right so Nicanor stays lit.
+[node name="Scrim" type="TextureRect" parent="."]
+anchor_bottom = 1.0
+offset_right = 900.0
+texture = SubResource("GradientTexture2D_scrim")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Title" type="VBoxContainer" parent="."]
 anchor_top = 0.5
-anchor_right = 0.06
 anchor_bottom = 0.5
-offset_top = -110.0
-offset_right = 520.0
-offset_bottom = 110.0
-theme_override_constants/separation = 26
+offset_left = 84.0
+offset_top = -196.0
+offset_right = 700.0
+offset_bottom = 150.0
+theme_override_constants/separation = 0
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+[node name="Overline" type="Label" parent="Title"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "El Ministerio
-de los Ausentes"
+modulate = Color(0.839, 0.804, 0.686, 0.62)
+theme_override_font_sizes/font_size = 15
+text = "PROTOTIPO  ·  VERTICAL SLICE"
 
-[node name="SubtitleLabel" type="Label" parent="VBoxContainer"]
+[node name="Spacer1" type="Control" parent="Title"]
+custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
+
+[node name="TitleTop" type="Label" parent="Title"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.859, 1)
+theme_override_font_sizes/font_size = 78
+text = "MINISTERIO"
+
+[node name="TitleBottom" type="Label" parent="Title"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.902, 0.867, 0.741, 0.92)
+theme_override_font_sizes/font_size = 42
+text = "de los Ausentes"
+
+[node name="Spacer2" type="Control" parent="Title"]
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+
+[node name="Rule" type="ColorRect" parent="Title"]
+custom_minimum_size = Vector2(300, 1)
+layout_mode = 2
+size_flags_horizontal = 0
+color = Color(0.839, 0.804, 0.686, 0.45)
+
+[node name="Spacer3" type="Control" parent="Title"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+; The rule painted on the office wall, doing double duty as the tagline.
+[node name="Tagline" type="Label" parent="Title"]
+custom_minimum_size = Vector2(470, 0)
+layout_mode = 2
+modulate = Color(0.839, 0.804, 0.686, 0.78)
 theme_override_font_sizes/font_size = 18
-modulate = Color(1, 1, 1, 0.7)
-text = "Vertical slice — Recepción"
+text = "«Toda declaración de ausencia requiere acreditar presencia previa.»"
+autowrap_mode = 2
 
-[node name="Comenzar" type="Button" parent="VBoxContainer"]
+[node name="Spacer4" type="Control" parent="Title"]
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
-custom_minimum_size = Vector2(180, 44)
-theme_override_font_sizes/font_size = 20
+
+[node name="Comenzar" type="Button" parent="Title"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(196, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.902, 0.867, 0.741, 1)
+theme_override_colors/font_hover_color = Color(0.976, 0.965, 0.918, 1)
+theme_override_colors/font_pressed_color = Color(0.902, 0.867, 0.741, 1)
+theme_override_colors/font_focus_color = Color(0.976, 0.965, 0.918, 1)
+theme_override_font_sizes/font_size = 21
+theme_override_styles/focus = SubResource("SB_hover")
+theme_override_styles/normal = SubResource("SB_normal")
+theme_override_styles/hover = SubResource("SB_hover")
+theme_override_styles/pressed = SubResource("SB_pressed")
 text = "Comenzar"
+
+; Web testers get no README, so the two verbs live on the cover.
+[node name="Controles" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 86.0
+offset_top = -62.0
+offset_right = 780.0
+offset_bottom = -34.0
+grow_vertical = 0
+modulate = Color(0.839, 0.804, 0.686, 0.5)
+theme_override_font_sizes/font_size = 15
+text = "Clic izquierdo: caminar, hablar, usar        Clic derecho: observar"
+
+[node name="Pie" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -46.0
+offset_right = -30.0
+offset_bottom = -22.0
+grow_horizontal = 0
+grow_vertical = 0
+modulate = Color(0.839, 0.804, 0.686, 0.38)
+theme_override_font_sizes/font_size = 14
+text = "Recepción · escena 1"
+horizontal_alignment = 2

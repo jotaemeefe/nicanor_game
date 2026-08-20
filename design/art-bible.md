@@ -1,4 +1,4 @@
-# Art Bible — El Ministerio de los Ausentes
+# Art Bible — Ministerio de los Ausentes
 
 - Status: Active (biblia creativa completa; primer set de assets reales en integración)
 - Related docs: [game-bible.md](game-bible.md), [../production/current-scope.md](../production/current-scope.md)

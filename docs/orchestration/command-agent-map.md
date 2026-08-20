@@ -454,7 +454,7 @@ Support:
 - `2d-artist`
 - `architect`
 
-## Project: El Ministerio de los Ausentes
+## Project: Ministerio de los Ausentes
 
 These commands are this project's reduced-scope local equivalents (see `AGENTS.md` and
 `commands/*.md`). They exist alongside, not instead of, the general commands above; the general

@@ -1,4 +1,4 @@
-# Puzzle Design — El Ministerio de los Ausentes
+# Puzzle Design — Ministerio de los Ausentes
 
 - Status: Active — un puzle diseñado e implementado (ver abajo)
 - Related docs: [narrative.md](narrative.md), [../production/current-scope.md](../production/current-scope.md)
