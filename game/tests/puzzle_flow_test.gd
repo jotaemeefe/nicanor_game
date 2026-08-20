@@ -26,6 +26,7 @@ func _ready() -> void:
 	_check_parrot_remates()
 	await _check_formulario_sequence()
 	await _check_single_verb()
+	await _check_audio()
 	await _check_parrot_speaks_after_a_beat()
 	await _check_restart_resets_state()
 	await _check_formulario_disappears()
@@ -59,9 +60,15 @@ func _check_dialogue_click_routing() -> void:
 	var box: DialogueBox = office.get_node("UI/DialogueBox")
 	var loro: Hotspot = office.get_node("World/Hotspots/LoroAnchor/Loro")
 
+	# No await before the first click on purpose. show_line() sets the box up
+	# synchronously, and yielding a frame here lets _process finish the
+	# typewriter on its own whenever the previous frame ran long — which made
+	# this check fail the moment a test that loads a 10 MB mp3 was added ahead
+	# of it. Clicking in the same frame is both deterministic and closer to
+	# what it means to test: the click must not be swallowed.
 	office._play_lines(["uno", "dos"])
-	await get_tree().process_frame
 	_expect(box.visible and box._full_text == "uno", "the first line should be on screen")
+	_expect(box._revealing, "the line should still be revealing before the first click")
 
 	# first click completes the typewriter, second one advances
 	office._on_hotspot_interacted(loro)
@@ -205,19 +212,68 @@ func _check_single_verb() -> void:
 	_expect(office._prop_lines(by_name["Ventilador de techo"]).size() == 1,
 		"the Ventilador should be down to its one remaining line")
 
-	# Right click has to land somewhere, not nowhere. Nicanor is parked on the
-	# approach point first so walk_to() has nothing to do and the whole thing
-	# resolves in one frame — otherwise this would be racing a real walk.
+	# Right click has to land somewhere, not nowhere. Checked synchronously:
+	# _start_interaction walks Nicanor over first and only then opens the box,
+	# so waiting for the box here would be racing a real walk across the floor
+	# — which is exactly how this check first went intermittent. Either it
+	# claimed him (_busy) or it already resolved; both mean the click was not
+	# dropped, and neither depends on how long a step takes.
 	var reloj: Hotspot = by_name["Reloj"]
 	var box: DialogueBox = office.get_node("UI/DialogueBox")
-	office._nicanor.global_position = reloj.approach_global_position()
+	office._on_hotspot_observed(reloj)
+	_expect(office._busy or box.visible,
+		"right click on a prop should start an interaction, not be ignored")
+
+	# What it ends up saying is checked past the walk, at the point where both
+	# buttons already share one code path.
+	office._resolve_hotspot(reloj)
+	_expect(box.visible, "resolving a prop should say something")
+	_expect(box._full_text == str(office._prop_lines(reloj)[0]),
+		"a prop should open on its own first line, got '%s'" % box._full_text)
+
+	office.queue_free()
+
+## Both background tracks have to loop, and the loop is an *import* setting on
+## the mp3 (`loop=true` in the .import), not something the scene can fake. That
+## flag is invisible in the editor's scene view and would fail the quietest way
+## possible: the track simply stops a few minutes in and nobody notices during
+## a short test. Checked on the resource, plus the wiring that actually plays it.
+func _check_audio() -> void:
+	for path in ["res://assets/sounds/fondo_menu.mp3", "res://assets/sounds/fondo_escena1.mp3"]:
+		var stream: AudioStream = load(path)
+		_expect(stream != null, "%s should load" % path)
+		if stream == null:
+			continue
+		_expect(stream.get("loop") == true,
+			"%s must be imported with loop=true, or it stops mid-scene" % path)
+
+	GameState.reset()
+	var office: Node2D = load("res://scenes/office/oficina_recepcion.tscn").instantiate()
+	add_child(office)
 	await get_tree().process_frame
 
-	office._on_hotspot_observed(reloj)
-	await get_tree().process_frame
-	_expect(box.visible, "right click on a prop should still say something")
-	_expect(box._full_text == str(office._prop_lines(reloj)[0]),
-		"right click should open the prop's own first line, got '%s'" % box._full_text)
+	var ambiente: AudioStreamPlayer = office.get_node_or_null("Audio/Ambiente")
+	_expect(ambiente != null, "the office should have an Audio/Ambiente player")
+	if ambiente:
+		_expect(ambiente.stream != null, "Ambiente should have its room tone assigned")
+		_expect(ambiente.autoplay, "Ambiente should start on its own")
+		_expect(ambiente.playing, "the room tone should be running at INICIO")
+
+		# Opening the door ends the scene, and the tone fades from there. The
+		# fade is what is asserted, not silence: stop() only lands at the end
+		# of the tween, seconds after this runs.
+		GameState.set_state(GameState.State.ESCENA_TERMINADA)
+		await get_tree().process_frame
+		_expect(office._ambience_tween != null and office._ambience_tween.is_valid(),
+			"the room tone should start fading when the door opens")
+
+		# ...and Reiniciar has to bring it back, since the restart only puts the
+		# state back rather than reloading the node.
+		GameState.reset()
+		await get_tree().process_frame
+		_expect(ambiente.playing, "the room tone should come back after a reset")
+		_expect(is_equal_approx(ambiente.volume_db, office._ambience_volume_db),
+			"a reset should restore the mix level the fade was pulling down")
 
 	office.queue_free()
 

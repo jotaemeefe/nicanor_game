@@ -30,8 +30,10 @@ It implements, and nothing more:
   personaje.
 - Pantalla inicial ("Comenzar") y pantalla final con reinicio.
 - Texto de diálogo saltable/acelerable.
-- Soporte de audio mínimo (ambiente de oficina, sonido de máquina, sonido de clic) — placeholders
-  silenciosos donde no hay asset, documentados en `game/TODO_ASSETS.md`.
+- Soporte de audio mínimo. **Música de menú y ambiente de la escena entregados el 2026-08-20**
+  (`game/assets/sounds/`), ambos en bucle: la música corta al presionar Comenzar y el ambiente al
+  abrirse la puerta. Sonido de máquina y de clic siguen como placeholders silenciosos,
+  documentados en `game/TODO_ASSETS.md`.
 - **Build web (WebAssembly) para playtest cerrado** (agregado el 2026-08-19 a pedido del usuario).
   Export de Godot a la plataforma Web, sin soporte de hilos, publicable en itch.io en modo
   Restricted (con contraseña) para que solo lo prueben las personas que el usuario elija. El preset

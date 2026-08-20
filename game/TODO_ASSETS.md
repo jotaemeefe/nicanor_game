@@ -67,6 +67,17 @@ consistently draws in front, instead of a fixed, position-independent draw order
 
 ## Audio
 
-No audio assets were provided in either batch. `AudioStreamPlayer` nodes are present with no
-`stream` set (ambiente de oficina, sonido de máquina, sonido de clic) — placeholders, documented,
-per the brief's "silent placeholder" fallback. Voices: explicitly out of scope.
+**Provided 2026-08-20** (`assets/sounds/`):
+
+- `fondo_menu.mp3` — title screen music. Loops; fades out over 0.35 s when the player presses
+  Comenzar, because the intro video that follows carries its own audio and a hard cut is audible.
+- `fondo_escena1.mp3` — reception room tone. Loops; fades out over 1.4 s when the door opens
+  (`ESCENA_TERMINADA`).
+
+**Both loop via the mp3 import setting** (`loop=true` in the `.import`), not via script. That flag
+is invisible in the scene view and fails silently — the track just stops minutes in — so
+`puzzle_flow_test` asserts it on the resource.
+
+Still missing: sonido de máquina and sonido de clic. Their `AudioStreamPlayer` nodes
+(`Audio/MaquinaSfx`, `Audio/ClickSfx`) exist with no `stream` set — silent placeholders, per the
+brief's fallback. Voices: explicitly out of scope.

@@ -42,6 +42,7 @@ const CARTEL_ROJO := preload("res://assets/props/cartel_estado/cartel_rojo_new.p
 ## hangs on recedes, so it needs a projective warp rather than a transform.
 @onready var _cartel_estado_sprite: Polygon2D = get_node_or_null("CartelEstado")
 @onready var _hotspots: Node2D = $World/Hotspots
+@onready var _ambiente: AudioStreamPlayer = get_node_or_null("Audio/Ambiente")
 @onready var _hover_label: Label = $UI/HoverLabel
 @onready var _dialogue_box: DialogueBox = $UI/DialogueBox
 @onready var _end_panel: Control = $UI/EndPanel
@@ -71,12 +72,23 @@ var _pending_choice_options: Array = []
 ## Name of the GameState.State whose parrot remate is owed, or "" for none.
 var _pending_parrot_state: String = ""
 
+## Room tone. The mix level is read off the node in _ready instead of being
+## repeated here — a second copy of a number the scene already owns is how the
+## sprite-scale bug happened.
+const AMBIENCE_FADE_SECONDS := 1.4
+const AMBIENCE_FADE_TO_DB := -40.0
+var _ambience_volume_db: float = 0.0
+var _ambience_tween: Tween = null
+
 func _ready() -> void:
 	_recepcionista_data = DialogueManager.load_json(RECEPCIONISTA_DIALOGUE_PATH)
 	_loro_data = DialogueManager.load_json(LORO_DIALOGUE_PATH)
 	_final_data = DialogueManager.load_json(FINAL_DIALOGUE_PATH)
 	_machine_data = DialogueManager.load_json(MAQUINA_HOTSPOT_DATA_PATH)
 	_formulario_data = DialogueManager.load_json(FORMULARIO_HOTSPOT_DATA_PATH)
+
+	if _ambiente:
+		_ambience_volume_db = _ambiente.volume_db
 
 	_hover_label.hide()
 	_dialogue_box.hide()
@@ -125,6 +137,7 @@ func _reset_puzzle_state() -> void:
 # --- State-driven prop visuals (independent of any dialogue being shown) ---
 
 func _sync_state_visuals() -> void:
+	_sync_ambience()
 	_sync_formulario(GameState.is_at_least(GameState.State.DECLARACION_OBTENIDA))
 	if _machine_sprite:
 		_machine_sprite.texture = _machine_texture_for_state(GameState.current)
@@ -132,6 +145,31 @@ func _sync_state_visuals() -> void:
 		_door_sprite.texture = _door_texture_for_state(GameState.current)
 	if _cartel_estado_sprite:
 		_cartel_estado_sprite.texture = _cartel_estado_texture_for_state(GameState.current)
+
+## The room tone loops (the loop lives on the mp3 import) for as long as Nicanor
+## is still in the room, and fades out when the door opens — ESCENA_TERMINADA.
+## Derived from the state like every other prop rather than stopped by hand at
+## the ending, so Reiniciar brings it back for free: the restart puts GameState
+## at INICIO and this runs again from the state.
+func _sync_ambience() -> void:
+	if not _ambiente or _ambiente.stream == null:
+		return
+	if GameState.current != GameState.State.ESCENA_TERMINADA:
+		if _ambience_tween and _ambience_tween.is_valid():
+			_ambience_tween.kill()
+		_ambience_tween = null
+		# Back to the level configured on the node, in case a fade left it low.
+		_ambiente.volume_db = _ambience_volume_db
+		if not _ambiente.playing:
+			_ambiente.play()
+		return
+	if not _ambiente.playing:
+		return
+	if _ambience_tween and _ambience_tween.is_valid():
+		return
+	_ambience_tween = create_tween()
+	_ambience_tween.tween_property(_ambiente, "volume_db", AMBIENCE_FADE_TO_DB, AMBIENCE_FADE_SECONDS)
+	_ambience_tween.tween_callback(_ambiente.stop)
 
 ## Once Nicanor fills the form in he takes it with him, so it leaves the desk.
 ## Hiding the sprite is not enough: an Area2D keeps being picked while invisible,

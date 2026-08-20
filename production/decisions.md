@@ -5,6 +5,43 @@
 
 Chronological log of judgment calls made where the request left a genuine gap. Newest first.
 
+## 2026-08-20 — Música de menú y ambiente de escena, en bucle y con corte
+
+El usuario dejó dos pistas en `game/assets/sounds/` y pidió que sonaran en bucle hasta el clic en
+Comenzar y hasta que se abre la puerta, respectivamente.
+
+- **El bucle va en el import, no en el script.** Godot importa los mp3 con `loop=false` por
+  defecto; se puso `loop=true` en los dos `.import`. La alternativa — reconectar `finished` para
+  volver a llamar `play()` — deja un hueco audible en cada vuelta. **Es la clase de flag que falla
+  en silencio**: no se ve en la vista de escena y el síntoma es que la música se corta a los tres
+  minutos, cuando ya nadie está mirando. Por eso `puzzle_flow_test` lo verifica sobre el recurso.
+- **Los dos cortes son fade, no stop.** El del menú dura 0,35 s porque lo que sigue es el video de
+  intro, que trae su propio audio: un corte seco se escucha como un click. El de la escena dura
+  1,4 s y cae sobre el cierre emocional, donde un corte seco sería peor todavía. El botón Comenzar
+  se deshabilita durante su fade — la escena sigue viva esos 350 ms y un segundo clic encolaría un
+  segundo cambio de escena.
+- **El ambiente se deriva del estado, no se apaga a mano en el final.** `_sync_ambience()` cuelga
+  de `_sync_state_visuals()` como cualquier otro prop, así que Reiniciar lo trae de vuelta gratis:
+  el reinicio pone `GameState` en INICIO y esto vuelve a correr desde el estado. Apagarlo a mano
+  dentro de `_play_ending` habría dejado la escena reiniciada en silencio.
+- **El nivel de mezcla se lee del nodo en `_ready`**, no se repite como constante en el script. Un
+  segundo número donde la escena ya tiene el suyo es exactamente cómo apareció el bug de la escala
+  del sprite.
+- **Dos tests se volvieron intermitentes y los dos eran tests frágiles, no código frágil.**
+  `_check_dialogue_click_routing` daba por sentado que el efecto de máquina de escribir seguía
+  revelando después de `await process_frame`; cargar 10 MB de mp3 en el test anterior hizo que ese
+  frame tuviera un delta enorme y la línea se completara sola. Ahora clickea **en el mismo frame**,
+  sin await, que además es más fiel a lo que quiere probar. Y el chequeo del clic derecho esperaba
+  la caja de diálogo, que llega recién **después** de que Nicanor camina; ahora verifica
+  sincrónicamente que la interacción arrancó (`_busy` o caja visible) y deja el contenido para
+  `_resolve_hotspot`, que no depende de cuánto tarda un paso. Verificado con cuatro corridas
+  seguidas idénticas.
+- **Aviso conocido y descartado**: correr una escena con `--quit-after` ahora imprime "1 resources
+  still in use at exit" señalando el mp3. Es la reproducción todavía sosteniendo el stream cuando
+  se mata el proceso a la fuerza; no aparece al cerrar la escena normalmente (los tests hacen
+  `queue_free` y salen limpios). No es un bug de juego.
+- Verificado: 178/8/64/17.
+
 ## 2026-08-20 — Un solo verbo, el Mostrador fuera, y siete correcciones de playtest
 
 Siete pedidos del usuario en una sola pasada, sobre la versión recién commiteada.

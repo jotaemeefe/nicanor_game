@@ -709,6 +709,11 @@ nicanor_game
 │   │   │   ├── formulario.png.import
 │   │   │   ├── sello.png
 │   │   │   └── sello.png.import
+│   │   ├── sounds
+│   │   │   ├── fondo_escena1.mp3
+│   │   │   ├── fondo_escena1.mp3.import
+│   │   │   ├── fondo_menu.mp3
+│   │   │   └── fondo_menu.mp3.import
 │   │   └── video
 │   │       ├── intro.ogv
 │   │       └── intro.ogv.uid

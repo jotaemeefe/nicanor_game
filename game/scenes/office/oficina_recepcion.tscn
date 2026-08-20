@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="Script" path="res://scripts/office_scene_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://scripts/nicanor_controller.gd" id="2_nicanor"]
+[ext_resource type="AudioStream" path="res://assets/sounds/fondo_escena1.mp3" id="3_ambiente"]
 [ext_resource type="SpriteFrames" path="res://assets/characters/nicanor/nicanor_frames.tres" id="3_nicanorframes"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/scene_background_counterless.png" id="4_bg"]
 [ext_resource type="PackedScene" path="res://scenes/hotspot.tscn" id="5_hotspot"]
@@ -79,7 +80,8 @@ bottom_left = Vector2(-63, 57)
 [node name="Audio" type="Node" parent="."]
 
 [node name="Ambiente" type="AudioStreamPlayer" parent="Audio"]
-autoplay = false
+stream = ExtResource("3_ambiente")
+autoplay = true
 volume_db = -8.0
 
 [node name="MaquinaSfx" type="AudioStreamPlayer" parent="Audio"]
